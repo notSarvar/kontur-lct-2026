@@ -45,6 +45,7 @@ test('custom input creates a real new route assignment, report syncs to a second
   await page.getByLabel('Название заявки', { exact: true }).fill('Тест: диагностика офиса');
   await page.getByLabel('Адрес / название объекта').fill('Тестовый офис на карте');
   await page.getByRole('button', { name: 'Создать и перепланировать' }).click();
+  await page.getByRole('button', { name: 'Применить план', exact: true }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
   const state = await (await request.get('/api/state')).json();
   expect(state.jobs).toHaveLength(19);
@@ -159,6 +160,7 @@ test('batch arrival, edited windows and import/export work through the interface
   await page.getByLabel('Окно: с', { exact: true }).fill('08:00');
   await page.getByLabel('Начать до', { exact: true }).fill('08:01');
   await page.getByRole('button', { name: 'Сохранить изменения' }).click();
+  await page.getByRole('button', { name: 'Применить план', exact: true }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
   s = await (await request.get('/api/state')).json();
   expect(s.jobs[0].windowEnd).toBe(481);

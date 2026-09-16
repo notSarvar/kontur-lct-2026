@@ -4,13 +4,14 @@ import RouteMap from '../../components/RouteMap.jsx';
 export default function OfficeForm({ state, onClose, save, busy }) {
   const office = state.dataset?.office || state.engineers[0].home;
   const [point, setPoint] = useState({ lat: office.lat, lng: office.lng });
+  const [note, setNote] = useState('');
   return (
     <Modal title="Офис участка" subtitle={office.address} onClose={onClose}>
       <form
         className="modal-body form-stack"
         onSubmit={(e) => {
           e.preventDefault();
-          save(point);
+          save({ ...point, confirmationNote: note });
         }}
       >
         {office.approximate && <p className="inline-warning">Предварительная точка: {office.assumption}</p>}
@@ -45,6 +46,13 @@ export default function OfficeForm({ state, onClose, save, busy }) {
             />
           </Field>
         </div>
+        <Field label="Источник подтверждения">
+          <textarea
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="Ссылка на источник или результат проверки с клиентом"
+          />
+        </Field>
         <div className="form-actions">
           <Button type="button" onClick={onClose}>
             Отмена

@@ -41,7 +41,7 @@ export function createEvaluator(state, leg, previous = {}) {
       new Map(state.jobs.map((j) => [j.id, incompatibilities(j, e).length === 0])),
     ]),
   );
-  return (engineer, jobs) => {
+  const evaluate = (engineer, jobs) => {
     const context = contexts.get(engineer.id);
     let time = context.start,
       point = context.origin,
@@ -60,9 +60,7 @@ export function createEvaluator(state, leg, previous = {}) {
         end = start + job.duration;
       if (!Number.isFinite(end) || start > job.windowEnd || end > engineer.shiftEnd) return null;
       const response =
-        job.priority === 'urgent'
-          ? Math.max(0, start - Math.max(state.time, job.createdAt ?? state.time, job.windowStart))
-          : 0;
+        job.priority === 'urgent' ? Math.max(0, start - Math.max(job.createdAt ?? 0, job.windowStart)) : 0;
       urgentResponse += response;
       stops.push({
         jobId: job.id,
@@ -102,17 +100,33 @@ export function createEvaluator(state, leg, previous = {}) {
       used: Boolean(stops.length || context.locked),
     };
   };
+  evaluate.mode = state.settings.mode || 'economy';
+  return evaluate;
+}
+
+export function routeCost(route, mode = 'economy') {
+  const people = Number(route.used),
+    response = route.urgentResponse;
+  return [
+    ...(mode === 'emergency' ? [response, people] : [people, response]),
+    route.changes,
+    route.km,
+    route.drive,
+  ];
 }
 
 export function objective(solution) {
+  const totals = solution.routes.reduce(
+    (sum, route) => {
+      const cost = routeCost(route, solution.mode);
+      return sum.map((value, i) => value + cost[i]);
+    },
+    [0, 0, 0, 0, 0],
+  );
   return [
     solution.unassigned.filter((j) => j.priority === 'urgent').length,
     solution.unassigned.length,
-    solution.routes.reduce((s, r) => s + r.urgentResponse, 0),
-    solution.routes.filter((r) => r.used).length,
-    solution.routes.reduce((s, r) => s + r.km, 0),
-    solution.routes.reduce((s, r) => s + r.changes, 0),
-    solution.routes.reduce((s, r) => s + r.drive, 0),
+    ...totals,
   ];
 }
 export function compare(a, b) {

@@ -24,7 +24,7 @@ test('official regions, synthetic staff and mandatory metrics work in the dispat
     .getByRole('button', { name: /Аналитика/ })
     .click();
   await expect(page.getByRole('heading', { name: 'ALNS и базовый алгоритм' })).toBeVisible();
-  await expect(page.locator('.analytics-grid table')).toContainText('Первый доступный');
+  await expect(page.locator('.analytics-grid table').first()).toContainText('Первый доступный');
   await page
     .locator('.sidebar nav')
     .getByRole('button', { name: /Команда/ })
@@ -71,10 +71,11 @@ test('dispatcher resolves an emergency-displaced request and the audit survives 
     .getByLabel('Результат согласования', { exact: true })
     .fill('Клиент подтвердил 12–14 по телефону');
   await page.getByRole('button', { name: 'Подтвердить и перепланировать', exact: true }).click();
+  await page.getByRole('button', { name: 'Применить план', exact: true }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
   s = await (await request.get('/api/state')).json();
   expect(s.jobs.find((j) => j.id === original).status).toBe('pending');
-  expect(s.history.at(-1).before.windowEnd).toBe(540);
+  expect(s.history.findLast((h) => h.type === 'job.rescheduled').before.windowEnd).toBe(540);
   await page.reload();
   await page
     .locator('.sidebar nav')

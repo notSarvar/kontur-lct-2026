@@ -51,6 +51,9 @@ import RandomForm from '../features/scenarios/RandomForm.jsx';
 import Settings from '../features/scenarios/Settings.jsx';
 import DatasetForm from '../features/scenarios/DatasetForm.jsx';
 import OfficeForm from '../features/scenarios/OfficeForm.jsx';
+import PlanPreview from '../features/plans/PlanPreview.jsx';
+import AssignmentForm from '../features/plans/AssignmentForm.jsx';
+import GeographyPanel from '../features/scenarios/GeographyPanel.jsx';
 
 export default function App() {
   const [state, setState] = useState(null),
@@ -102,13 +105,28 @@ export default function App() {
     busyRef.current = true;
     setBusy(true);
     try {
-      const response = await fetch('/api/action', {
+      const preview = [
+        'job.assign',
+        'job.save',
+        'job.resolve',
+        'job.delete',
+        'settings',
+        'optimize',
+        'office.save',
+        'geography.confirm',
+      ].includes(type);
+      const response = await fetch(preview ? '/api/preview' : '/api/action', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, payload }),
+        body: JSON.stringify({ type, payload, expectedRevision: stateRef.current.revision }),
       });
       const next = await response.json();
       if (!response.ok) throw new Error(next.error);
+      if (preview) {
+        setRunning(false);
+        setModal({ type: 'preview', candidate: next });
+        return false;
+      }
       accept(next);
       if (message) setToast({ text: message });
       return true;
@@ -120,6 +138,33 @@ export default function App() {
       busyRef.current = false;
       setBusy(false);
     }
+  }
+  async function applyPreview() {
+    if (busyRef.current) return;
+    busyRef.current = true;
+    setBusy(true);
+    try {
+      const response = await fetch('/api/preview/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: modal.candidate.id, expectedRevision: modal.candidate.baseRevision }),
+      });
+      const next = await response.json();
+      if (!response.ok) throw new Error(next.error);
+      accept(next);
+      setModal(null);
+      setToast({ text: 'Новый план применён' });
+    } catch (error) {
+      setToast({ text: error.message, error: true });
+      await load();
+    } finally {
+      busyRef.current = false;
+      setBusy(false);
+    }
+  }
+  function closePreview() {
+    fetch(`/api/preview/${modal.candidate.id}`, { method: 'DELETE' }).catch(() => {});
+    setModal(null);
   }
   useEffect(() => {
     if (!running) return;
@@ -312,6 +357,15 @@ export default function App() {
                   <p>Планируйте выезды, следите за командой и реагируйте на изменения.</p>
                 </div>
                 <div className="heading-actions">
+                  <select
+                    aria-label="Режим планирования"
+                    disabled={busy}
+                    value={state.settings.mode || 'economy'}
+                    onChange={(event) => act('settings', { ...state.settings, mode: event.target.value })}
+                  >
+                    <option value="economy">Экономия</option>
+                    <option value="emergency">Аварийное реагирование</option>
+                  </select>
                   <Button
                     icon={RefreshCw}
                     disabled={busy}
@@ -332,6 +386,9 @@ export default function App() {
                     расписаний. {state.dataset.office.approximate && 'Точка офиса предварительная.'}
                   </span>
                   <Button onClick={() => open({ type: 'office' })}>Офис участка</Button>
+                  <Button onClick={() => open({ type: 'geography' })}>
+                    География: {state.geography?.issues.length || 0} на проверке
+                  </Button>
                 </div>
               )}
               <div className="metrics-grid">
@@ -353,7 +410,7 @@ export default function App() {
                   icon={Navigation}
                   label="Длина маршрутов"
                   value={`${plan.metrics.km.toFixed(1)} км`}
-                  detail={`${duration(plan.metrics.travel)} в пути · ${plan.roadSource === 'osrm' ? 'по дорогам' : 'оценка'}`}
+                  detail={`${duration(plan.metrics.travel)} в пути · ${plan.roadSource === 'osrm' ? 'по дорогам' : plan.roadSource === 'prepared' ? 'пешком по дорогам, ОТ оценочно' : 'оценка'}`}
                   color="blue"
                 />
                 <Metric
@@ -435,11 +492,13 @@ export default function App() {
                         <span title={plan.roadDetail}>
                           {plan.roadSource === 'osrm'
                             ? 'OSRM · дороги'
-                            : plan.roadSource === 'mixed'
-                              ? 'Дороги + оценка'
-                              : plan.roadSource === 'fallback'
-                                ? 'OSRM недоступен · оценка'
-                                : 'Оценочное время'}
+                            : plan.roadSource === 'prepared'
+                              ? 'Пешком по дорогам · ОТ оценочно'
+                              : plan.roadSource === 'mixed'
+                                ? 'Дороги + оценка'
+                                : plan.roadSource === 'fallback'
+                                  ? 'OSRM недоступен · оценка'
+                                  : 'Оценочное время'}
                           <CircleHelp size={13} />
                         </span>
                       </div>
@@ -869,7 +928,35 @@ export default function App() {
             })
           }
           act={act}
+          assign={() => open({ type: 'assignment', id: currentJob.id })}
           busy={busy}
+        />
+      )}
+      {modal?.type === 'assignment' && (
+        <AssignmentForm
+          job={jobs.find((j) => j.id === modal.id)}
+          state={state}
+          busy={busy}
+          onClose={() => setModal(null)}
+          save={(payload) => act('job.assign', payload)}
+        />
+      )}
+      {modal?.type === 'geography' && (
+        <GeographyPanel
+          state={state}
+          busy={busy}
+          onClose={() => setModal(null)}
+          office={() => open({ type: 'office' })}
+          save={(payload) => act('geography.confirm', payload)}
+        />
+      )}
+      {modal?.type === 'preview' && (
+        <PlanPreview
+          candidate={modal.candidate}
+          revision={state.revision}
+          busy={busy}
+          apply={applyPreview}
+          onClose={closePreview}
         />
       )}
       {modal?.type === 'engineer' && (

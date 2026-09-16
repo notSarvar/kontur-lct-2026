@@ -3,7 +3,7 @@ import { Check, CheckCheck, FileText, Headphones, ShieldCheck, TriangleAlert } f
 import { time, duration, transport, statusText } from '../../shared/format.js';
 import { Button, Avatar, Badge, Modal } from '../../components/ui.jsx';
 
-export default function JobDetails({ job: j, state, onClose, edit, act, busy }) {
+export default function JobDetails({ job: j, state, onClose, edit, act, busy, assign }) {
   const [note, setNote] = useState('');
   const e = state.engineers.find((e) => e.id === j.engineerId),
     route = state.plan.routes.find((r) => r.stops.some((s) => s.jobId === j.id)),
@@ -138,6 +138,11 @@ export default function JobDetails({ job: j, state, onClose, edit, act, busy }) 
           )}
         </div>
         <div className="form-actions">
+          {j.status === 'pending' && (
+            <Button onClick={assign} disabled={busy}>
+              Переназначить
+            </Button>
+          )}
           {['pending', 'manual_review'].includes(j.status) && (
             <>
               <Button

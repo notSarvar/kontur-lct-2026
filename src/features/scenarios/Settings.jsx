@@ -11,9 +11,16 @@ export default function Settings({ state, onClose, save, busy }) {
           save(form);
         }}
       >
+        <Field label="Цель планирования">
+          <select value={form.mode || 'economy'} onChange={(e) => setForm({ ...form, mode: e.target.value })}>
+            <option value="economy">Экономия — меньше инженеров</option>
+            <option value="emergency">Аварийное реагирование — раньше обслужить срочные</option>
+          </select>
+        </Field>
         <Field label="Время переездов">
           <select value={form.roadMode} onChange={(e) => setForm({ ...form, roadMode: e.target.value })}>
             <option value="estimate">Пешком и общественным транспортом — оценка</option>
+            <option value="prepared">Пешком по дорожной сети; общественный транспорт — оценка</option>
             <option value="osrm">OSRM для автомобилей; остальные — оценка</option>
           </select>
         </Field>
@@ -21,7 +28,7 @@ export default function Settings({ state, onClose, save, busy }) {
         <label className="toggle-row">
           <span>
             <b>Сохранять назначенного инженера</b>
-            <small>При равном качестве предпочитать прежнее назначение</small>
+            <small>После покрытия и основных целей, перед сокращением километров</small>
           </span>
           <input
             type="checkbox"

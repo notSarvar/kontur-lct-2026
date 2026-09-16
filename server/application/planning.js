@@ -1,8 +1,10 @@
 import { solve } from '../optimization/solver.js';
 import { getTravel, addGeometries } from '../infrastructure/routing.js';
 import { addEvent } from '../domain/scenario.js';
+import { geographyStatus } from '../domain/geography.js';
 
 export async function replan(state, { roads = true, iterations } = {}) {
+  state.geography = geographyStatus(state);
   const old = {};
   for (const r of state.plan?.routes || []) for (const s of r.stops) old[s.jobId] = r.engineerId;
   const travel = roads
@@ -14,6 +16,7 @@ export async function replan(state, { roads = true, iterations } = {}) {
       };
   state.plan = solve(state, travel.matrix, { iterations });
   state.plan.roadSource = travel.source;
+  state.plan.matrixId = travel.matrixId || null;
   state.plan.roadDetail = travel.detail;
   for (const job of state.jobs) if (['pending', 'manual_review'].includes(job.status)) job.engineerId = null;
   for (const r of state.plan.routes)

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar } from '../../components/ui.jsx';
-import { duration, time } from '../../shared/format.js';
+import { duration } from '../../shared/format.js';
+import PlanChanges from '../plans/PlanChanges.jsx';
 export default function Analytics({ state }) {
   const m = state.plan.metrics,
     done = state.jobs.filter((j) => j.status === 'done');
@@ -48,7 +49,9 @@ export default function Analytics({ state }) {
           {m.comparable
             ? 'Набор размещённых заявок совпадает.'
             : 'Наборы заявок различаются: меньшее расстояние само по себе не означает лучший план.'}{' '}
-          Километраж и общественный транспорт оценочные.
+          {state.plan.roadSource === 'prepared'
+            ? 'Пешие поездки — по сохранённой дорожной матрице; общественный транспорт — оценка.'
+            : 'Километраж и общественный транспорт оценочные.'}
         </p>
         <div className="analysis-meta">
           <span>
@@ -62,18 +65,10 @@ export default function Analytics({ state }) {
           </span>
         </div>
         <p className="analysis-note">{state.plan.algorithm}</p>
-        {state.plan.changes.length > 0 && (
-          <div>
-            <h3>Изменения после пересчёта</h3>
-            {state.plan.changes.slice(0, 10).map((c) => (
-              <p key={c.jobId}>
-                №{state.jobs.find((j) => j.id === c.jobId)?.number}: {time(c.before.start)} →{' '}
-                {c.after ? time(c.after.start) : 'требует согласования'}
-                {c.after && c.before.engineerId !== c.after.engineerId ? ' · изменён инженер' : ''}
-              </p>
-            ))}
-          </div>
-        )}
+        <p>
+          Режим: <b>{state.plan.mode === 'emergency' ? 'Аварийное реагирование' : 'Экономия'}</b>
+        </p>
+        {state.plan.diff && <PlanChanges diff={state.plan.diff} engineers={state.engineers} />}
       </section>
       <section className="panel analytics-card">
         <div className="panel-heading">

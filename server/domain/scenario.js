@@ -71,7 +71,7 @@ export function createScenario({ seed = 42, count = 18, engineerCount = 4 } = {}
     engineers,
     jobs,
     plan: null,
-    settings: { roadMode: 'estimate', stability: true },
+    settings: { roadMode: 'estimate', stability: true, mode: 'economy' },
     notifications: [],
     support: [],
     createdAt: new Date().toISOString(),

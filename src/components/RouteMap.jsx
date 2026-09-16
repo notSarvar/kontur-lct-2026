@@ -34,7 +34,8 @@ export default function RouteMap({
     );
     L.control.zoom({ position: 'bottomright' }).addTo(map.current);
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · <a href="https://www.openstreetmap.org/fixthemap">Исправить карту</a>',
       maxZoom: 19,
     });
     tiles.on('tileerror', () => setTileError(true));
@@ -79,7 +80,15 @@ export default function RouteMap({
     for (const route of routes) {
       if (selected !== 'all' && route.engineerId !== selected) continue;
       const engineer = state.engineers.find((e) => e.id === route.engineerId);
-      if (route.geometry?.length > 1)
+      if (route.segments)
+        for (const segment of route.segments)
+          L.polyline(segment.coordinates, {
+            color: engineer.color,
+            weight: selected === 'all' ? 3 : 4,
+            opacity: 0.75,
+            dashArray: segment.roadGeometry ? null : '7 6',
+          }).addTo(layers.current);
+      if (!route.segments && route.geometry?.length > 1)
         L.polyline(route.geometry, {
           color: engineer.color,
           weight: selected === 'all' ? 3 : 4,

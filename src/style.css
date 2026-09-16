@@ -2820,3 +2820,64 @@ legend {
     flex-wrap: wrap;
   }
 }
+
+.preview-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.preview-policy {
+  font-size: 13px;
+  color: #587061;
+}
+.preview-warning {
+  padding: 14px;
+  border: 1px solid #dfb084;
+  border-radius: 10px;
+  background: #fff2df;
+  color: #864712;
+}
+.preview-maps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.preview-maps .route-map {
+  height: 260px;
+  min-height: 260px;
+}
+.preview-maps h3 {
+  margin: 0 0 10px;
+}
+.diff-list {
+  max-height: 400px;
+  overflow: auto;
+}
+.diff-list td {
+  min-width: 150px;
+  white-space: normal;
+}
+.diff-list td small {
+  display: block;
+  margin-top: 6px;
+  color: #6e8174;
+}
+.diff-metrics {
+  width: 100%;
+}
+.route-diff-list {
+  max-height: 200px;
+  overflow: auto;
+  font-size: 13px;
+}
+.heading-actions select {
+  max-width: 215px;
+}
+@media (max-width: 700px) {
+  .preview-maps {
+    grid-template-columns: 1fr;
+  }
+  .heading-actions {
+    flex-wrap: wrap;
+  }
+}

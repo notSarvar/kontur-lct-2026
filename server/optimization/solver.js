@@ -122,6 +122,7 @@ export function solve(state, matrix = {}, options = {}) {
     .join(',');
   const total = (solution, key) => solution.routes.reduce((s, r) => s + r[key], 0);
   return {
+    mode: evaluate.mode,
     routes,
     unassigned,
     changes,

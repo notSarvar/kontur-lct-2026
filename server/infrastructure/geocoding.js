@@ -45,5 +45,7 @@ export async function readGeocache() {
 }
 export function resolvedPoint(address, cache) {
   const result = cache[normalizeAddress(address)];
-  return result?.status === 'matched' ? { lat: result.lat, lng: result.lng, geocode: result } : null;
+  return result?.status === 'matched'
+    ? { lat: result.lat, lng: result.lng, geocode: { ...result, precision: result.precision || 'building' } }
+    : null;
 }

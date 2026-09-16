@@ -1,8 +1,13 @@
-import { better, compare } from './evaluate.js';
+import { better, compare, routeCost } from './evaluate.js';
 import { haversine } from './travel.js';
 
 export function emptySolution(engineers, evaluate) {
-  return { lists: engineers.map(() => []), routes: engineers.map((e) => evaluate(e, [])), unassigned: [] };
+  return {
+    mode: evaluate.mode,
+    lists: engineers.map(() => []),
+    routes: engineers.map((e) => evaluate(e, [])),
+    unassigned: [],
+  };
 }
 
 export function baseline(jobs, engineers, evaluate) {
@@ -34,13 +39,8 @@ function insertions(job, solution, engineers, evaluate) {
       const route = evaluate(engineers[e], list);
       if (!route) continue;
       const old = solution.routes[e];
-      const delta = [
-        route.urgentResponse - old.urgentResponse,
-        Number(route.used) - Number(old.used),
-        route.km - old.km,
-        route.changes - old.changes,
-        route.drive - old.drive,
-      ];
+      const oldCost = routeCost(old, evaluate.mode);
+      const delta = routeCost(route, evaluate.mode).map((value, i) => value - oldCost[i]);
       if (!best || compare(delta, best.delta) < 0) best = { e, list, route, delta };
     }
     if (best) choices.push(best);
@@ -60,15 +60,11 @@ export function repair(solution, pool, engineers, evaluate, regret = true) {
       if (!choices.length) continue;
       const first = choices[0],
         second = choices[1];
-      const regretValue = second
-        ? (second.delta[0] - first.delta[0]) * 10000 +
-          (second.delta[1] - first.delta[1]) * 1000 +
-          second.delta[2] -
-          first.delta[2]
-        : 1e9;
       const rank = [
         job.priority === 'urgent' ? 0 : 1,
-        regret ? -regretValue : job.windowEnd,
+        ...(regret
+          ? [second ? 1 : 0, ...first.delta.map((value, n) => (second ? value - second.delta[n] : 0))]
+          : [job.windowEnd]),
         job.windowEnd,
         ...first.delta,
       ];
@@ -135,7 +131,12 @@ export function improve(initial, jobs, engineers, evaluate, { seed = 42, iterati
     }
     const removedIds = new Set(removed.map((j) => j.id));
     const lists = current.lists.map((l) => l.filter((j) => !removedIds.has(j.id)));
-    const candidate = { lists, routes: lists.map((l, i) => evaluate(engineers[i], l)), unassigned: [] };
+    const candidate = {
+      mode: evaluate.mode,
+      lists,
+      routes: lists.map((l, i) => evaluate(engineers[i], l)),
+      unassigned: [],
+    };
     repair(candidate, [...current.unassigned, ...removed], engineers, evaluate, step % 3 !== 0);
     if (better(candidate, best)) {
       best = candidate;

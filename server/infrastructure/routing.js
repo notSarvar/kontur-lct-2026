@@ -1,4 +1,5 @@
 import { pointKey, hasCoordinates } from '../optimization/travel.js';
+import { readPreparedTravel, preparedMatrix } from './prepared-travel.js';
 const matrixCache = new Map(),
   routeCache = new Map();
 const BASE = process.env.OSRM_URL || 'https://router.project-osrm.org';
@@ -20,6 +21,23 @@ async function request(path) {
   }
 }
 export async function getTravel(state) {
+  if (state.settings.roadMode === 'prepared') {
+    const saved = await readPreparedTravel(),
+      bundle = saved.regions[state.dataset?.id];
+    if (!bundle)
+      throw Object.assign(
+        new Error(
+          'Для этого сценария нет подготовленной пешей матрицы. Выберите встроенный участок или оценочный режим.',
+        ),
+        { status: 409, code: 'DATA_NOT_READY' },
+      );
+    return {
+      matrix: preparedMatrix(state, bundle),
+      source: 'prepared',
+      matrixId: bundle.id,
+      detail: `Пешком: дорожная сеть OpenStreetMap / FOSSGIS, матрица от ${bundle.generatedAt.slice(0, 10)}. Общественный транспорт: оценка без расписаний; явно выбирается более быстрый вариант. Пунктир — схема, сплошные пешие участки — сохранённая дорожная геометрия.`,
+    };
+  }
   if (state.settings.roadMode !== 'osrm' || !state.engineers.some((e) => e.transport === 'car'))
     return {
       matrix: {},
@@ -70,11 +88,28 @@ export async function getTravel(state) {
 }
 export async function addGeometries(state) {
   const byId = Object.fromEntries(state.jobs.map((j) => [j.id, j]));
+  const prepared = state.settings.roadMode === 'prepared' ? await readPreparedTravel() : null;
   for (const route of state.plan.routes) {
     const engineer = state.engineers.find((e) => e.id === route.engineerId);
     const points = [engineer.position, ...route.stops.map((s) => byId[s.jobId])].filter(hasCoordinates);
     route.geometry = points.map((p) => [p.lat, p.lng]);
     route.roadGeometry = false;
+    if (prepared) {
+      route.segments = route.stops.map((stop) => {
+        const job = byId[stop.jobId],
+          key = `${pointKey(stop.from)}|${pointKey(job)}`;
+        const stored = stop.travelMode === 'foot' && !stop.estimated ? prepared.geometries[key] : null;
+        return {
+          coordinates: stored?.coordinates || [
+            [stop.from.lat, stop.from.lng],
+            [job.lat, job.lng],
+          ],
+          roadGeometry: Boolean(stored),
+          mode: stop.travelMode,
+        };
+      });
+      continue;
+    }
     if (
       engineer.transport !== 'car' ||
       !['osrm', 'mixed'].includes(state.plan.roadSource) ||

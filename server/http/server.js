@@ -7,6 +7,7 @@ import { loadState, persistState } from '../infrastructure/storage.js';
 import { OFFICIAL_DATASETS } from '../infrastructure/datasets.js';
 import { exportScenario } from '../domain/export.js';
 import { applyAction } from '../application/actions.js';
+import { previewAction, activateCandidate, conflict } from '../application/candidates.js';
 export async function startServer() {
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
   const production = process.argv.includes('--production');
@@ -15,6 +16,7 @@ export async function startServer() {
   const persist = (next) => persistState(dataDir, next);
   await persist(state);
   const clients = new Set();
+  const candidates = new Map();
   let queue = Promise.resolve();
   const vite = production
     ? null
@@ -47,6 +49,43 @@ export async function startServer() {
   const server = http.createServer(async (req, res) => {
     try {
       const url = new URL(req.url, 'http://localhost');
+      if (
+        ['POST', 'DELETE'].includes(req.method) &&
+        req.headers.origin &&
+        new URL(req.headers.origin).host !== req.headers.host
+      )
+        return json(res, { error: 'Недопустимый источник запроса' }, 403);
+      if (url.pathname === '/api/preview' && req.method === 'POST') {
+        const action = await body(req);
+        const work = queue.then(async () => {
+          const candidate = await previewAction(state, action);
+          candidates.set(candidate.id, candidate);
+          while (candidates.size > 20) candidates.delete(candidates.keys().next().value);
+          return candidate;
+        });
+        queue = work.catch(() => {});
+        return json(res, await work);
+      }
+      if (url.pathname === '/api/preview/apply' && req.method === 'POST') {
+        const input = await body(req);
+        const work = queue.then(async () => {
+          const candidate = candidates.get(input.id);
+          if (candidate && Date.now() - Date.parse(candidate.createdAt) > 15 * 60 * 1000)
+            candidates.delete(input.id);
+          const next = activateCandidate(state, candidates.get(input.id), input.expectedRevision);
+          await persist(next);
+          state = next;
+          candidates.delete(input.id);
+          for (const client of clients) client.write(`data: ${state.revision}\n\n`);
+          return { ...state, catalog: { skills: SKILLS, equipment: EQUIPMENT, types: TYPES } };
+        });
+        queue = work.catch(() => {});
+        return json(res, await work);
+      }
+      if (url.pathname.startsWith('/api/preview/') && req.method === 'DELETE') {
+        candidates.delete(url.pathname.split('/').at(-1));
+        return json(res, { ok: true });
+      }
       if (url.pathname === '/api/state' && req.method === 'GET')
         return json(res, { ...state, catalog: { skills: SKILLS, equipment: EQUIPMENT, types: TYPES } });
       if (url.pathname === '/api/datasets' && req.method === 'GET') return json(res, OFFICIAL_DATASETS);
@@ -72,6 +111,11 @@ export async function startServer() {
           return json(res, { error: 'Недопустимый источник запроса' }, 403);
         const action = await body(req);
         const work = queue.then(async () => {
+          if (action.type === 'job.assign')
+            throw conflict(
+              'Ручное переназначение требует предпросмотра и подтверждения.',
+              'PREVIEW_REQUIRED',
+            );
           const next = await applyAction(state, action);
           await persist(next);
           state = next;
@@ -122,6 +166,7 @@ export async function startServer() {
         json(
           res,
           {
+            code: error.code || (error.status ? 'INVALID_INPUT' : 'INTERNAL_ERROR'),
             error: error.status
               ? error.message
               : 'Не удалось выполнить действие. Подробности в журнале сервера.',

@@ -418,21 +418,19 @@
     "fetchedAt": "2026-09-16T20:41:14.421Z"
   },
   "Москва, улица 2-я Синичкина, 9 к 1": {
-    "status": "review",
-    "candidates": [
-      {
-        "lat": 55.766048,
-        "lng": 37.7051466,
-        "label": "1-я улица Синичкина, район Лефортово, Москва, Центральный федеральный округ, 111020, Россия"
-      },
-      {
-        "lat": 55.76097,
-        "lng": 37.716786,
-        "label": "2-я улица Синичкина, район Лефортово, Москва, Центральный федеральный округ, 111020, Россия"
-      }
-    ],
+    "status": "matched",
+    "lat": 55.76264,
+    "lng": 37.7130584,
+    "displayName": "9 к1, 2-я улица Синичкина, район Лефортово, Москва, Центральный федеральный округ, 111020, Россия",
+    "precision": "building",
+    "osmType": "way",
+    "osmId": 56008420,
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+2-%D1%8F+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%A1%D0%B8%D0%BD%D0%B8%D1%87%D0%BA%D0%B8%D0%BD%D0%B0+9%D0%BA1&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:19:55.501Z",
+    "reviewedAt": "2026-09-17",
+    "reviewMethod": "Exact building address, district checked; POI and street matches excluded",
+    "attribution": "© OpenStreetMap contributors, ODbL"
   },
   "Москва, проезд Орехово-Зуевский, 18/8": {
     "status": "matched",
@@ -469,26 +467,19 @@
     "refined": true
   },
   "Москва, улица 11-я Текстильщиков, 10": {
-    "status": "review",
-    "candidates": [
-      {
-        "lat": 55.7056734,
-        "lng": 37.7373653,
-        "label": "11-я улица Текстильщиков, район Текстильщики, Москва, Центральный федеральный округ, 109129, Россия"
-      },
-      {
-        "lat": 55.7043958,
-        "lng": 37.7341203,
-        "label": "11-я улица Текстильщиков, район Текстильщики, Москва, Центральный федеральный округ, 109390, Россия"
-      },
-      {
-        "lat": 55.7057353,
-        "lng": 37.7390014,
-        "label": "11-я улица Текстильщиков, район Текстильщики, Москва, Центральный федеральный округ, 109129, Россия"
-      }
-    ],
+    "status": "matched",
+    "lat": 55.706885,
+    "lng": 37.7431987,
+    "displayName": "10, 11-я улица Текстильщиков, район Текстильщики, Москва, Центральный федеральный округ, 109129, Россия",
+    "precision": "building",
+    "osmType": "way",
+    "osmId": 29502704,
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+11-%D1%8F+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%A2%D0%B5%D0%BA%D1%81%D1%82%D0%B8%D0%BB%D1%8C%D1%89%D0%B8%D0%BA%D0%BE%D0%B2+10&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:19:57.072Z",
+    "reviewedAt": "2026-09-17",
+    "reviewMethod": "Exact building address, district checked; POI and street matches excluded",
+    "attribution": "© OpenStreetMap contributors, ODbL"
   },
   "Москва, улица Паперника, 18": {
     "status": "matched",
@@ -524,21 +515,19 @@
     "fetchedAt": "2026-09-16T20:41:26.472Z"
   },
   "Москва, улица Талалихина, 16": {
-    "status": "review",
-    "candidates": [
-      {
-        "lat": 55.7355002,
-        "lng": 37.676817,
-        "label": "16, улица Талалихина, Таганский район, Москва, Центральный федеральный округ, 109316, Россия"
-      },
-      {
-        "lat": 55.5066988,
-        "lng": 37.5819505,
-        "label": "16, улица Талалихина, Липки, район Щербинка, Москва, Центральный федеральный округ, 117623, Россия"
-      }
-    ],
+    "status": "matched",
+    "lat": 55.7355002,
+    "lng": 37.676817,
+    "displayName": "16, улица Талалихина, Таганский район, Москва, Центральный федеральный округ, 109316, Россия",
+    "precision": "building",
+    "osmType": "way",
+    "osmId": 50286450,
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%A2%D0%B0%D0%B3%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%A2%D0%B0%D0%BB%D0%B0%D0%BB%D0%B8%D1%85%D0%B8%D0%BD%D0%B0+16&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:19:58.849Z",
+    "reviewedAt": "2026-09-17",
+    "reviewMethod": "Exact building address, district checked; POI and street matches excluded",
+    "attribution": "© OpenStreetMap contributors, ODbL"
   },
   "Москва, бульвар Волжский, 50 к 2": {
     "status": "matched",
@@ -793,10 +782,19 @@
     "refined": true
   },
   "Домодедово, проезд Советский 1-й, 1А": {
-    "status": "not_found",
-    "candidates": [],
+    "status": "matched",
+    "lat": 55.4407054,
+    "lng": 37.7700883,
+    "displayName": "1А, 1-й Советский проезд, микрорайон Северный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142000, Россия",
+    "precision": "building",
+    "osmType": "way",
+    "osmId": 1557627663,
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%94%D0%BE%D0%BC%D0%BE%D0%B4%D0%B5%D0%B4%D0%BE%D0%B2%D0%BE+1-%D0%B9+%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%B9+%D0%BF%D1%80%D0%BE%D0%B5%D0%B7%D0%B4+1%D0%90&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:01.658Z",
+    "reviewedAt": "2026-09-17",
+    "reviewMethod": "Exact building address, district checked; POI and street matches excluded",
+    "attribution": "© OpenStreetMap contributors, ODbL"
   },
   "Москва, проезд Гурьевский, 23 к 1": {
     "status": "matched",
@@ -855,21 +853,19 @@
     "fetchedAt": "2026-09-16T20:42:10.744Z"
   },
   "Москва, проезд Загорьевский, 9": {
-    "status": "review",
-    "candidates": [
-      {
-        "lat": 55.5780853,
-        "lng": 37.6775523,
-        "label": "9, Загорьевский проезд, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115598, Россия"
-      },
-      {
-        "lat": 55.5739305,
-        "lng": 37.6690941,
-        "label": "Магнит, 9, Загорьевский проезд, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115547, Россия"
-      }
-    ],
+    "status": "matched",
+    "lat": 55.5780853,
+    "lng": 37.6775523,
+    "displayName": "9, Загорьевский проезд, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115598, Россия",
+    "precision": "building",
+    "osmType": "way",
+    "osmId": 32632205,
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%97%D0%B0%D0%B3%D0%BE%D1%80%D1%8C%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9+%D0%BF%D1%80%D0%BE%D0%B5%D0%B7%D0%B4+9&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:02.973Z",
+    "reviewedAt": "2026-09-17",
+    "reviewMethod": "Exact building address, district checked; POI and street matches excluded",
+    "attribution": "© OpenStreetMap contributors, ODbL"
   },
   "Москва, улица 6-я Радиальная, 5 к 3": {
     "status": "matched",
@@ -1084,26 +1080,19 @@
     "reviewReason": "Номер здания отличается от исходного адреса"
   },
   "Москва, бульвар Ореховый, 7 к 1": {
-    "status": "review",
-    "candidates": [
-      {
-        "lat": 55.6096657,
-        "lng": 37.7060471,
-        "label": "7 к1, Ореховый бульвар, район Орехово-Борисово Северное, Москва, Центральный федеральный округ, 115551, Россия"
-      },
-      {
-        "lat": 55.6099647,
-        "lng": 37.7080141,
-        "label": "Dolce Vita, 7 к1, Ореховый бульвар, район Орехово-Борисово Северное, Москва, Центральный федеральный округ, 115551, Россия"
-      },
-      {
-        "lat": 55.6098368,
-        "lng": 37.7072908,
-        "label": "Medical star, 7 к1, Ореховый бульвар, район Орехово-Борисово Северное, Москва, Центральный федеральный округ, 115551, Россия"
-      }
-    ],
+    "status": "matched",
+    "lat": 55.6096657,
+    "lng": 37.7060471,
+    "displayName": "7 к1, Ореховый бульвар, район Орехово-Борисово Северное, Москва, Центральный федеральный округ, 115551, Россия",
+    "precision": "building",
+    "osmType": "way",
+    "osmId": 31064679,
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%9E%D1%80%D0%B5%D1%85%D0%BE%D0%B2%D1%8B%D0%B9+%D0%B1%D1%83%D0%BB%D1%8C%D0%B2%D0%B0%D1%80+7%D0%BA1&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:06.408Z",
+    "reviewedAt": "2026-09-17",
+    "reviewMethod": "Exact building address, district checked; POI and street matches excluded",
+    "attribution": "© OpenStreetMap contributors, ODbL"
   },
   "Москва, ш.Каширское, 94 к 1": {
     "status": "matched",
@@ -1221,18 +1210,15 @@
     "status": "review",
     "candidates": [
       {
-        "lat": 55.4512022,
-        "lng": 37.7488993,
-        "label": "улица Гагарина, микрорайон Северный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142000, Россия"
-      },
-      {
-        "lat": 55.3290805,
-        "lng": 37.8700539,
-        "label": "улица Гагарина, Белые Столбы, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142050, Россия"
+        "lat": 55.4515305,
+        "lng": 37.7394233,
+        "label": "55 к2, улица Гагарина, микрорайон Северный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142000, Россия — в источнике корпус, в CSV дробь; подтвердите соответствие",
+        "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%94%D0%BE%D0%BC%D0%BE%D0%B4%D0%B5%D0%B4%D0%BE%D0%B2%D0%BE+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%93%D0%B0%D0%B3%D0%B0%D1%80%D0%B8%D0%BD%D0%B0+55%D0%BA2&format=jsonv2&addressdetails=1&limit=5&accept-language=ru"
       }
     ],
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "refined": true,
+    "reviewNote": "Different house notation; requires confirmation, no automatic substitution"
   },
   "Домодедово, улица 1-я Коммунистическая, 39": {
     "status": "matched",
@@ -1542,10 +1528,18 @@
     "fetchedAt": "2026-09-16T20:43:34.281Z"
   },
   "обл.Московская область, г.Домодедово, пгт.Востряково-1, улица Жуковского, 14/18": {
-    "status": "not_found",
-    "candidates": [],
+    "status": "matched",
+    "lat": 55.4118698,
+    "lng": 37.8397236,
+    "displayName": "14/18, улица Жуковского, микрорайон Авиационный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142007, Россия",
+    "precision": "building",
+    "osmType": "way",
+    "osmId": 399606307,
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%94%D0%BE%D0%BC%D0%BE%D0%B4%D0%B5%D0%B4%D0%BE%D0%B2%D0%BE+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%96%D1%83%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+14&format=jsonv2&addressdetails=1&limit=5&accept-language=ru",
+    "reviewMethod": "Exact building 14/18, Vostryakovo district checked",
+    "attribution": "© OpenStreetMap contributors, ODbL",
+    "reviewedAt": "2026-09-16T22:34:46.144768+00:00"
   },
   "Московская область, г. Кашира Центральная улица 21": {
     "status": "matched",
@@ -1563,13 +1557,15 @@
     "status": "review",
     "candidates": [
       {
-        "lat": 54.8398433,
-        "lng": 38.239367,
-        "label": "улица Кржижановского, Кашира-2, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142904, Россия"
+        "lat": 54.8404598,
+        "lng": 38.2404648,
+        "label": "5 к1, улица Кржижановского, Кашира-2, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142904, Россия — в источнике корпус, в CSV дробь; подтвердите соответствие",
+        "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%9A%D0%B0%D1%88%D0%B8%D1%80%D0%B0+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%9A%D1%80%D0%B6%D0%B8%D0%B6%D0%B0%D0%BD%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+5%D0%BA1&format=jsonv2&addressdetails=1&limit=5&accept-language=ru"
       }
     ],
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "refined": true,
+    "reviewNote": "Different house notation; requires confirmation, no automatic substitution"
   },
   "Московская область, г. Кашира Кржижановского улица 7к2": {
     "status": "matched",
@@ -1587,25 +1583,29 @@
     "status": "review",
     "candidates": [
       {
-        "lat": 54.8398433,
-        "lng": 38.239367,
-        "label": "улица Кржижановского, Кашира-2, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142904, Россия"
+        "lat": 54.8408174,
+        "lng": 38.242988,
+        "label": "5 к3, улица Кржижановского, Кашира-2, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142904, Россия — в источнике корпус, в CSV дробь; подтвердите соответствие",
+        "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%9A%D0%B0%D1%88%D0%B8%D1%80%D0%B0+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%9A%D1%80%D0%B6%D0%B8%D0%B6%D0%B0%D0%BD%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+5%D0%BA3&format=jsonv2&addressdetails=1&limit=5&accept-language=ru"
       }
     ],
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "refined": true,
+    "reviewNote": "Different house notation; requires confirmation, no automatic substitution"
   },
   "Московская область, г. Кашира Кржижановского улица 5/2": {
     "status": "review",
     "candidates": [
       {
-        "lat": 54.8398433,
-        "lng": 38.239367,
-        "label": "улица Кржижановского, Кашира-2, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142904, Россия"
+        "lat": 54.8406569,
+        "lng": 38.2420016,
+        "label": "5 к2, улица Кржижановского, Кашира-2, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142904, Россия — в источнике корпус, в CSV дробь; подтвердите соответствие",
+        "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%9A%D0%B0%D1%88%D0%B8%D1%80%D0%B0+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%9A%D1%80%D0%B6%D0%B8%D0%B6%D0%B0%D0%BD%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+5%D0%BA2&format=jsonv2&addressdetails=1&limit=5&accept-language=ru"
       }
     ],
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "refined": true,
+    "reviewNote": "Different house notation; requires confirmation, no automatic substitution"
   },
   "Московская область, г. Ступино Андропова улица 37": {
     "status": "matched",
@@ -2147,21 +2147,19 @@
     "fetchedAt": "2026-09-16T20:44:53.694Z"
   },
   "Москва, улица Городская, 9": {
-    "status": "review",
-    "candidates": [
-      {
-        "lat": 55.7150778,
-        "lng": 37.6180122,
-        "label": "9, Городская улица, Даниловский район, Москва, Центральный федеральный округ, 115162, Россия"
-      },
-      {
-        "lat": 55.4517146,
-        "lng": 36.9466379,
-        "label": "9, Городская улица, район Бекасово, Кузнецово, Москва, Центральный федеральный округ, 143340, Россия"
-      }
-    ],
+    "status": "matched",
+    "lat": 55.7150778,
+    "lng": 37.6180122,
+    "displayName": "9, Городская улица, Даниловский район, Москва, Центральный федеральный округ, 115162, Россия",
+    "precision": "building",
+    "osmType": "way",
+    "osmId": 45820295,
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%94%D0%B0%D0%BD%D0%B8%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD+%D0%93%D0%BE%D1%80%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D1%8F+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+9&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:19.473Z",
+    "reviewedAt": "2026-09-17",
+    "reviewMethod": "Exact building address, district checked; POI and street matches excluded",
+    "attribution": "© OpenStreetMap contributors, ODbL"
   },
   "Москва, проспект Севастопольский, 9 к 1": {
     "status": "matched",
@@ -2302,25 +2300,18 @@
     "fetchedAt": "2026-09-16T20:45:12.857Z"
   },
   "Москва, проспект Ленинский, 70/11": {
-    "status": "review",
-    "candidates": [
-      {
-        "lat": 55.6879261,
-        "lng": 37.5407755,
-        "label": "70/11, Ленинский проспект (дублёр), Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия"
-      },
-      {
-        "lat": 55.6878702,
-        "lng": 37.5439664,
-        "label": "Иль Де Ботэ, 70/11, Ленинский проспект (дублёр), Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия"
-      },
-      {
-        "lat": 55.6883974,
-        "lng": 37.5436752,
-        "label": "Амурофф, 70/11, Ленинский проспект (дублёр), Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия"
-      }
-    ],
+    "status": "matched",
+    "lat": 55.6879261,
+    "lng": 37.5407755,
+    "displayName": "70/11, Ленинский проспект, Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия",
+    "precision": "building",
+    "osmType": "way",
+    "osmId": 46657116,
     "provider": "https://nominatim.openstreetmap.org/search",
-    "refined": true
+    "sourceUrl": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82+70%2F11&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:20.904Z",
+    "reviewedAt": "2026-09-17",
+    "reviewMethod": "Exact building address, district checked; POI and street matches excluded",
+    "attribution": "© OpenStreetMap contributors, ODbL"
   }
 }

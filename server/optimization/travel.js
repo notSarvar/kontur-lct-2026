@@ -64,7 +64,7 @@ export function legFunction(matrix = {}) {
     if (raw === null) leg = { ...leg, minutes: Infinity, km: Infinity };
     else if (typeof raw === 'number') leg = { ...leg, minutes: raw };
     else if (raw && typeof raw === 'object')
-      leg = { ...raw, estimated: raw.estimated ?? false, mode: engineer.transport };
+      leg = { ...raw, estimated: raw.estimated ?? false, mode: raw.mode || engineer.transport };
     cache.set(modeKey, leg);
     return leg;
   };

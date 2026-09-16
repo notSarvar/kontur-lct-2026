@@ -64,7 +64,7 @@ export async function createOfficialScenario(id) {
   const jobs = dataset.jobs.map((job) => ({
     ...job,
     ...resolvedPoint(job.address, cache),
-    createdAt: 480,
+    createdAt: 0,
     geocodingCandidates: cache[normalizeAddress(job.address)]?.candidates || [],
   }));
   const roster = deriveEngineers(jobs, office, id);

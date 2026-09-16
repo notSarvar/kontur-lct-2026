@@ -1,0 +1,2625 @@
+{
+  "Москва, улица 2-я Синичкина, 9 к 1": {
+    "query": "Москва 2-я улица Синичкина 9к1",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+2-%D1%8F+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%A1%D0%B8%D0%BD%D0%B8%D1%87%D0%BA%D0%B8%D0%BD%D0%B0+9%D0%BA1&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:19:55.501Z",
+    "results": [
+      {
+        "place_id": 195933394,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 56008420,
+        "lat": "55.7626400",
+        "lon": "37.7130584",
+        "category": "building",
+        "type": "apartments",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "building",
+        "name": "",
+        "display_name": "9 к1, 2-я улица Синичкина, район Лефортово, Москва, Центральный федеральный округ, 111020, Россия",
+        "address": {
+          "house_number": "9 к1",
+          "road": "2-я улица Синичкина",
+          "suburb": "район Лефортово",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "111020",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7625040",
+          "55.7628237",
+          "37.7126456",
+          "37.7133412"
+        ]
+      }
+    ]
+  },
+  "Москва, улица 11-я Текстильщиков, 10": {
+    "query": "Москва 11-я улица Текстильщиков 10",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+11-%D1%8F+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%A2%D0%B5%D0%BA%D1%81%D1%82%D0%B8%D0%BB%D1%8C%D1%89%D0%B8%D0%BA%D0%BE%D0%B2+10&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:19:57.072Z",
+    "results": [
+      {
+        "place_id": 196109771,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 29502704,
+        "lat": "55.7068850",
+        "lon": "37.7431987",
+        "category": "building",
+        "type": "apartments",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "building",
+        "name": "",
+        "display_name": "10, 11-я улица Текстильщиков, район Текстильщики, Москва, Центральный федеральный округ, 109129, Россия",
+        "address": {
+          "house_number": "10",
+          "road": "11-я улица Текстильщиков",
+          "suburb": "район Текстильщики",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "109129",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7067044",
+          "55.7070655",
+          "37.7426662",
+          "37.7437311"
+        ]
+      }
+    ]
+  },
+  "Москва, улица Талалихина, 16": {
+    "query": "Москва Таганский район улица Талалихина 16",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%A2%D0%B0%D0%B3%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%A2%D0%B0%D0%BB%D0%B0%D0%BB%D0%B8%D1%85%D0%B8%D0%BD%D0%B0+16&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:19:58.849Z",
+    "results": [
+      {
+        "place_id": 196105619,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 50286450,
+        "lat": "55.7355002",
+        "lon": "37.6768170",
+        "category": "building",
+        "type": "apartments",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "building",
+        "name": "",
+        "display_name": "16, улица Талалихина, Таганский район, Москва, Центральный федеральный округ, 109316, Россия",
+        "address": {
+          "house_number": "16",
+          "road": "улица Талалихина",
+          "suburb": "Таганский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "109316",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7353272",
+          "55.7356231",
+          "37.6766244",
+          "37.6770428"
+        ]
+      }
+    ]
+  },
+  "Москва, улица Красноказарменная, 9Б стр. 1": {
+    "query": "Москва Красноказарменная улица 9Б строение 1",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%80%D0%BC%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+9%D0%91+%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BD%D0%B8%D0%B5+1&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:00.217Z",
+    "results": []
+  },
+  "Домодедово, проезд Советский 1-й, 1А": {
+    "query": "Домодедово 1-й Советский проезд 1А",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%94%D0%BE%D0%BC%D0%BE%D0%B4%D0%B5%D0%B4%D0%BE%D0%B2%D0%BE+1-%D0%B9+%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%B9+%D0%BF%D1%80%D0%BE%D0%B5%D0%B7%D0%B4+1%D0%90&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:01.658Z",
+    "results": [
+      {
+        "place_id": 426989748,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1557627663,
+        "lat": "55.4407054",
+        "lon": "37.7700883",
+        "category": "building",
+        "type": "apartments",
+        "place_rank": 30,
+        "importance": 6.035629816124235e-05,
+        "addresstype": "building",
+        "name": "",
+        "display_name": "1А, 1-й Советский проезд, микрорайон Северный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142000, Россия",
+        "address": {
+          "house_number": "1А",
+          "road": "1-й Советский проезд",
+          "suburb": "микрорайон Северный",
+          "city": "Домодедово",
+          "county": "городской округ Домодедово",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142000",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.4405211",
+          "55.4408867",
+          "37.7698663",
+          "37.7703118"
+        ]
+      }
+    ]
+  },
+  "Москва, проезд Загорьевский, 9": {
+    "query": "Москва Загорьевский проезд 9",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%97%D0%B0%D0%B3%D0%BE%D1%80%D1%8C%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9+%D0%BF%D1%80%D0%BE%D0%B5%D0%B7%D0%B4+9&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:02.973Z",
+    "results": [
+      {
+        "place_id": 195055859,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 32632205,
+        "lat": "55.5780853",
+        "lon": "37.6775523",
+        "category": "building",
+        "type": "apartments",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "building",
+        "name": "",
+        "display_name": "9, Загорьевский проезд, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115598, Россия",
+        "address": {
+          "house_number": "9",
+          "road": "Загорьевский проезд",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115598",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5777055",
+          "55.5784652",
+          "37.6773796",
+          "37.6777250"
+        ]
+      },
+      {
+        "place_id": 204007747,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 2172983374,
+        "lat": "55.5739305",
+        "lon": "37.6690941",
+        "category": "shop",
+        "type": "supermarket",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "shop",
+        "name": "Магнит",
+        "display_name": "Магнит, 9, Загорьевский проезд, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115547, Россия",
+        "address": {
+          "shop": "Магнит",
+          "house_number": "9",
+          "road": "Загорьевский проезд",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115547",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5738805",
+          "55.5739805",
+          "37.6690441",
+          "37.6691441"
+        ]
+      }
+    ]
+  },
+  "Кашира, улица 8 Марта, 22": {
+    "query": "Кашира улица 8 Марта 22",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9A%D0%B0%D1%88%D0%B8%D1%80%D0%B0+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+8+%D0%9C%D0%B0%D1%80%D1%82%D0%B0+22&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:04.951Z",
+    "results": [
+      {
+        "place_id": 196854066,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 486300797,
+        "lat": "54.8041762",
+        "lon": "38.2768274",
+        "category": "building",
+        "type": "yes",
+        "place_rank": 30,
+        "importance": 5.849164568546605e-05,
+        "addresstype": "building",
+        "name": "",
+        "display_name": "22/2, улица 8 Марта, Центролит, Ожерелье, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142921, Россия",
+        "address": {
+          "house_number": "22/2",
+          "road": "улица 8 Марта",
+          "suburb": "Центролит",
+          "town": "Кашира",
+          "county": "городской округ Кашира",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142921",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "54.8040978",
+          "54.8042545",
+          "38.2767273",
+          "38.2769275"
+        ]
+      },
+      {
+        "place_id": 196841951,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 110537648,
+        "lat": "54.8046102",
+        "lon": "38.2760978",
+        "category": "highway",
+        "type": "residential",
+        "place_rank": 26,
+        "importance": 0.05339420080872812,
+        "addresstype": "road",
+        "name": "улица 8 Марта",
+        "display_name": "улица 8 Марта, Центролит, Ожерелье, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142921, Россия",
+        "address": {
+          "road": "улица 8 Марта",
+          "suburb": "Центролит",
+          "town": "Кашира",
+          "county": "городской округ Кашира",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142921",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "54.8031572",
+          "54.8061788",
+          "38.2752537",
+          "38.2770987"
+        ]
+      }
+    ]
+  },
+  "Москва, бульвар Ореховый, 7 к 1": {
+    "query": "Москва Ореховый бульвар 7к1",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%9E%D1%80%D0%B5%D1%85%D0%BE%D0%B2%D1%8B%D0%B9+%D0%B1%D1%83%D0%BB%D1%8C%D0%B2%D0%B0%D1%80+7%D0%BA1&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:06.408Z",
+    "results": [
+      {
+        "place_id": 195527193,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 31064679,
+        "lat": "55.6096657",
+        "lon": "37.7060471",
+        "category": "building",
+        "type": "apartments",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "building",
+        "name": "",
+        "display_name": "7 к1, Ореховый бульвар, район Орехово-Борисово Северное, Москва, Центральный федеральный округ, 115551, Россия",
+        "address": {
+          "house_number": "7 к1",
+          "road": "Ореховый бульвар",
+          "suburb": "район Орехово-Борисово Северное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115551",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6093075",
+          "55.6100531",
+          "37.7041407",
+          "37.7081297"
+        ]
+      },
+      {
+        "place_id": 193456219,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 460402581,
+        "lat": "55.6099647",
+        "lon": "37.7080141",
+        "category": "shop",
+        "type": "hairdresser",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "shop",
+        "name": "Dolce Vita",
+        "display_name": "Dolce Vita, 7 к1, Ореховый бульвар, район Орехово-Борисово Северное, Москва, Центральный федеральный округ, 115551, Россия",
+        "address": {
+          "shop": "Dolce Vita",
+          "house_number": "7 к1",
+          "road": "Ореховый бульвар",
+          "suburb": "район Орехово-Борисово Северное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115551",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6099147",
+          "55.6100147",
+          "37.7079641",
+          "37.7080641"
+        ]
+      },
+      {
+        "place_id": 195414841,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 5907046385,
+        "lat": "55.6098368",
+        "lon": "37.7072908",
+        "category": "amenity",
+        "type": "dentist",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "amenity",
+        "name": "Medical star",
+        "display_name": "Medical star, 7 к1, Ореховый бульвар, район Орехово-Борисово Северное, Москва, Центральный федеральный округ, 115551, Россия",
+        "address": {
+          "amenity": "Medical star",
+          "house_number": "7 к1",
+          "road": "Ореховый бульвар",
+          "suburb": "район Орехово-Борисово Северное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115551",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6097868",
+          "55.6098868",
+          "37.7072408",
+          "37.7073408"
+        ]
+      }
+    ]
+  },
+  "Домодедово, улица Гагарина, 55/2": {
+    "query": "Домодедово улица Гагарина 55/2",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%94%D0%BE%D0%BC%D0%BE%D0%B4%D0%B5%D0%B4%D0%BE%D0%B2%D0%BE+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%93%D0%B0%D0%B3%D0%B0%D1%80%D0%B8%D0%BD%D0%B0+55%2F2&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:08.354Z",
+    "results": [
+      {
+        "place_id": 196164316,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1351189828,
+        "lat": "55.4512022",
+        "lon": "37.7488993",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05339368963149459,
+        "addresstype": "road",
+        "name": "улица Гагарина",
+        "display_name": "улица Гагарина, микрорайон Северный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142000, Россия",
+        "address": {
+          "road": "улица Гагарина",
+          "suburb": "микрорайон Северный",
+          "city": "Домодедово",
+          "county": "городской округ Домодедово",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142000",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.4496381",
+          "55.4518650",
+          "37.7366424",
+          "37.7611281"
+        ]
+      },
+      {
+        "place_id": 196225026,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1302709117,
+        "lat": "55.3290805",
+        "lon": "37.8700539",
+        "category": "highway",
+        "type": "residential",
+        "place_rank": 26,
+        "importance": 0.05339368963149459,
+        "addresstype": "road",
+        "name": "улица Гагарина",
+        "display_name": "улица Гагарина, Белые Столбы, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142050, Россия",
+        "address": {
+          "road": "улица Гагарина",
+          "suburb": "Белые Столбы",
+          "city": "Домодедово",
+          "county": "городской округ Домодедово",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142050",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.3288940",
+          "55.3293360",
+          "37.8685257",
+          "37.8715930"
+        ]
+      },
+      {
+        "place_id": 196172836,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1062951443,
+        "lat": "55.4495417",
+        "lon": "37.7359003",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05339368963149459,
+        "addresstype": "road",
+        "name": "улица Гагарина",
+        "display_name": "улица Гагарина, микрорайон Северный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142000, Россия",
+        "address": {
+          "road": "улица Гагарина",
+          "suburb": "микрорайон Северный",
+          "city": "Домодедово",
+          "county": "городской округ Домодедово",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142000",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.4494494",
+          "55.4496381",
+          "37.7351577",
+          "37.7366424"
+        ]
+      },
+      {
+        "place_id": 195507811,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 192427153,
+        "lat": "55.4506197",
+        "lon": "37.7621607",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05339368963149459,
+        "addresstype": "road",
+        "name": "улица Гагарина",
+        "display_name": "улица Гагарина, микрорайон Северный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142000, Россия",
+        "address": {
+          "road": "улица Гагарина",
+          "suburb": "микрорайон Северный",
+          "city": "Домодедово",
+          "county": "городской округ Домодедово",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142000",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.4505702",
+          "55.4507164",
+          "37.7615133",
+          "37.7628088"
+        ]
+      },
+      {
+        "place_id": 196122007,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1351189827,
+        "lat": "55.4507451",
+        "lon": "37.7613207",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05339368963149459,
+        "addresstype": "road",
+        "name": "улица Гагарина",
+        "display_name": "улица Гагарина, микрорайон Северный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142000, Россия",
+        "address": {
+          "road": "улица Гагарина",
+          "suburb": "микрорайон Северный",
+          "city": "Домодедово",
+          "county": "городской округ Домодедово",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142000",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.4507164",
+          "55.4507738",
+          "37.7611281",
+          "37.7615133"
+        ]
+      },
+      {
+        "place_id": 195507849,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 647528062,
+        "lat": "55.4506194",
+        "lon": "37.7628744",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05339368963149459,
+        "addresstype": "road",
+        "name": "улица Гагарина",
+        "display_name": "улица Гагарина, микрорайон Северный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142000, Россия",
+        "address": {
+          "road": "улица Гагарина",
+          "suburb": "микрорайон Северный",
+          "city": "Домодедово",
+          "county": "городской округ Домодедово",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142000",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.4506068",
+          "55.4506319",
+          "37.7628088",
+          "37.7629399"
+        ]
+      },
+      {
+        "place_id": 194138066,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 625180180,
+        "lat": "55.4508766",
+        "lon": "37.7637534",
+        "category": "highway",
+        "type": "service",
+        "place_rank": 27,
+        "importance": 0.04006035629816128,
+        "addresstype": "road",
+        "name": "улица Гагарина",
+        "display_name": "улица Гагарина, микрорайон Северный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142000, Россия",
+        "address": {
+          "road": "улица Гагарина",
+          "suburb": "микрорайон Северный",
+          "city": "Домодедово",
+          "county": "городской округ Домодедово",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142000",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.4506319",
+          "55.4511351",
+          "37.7629399",
+          "37.7645628"
+        ]
+      }
+    ],
+    "additionalSearch": {
+      "query": "Домодедово улица Гагарина 55к2",
+      "source": "https://nominatim.openstreetmap.org/search?q=%D0%94%D0%BE%D0%BC%D0%BE%D0%B4%D0%B5%D0%B4%D0%BE%D0%B2%D0%BE+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%93%D0%B0%D0%B3%D0%B0%D1%80%D0%B8%D0%BD%D0%B0+55%D0%BA2&format=jsonv2&addressdetails=1&limit=5&accept-language=ru",
+      "results": [
+        {
+          "place_id": 196615906,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 115379048,
+          "lat": "55.4515305",
+          "lon": "37.7394233",
+          "category": "building",
+          "type": "apartments",
+          "place_rank": 30,
+          "importance": 6.035629816124235e-05,
+          "addresstype": "building",
+          "name": "",
+          "display_name": "55 к2, улица Гагарина, микрорайон Северный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142000, Россия",
+          "address": {
+            "house_number": "55 к2",
+            "road": "улица Гагарина",
+            "suburb": "микрорайон Северный",
+            "city": "Домодедово",
+            "county": "городской округ Домодедово",
+            "state": "Московская область",
+            "ISO3166-2-lvl4": "RU-MOS",
+            "region": "Центральный федеральный округ",
+            "postcode": "142000",
+            "country": "Россия",
+            "country_code": "ru"
+          },
+          "boundingbox": [
+            "55.4513960",
+            "55.4516649",
+            "37.7387785",
+            "37.7400681"
+          ]
+        }
+      ]
+    }
+  },
+  "Москва, улица Бирюлёвская, 58 к 3": {
+    "query": "Москва Бирюлёвская улица 58к3",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%91%D0%B8%D1%80%D1%8E%D0%BB%D1%91%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+58%D0%BA3&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:09.645Z",
+    "results": [
+      {
+        "place_id": 195999034,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 31668009,
+        "lat": "55.5806701",
+        "lon": "37.6681476",
+        "category": "building",
+        "type": "apartments",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "building",
+        "name": "",
+        "display_name": "58 к3, Бирюлёвская улица, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115372, Россия",
+        "address": {
+          "house_number": "58 к3",
+          "road": "Бирюлёвская улица",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115372",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5799624",
+          "55.5813395",
+          "37.6676252",
+          "37.6687045"
+        ]
+      },
+      {
+        "place_id": 420882565,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 122231615,
+        "lat": "55.5820640",
+        "lon": "37.6690951",
+        "category": "building",
+        "type": "yes",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "building",
+        "name": "",
+        "display_name": "58 к3, Бирюлёвская улица, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115372, Россия",
+        "address": {
+          "house_number": "58 к3",
+          "road": "Бирюлёвская улица",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115372",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5819567",
+          "55.5821711",
+          "37.6689298",
+          "37.6692603"
+        ]
+      }
+    ]
+  },
+  "обл.Московская область, г.Домодедово, пгт.Востряково-1, улица Жуковского, 14/18": {
+    "query": "Домодедово Востряково улица Жуковского 14/18",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%94%D0%BE%D0%BC%D0%BE%D0%B4%D0%B5%D0%B4%D0%BE%D0%B2%D0%BE+%D0%92%D0%BE%D1%81%D1%82%D1%80%D1%8F%D0%BA%D0%BE%D0%B2%D0%BE+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%96%D1%83%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+14%2F18&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:10.931Z",
+    "results": [],
+    "additionalSearch": {
+      "query": "Домодедово улица Жуковского 14",
+      "source": "https://nominatim.openstreetmap.org/search?q=%D0%94%D0%BE%D0%BC%D0%BE%D0%B4%D0%B5%D0%B4%D0%BE%D0%B2%D0%BE+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%96%D1%83%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+14&format=jsonv2&addressdetails=1&limit=5&accept-language=ru",
+      "results": [
+        {
+          "place_id": 196154376,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 399606307,
+          "lat": "55.4118698",
+          "lon": "37.8397236",
+          "category": "building",
+          "type": "apartments",
+          "place_rank": 30,
+          "importance": 6.035629816124235e-05,
+          "addresstype": "building",
+          "name": "",
+          "display_name": "14/18, улица Жуковского, микрорайон Авиационный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142007, Россия",
+          "address": {
+            "house_number": "14/18",
+            "road": "улица Жуковского",
+            "suburb": "микрорайон Авиационный",
+            "city": "Домодедово",
+            "county": "городской округ Домодедово",
+            "state": "Московская область",
+            "ISO3166-2-lvl4": "RU-MOS",
+            "region": "Центральный федеральный округ",
+            "postcode": "142007",
+            "country": "Россия",
+            "country_code": "ru"
+          },
+          "boundingbox": [
+            "55.4111626",
+            "55.4123310",
+            "37.8395413",
+            "37.8407469"
+          ]
+        },
+        {
+          "place_id": 196186790,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 399609406,
+          "lat": "55.4122673",
+          "lon": "37.8409177",
+          "category": "building",
+          "type": "yes",
+          "place_rank": 30,
+          "importance": 6.035629816124235e-05,
+          "addresstype": "building",
+          "name": "",
+          "display_name": "14/18 с1, улица Жуковского, микрорайон Авиационный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142007, Россия",
+          "address": {
+            "house_number": "14/18 с1",
+            "road": "улица Жуковского",
+            "suburb": "микрорайон Авиационный",
+            "city": "Домодедово",
+            "county": "городской округ Домодедово",
+            "state": "Московская область",
+            "ISO3166-2-lvl4": "RU-MOS",
+            "region": "Центральный федеральный округ",
+            "postcode": "142007",
+            "country": "Россия",
+            "country_code": "ru"
+          },
+          "boundingbox": [
+            "55.4121321",
+            "55.4123551",
+            "37.8407166",
+            "37.8411283"
+          ]
+        },
+        {
+          "place_id": 196128949,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 5267463722,
+          "lat": "55.4122507",
+          "lon": "37.8401492",
+          "category": "shop",
+          "type": "convenience",
+          "place_rank": 30,
+          "importance": 6.035629816124235e-05,
+          "addresstype": "shop",
+          "name": "",
+          "display_name": "14/18, улица Жуковского, микрорайон Авиационный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142007, Россия",
+          "address": {
+            "house_number": "14/18",
+            "road": "улица Жуковского",
+            "suburb": "микрорайон Авиационный",
+            "city": "Домодедово",
+            "county": "городской округ Домодедово",
+            "state": "Московская область",
+            "ISO3166-2-lvl4": "RU-MOS",
+            "region": "Центральный федеральный округ",
+            "postcode": "142007",
+            "country": "Россия",
+            "country_code": "ru"
+          },
+          "boundingbox": [
+            "55.4122007",
+            "55.4123007",
+            "37.8400992",
+            "37.8401992"
+          ]
+        },
+        {
+          "place_id": 196154412,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 5217734621,
+          "lat": "55.4121737",
+          "lon": "37.8396443",
+          "category": "shop",
+          "type": "bakery",
+          "place_rank": 30,
+          "importance": 6.035629816124235e-05,
+          "addresstype": "shop",
+          "name": "",
+          "display_name": "14/18, улица Жуковского, микрорайон Авиационный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142007, Россия",
+          "address": {
+            "house_number": "14/18",
+            "road": "улица Жуковского",
+            "suburb": "микрорайон Авиационный",
+            "city": "Домодедово",
+            "county": "городской округ Домодедово",
+            "state": "Московская область",
+            "ISO3166-2-lvl4": "RU-MOS",
+            "region": "Центральный федеральный округ",
+            "postcode": "142007",
+            "country": "Россия",
+            "country_code": "ru"
+          },
+          "boundingbox": [
+            "55.4121237",
+            "55.4122237",
+            "37.8395943",
+            "37.8396943"
+          ]
+        },
+        {
+          "place_id": 196231748,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 5267469422,
+          "lat": "55.4122516",
+          "lon": "37.8400704",
+          "category": "shop",
+          "type": "florist",
+          "place_rank": 30,
+          "importance": 6.035629816124235e-05,
+          "addresstype": "shop",
+          "name": "",
+          "display_name": "14/18, улица Жуковского, микрорайон Авиационный, Домодедово, городской округ Домодедово, Московская область, Центральный федеральный округ, 142007, Россия",
+          "address": {
+            "house_number": "14/18",
+            "road": "улица Жуковского",
+            "suburb": "микрорайон Авиационный",
+            "city": "Домодедово",
+            "county": "городской округ Домодедово",
+            "state": "Московская область",
+            "ISO3166-2-lvl4": "RU-MOS",
+            "region": "Центральный федеральный округ",
+            "postcode": "142007",
+            "country": "Россия",
+            "country_code": "ru"
+          },
+          "boundingbox": [
+            "55.4122016",
+            "55.4123016",
+            "37.8400204",
+            "37.8401204"
+          ]
+        }
+      ]
+    }
+  },
+  "Московская область, г. Кашира Кржижановского улица 5/1": {
+    "query": "Кашира улица Кржижановского 5/1",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9A%D0%B0%D1%88%D0%B8%D1%80%D0%B0+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%9A%D1%80%D0%B6%D0%B8%D0%B6%D0%B0%D0%BD%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+5%2F1&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:12.699Z",
+    "results": [
+      {
+        "place_id": 196193208,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 106326986,
+        "lat": "54.8398433",
+        "lon": "38.2393670",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05339420080872812,
+        "addresstype": "road",
+        "name": "улица Кржижановского",
+        "display_name": "улица Кржижановского, Кашира-2, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142904, Россия",
+        "address": {
+          "road": "улица Кржижановского",
+          "suburb": "Кашира-2",
+          "town": "Кашира",
+          "county": "городской округ Кашира",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142904",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "54.8373956",
+          "54.8422454",
+          "38.2385137",
+          "38.2403134"
+        ]
+      }
+    ],
+    "additionalSearch": {
+      "query": "Кашира улица Кржижановского 5к1",
+      "source": "https://nominatim.openstreetmap.org/search?q=%D0%9A%D0%B0%D1%88%D0%B8%D1%80%D0%B0+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%9A%D1%80%D0%B6%D0%B8%D0%B6%D0%B0%D0%BD%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+5%D0%BA1&format=jsonv2&addressdetails=1&limit=5&accept-language=ru",
+      "results": [
+        {
+          "place_id": 196290222,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 106326987,
+          "lat": "54.8404598",
+          "lon": "38.2404648",
+          "category": "building",
+          "type": "apartments",
+          "place_rank": 30,
+          "importance": 6.086747539478168e-05,
+          "addresstype": "building",
+          "name": "",
+          "display_name": "5 к1, улица Кржижановского, Кашира-2, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142904, Россия",
+          "address": {
+            "house_number": "5 к1",
+            "road": "улица Кржижановского",
+            "suburb": "Кашира-2",
+            "town": "Кашира",
+            "county": "городской округ Кашира",
+            "state": "Московская область",
+            "ISO3166-2-lvl4": "RU-MOS",
+            "region": "Центральный федеральный округ",
+            "postcode": "142904",
+            "country": "Россия",
+            "country_code": "ru"
+          },
+          "boundingbox": [
+            "54.8403282",
+            "54.8406060",
+            "38.2396748",
+            "38.2411454"
+          ]
+        }
+      ]
+    }
+  },
+  "Московская область, г. Кашира Кржижановского улица 5/3": {
+    "query": "Кашира улица Кржижановского 5/3",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9A%D0%B0%D1%88%D0%B8%D1%80%D0%B0+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%9A%D1%80%D0%B6%D0%B8%D0%B6%D0%B0%D0%BD%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+5%2F3&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:14.012Z",
+    "results": [
+      {
+        "place_id": 196607892,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 106326986,
+        "lat": "54.8398433",
+        "lon": "38.2393670",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05339420080872812,
+        "addresstype": "road",
+        "name": "улица Кржижановского",
+        "display_name": "улица Кржижановского, Кашира-2, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142904, Россия",
+        "address": {
+          "road": "улица Кржижановского",
+          "suburb": "Кашира-2",
+          "town": "Кашира",
+          "county": "городской округ Кашира",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142904",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "54.8373956",
+          "54.8422454",
+          "38.2385137",
+          "38.2403134"
+        ]
+      }
+    ],
+    "additionalSearch": {
+      "query": "Кашира улица Кржижановского 5к3",
+      "source": "https://nominatim.openstreetmap.org/search?q=%D0%9A%D0%B0%D1%88%D0%B8%D1%80%D0%B0+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%9A%D1%80%D0%B6%D0%B8%D0%B6%D0%B0%D0%BD%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+5%D0%BA3&format=jsonv2&addressdetails=1&limit=5&accept-language=ru",
+      "results": [
+        {
+          "place_id": 195173118,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 106326939,
+          "lat": "54.8408174",
+          "lon": "38.2429880",
+          "category": "building",
+          "type": "yes",
+          "place_rank": 30,
+          "importance": 6.086747539478168e-05,
+          "addresstype": "building",
+          "name": "",
+          "display_name": "5 к3, улица Кржижановского, Кашира-2, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142904, Россия",
+          "address": {
+            "house_number": "5 к3",
+            "road": "улица Кржижановского",
+            "suburb": "Кашира-2",
+            "town": "Кашира",
+            "county": "городской округ Кашира",
+            "state": "Московская область",
+            "ISO3166-2-lvl4": "RU-MOS",
+            "region": "Центральный федеральный округ",
+            "postcode": "142904",
+            "country": "Россия",
+            "country_code": "ru"
+          },
+          "boundingbox": [
+            "54.8407169",
+            "54.8409178",
+            "38.2423821",
+            "38.2435938"
+          ]
+        }
+      ]
+    }
+  },
+  "Московская область, г. Кашира Кржижановского улица 5/2": {
+    "query": "Кашира улица Кржижановского 5/2",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9A%D0%B0%D1%88%D0%B8%D1%80%D0%B0+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%9A%D1%80%D0%B6%D0%B8%D0%B6%D0%B0%D0%BD%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+5%2F2&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:15.260Z",
+    "results": [
+      {
+        "place_id": 196632712,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 106326986,
+        "lat": "54.8398433",
+        "lon": "38.2393670",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05339420080872812,
+        "addresstype": "road",
+        "name": "улица Кржижановского",
+        "display_name": "улица Кржижановского, Кашира-2, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142904, Россия",
+        "address": {
+          "road": "улица Кржижановского",
+          "suburb": "Кашира-2",
+          "town": "Кашира",
+          "county": "городской округ Кашира",
+          "state": "Московская область",
+          "ISO3166-2-lvl4": "RU-MOS",
+          "region": "Центральный федеральный округ",
+          "postcode": "142904",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "54.8373956",
+          "54.8422454",
+          "38.2385137",
+          "38.2403134"
+        ]
+      }
+    ],
+    "additionalSearch": {
+      "query": "Кашира улица Кржижановского 5к2",
+      "source": "https://nominatim.openstreetmap.org/search?q=%D0%9A%D0%B0%D1%88%D0%B8%D1%80%D0%B0+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+%D0%9A%D1%80%D0%B6%D0%B8%D0%B6%D0%B0%D0%BD%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+5%D0%BA2&format=jsonv2&addressdetails=1&limit=5&accept-language=ru",
+      "results": [
+        {
+          "place_id": 196714471,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 106326943,
+          "lat": "54.8406569",
+          "lon": "38.2420016",
+          "category": "building",
+          "type": "yes",
+          "place_rank": 30,
+          "importance": 6.086747539478168e-05,
+          "addresstype": "building",
+          "name": "",
+          "display_name": "5 к2, улица Кржижановского, Кашира-2, Кашира, городской округ Кашира, Московская область, Центральный федеральный округ, 142904, Россия",
+          "address": {
+            "house_number": "5 к2",
+            "road": "улица Кржижановского",
+            "suburb": "Кашира-2",
+            "town": "Кашира",
+            "county": "городской округ Кашира",
+            "state": "Московская область",
+            "ISO3166-2-lvl4": "RU-MOS",
+            "region": "Центральный федеральный округ",
+            "postcode": "142904",
+            "country": "Россия",
+            "country_code": "ru"
+          },
+          "boundingbox": [
+            "54.8405742",
+            "54.8407396",
+            "38.2415773",
+            "38.2424259"
+          ]
+        }
+      ]
+    }
+  },
+  "Москва Бирюлевская улица 44": {
+    "query": "Москва Бирюлёвская улица 44",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%91%D0%B8%D1%80%D1%8E%D0%BB%D1%91%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+44&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:16.572Z",
+    "results": [
+      {
+        "place_id": 195850412,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 32632061,
+        "lat": "55.5864357",
+        "lon": "37.6645660",
+        "category": "building",
+        "type": "apartments",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "building",
+        "name": "",
+        "display_name": "44/6, Бирюлёвская улица, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115372, Россия",
+        "address": {
+          "house_number": "44/6",
+          "road": "Бирюлёвская улица",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115372",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5862763",
+          "55.5865753",
+          "37.6634641",
+          "37.6654764"
+        ]
+      },
+      {
+        "place_id": 195752414,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 130910714,
+        "lat": "55.5889273",
+        "lon": "37.6646136",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.2946949388609965,
+        "addresstype": "road",
+        "name": "Бирюлёвская улица",
+        "display_name": "Бирюлёвская улица, Бирюлёво, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115372, Россия",
+        "address": {
+          "road": "Бирюлёвская улица",
+          "neighbourhood": "Бирюлёво",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115372",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5873747",
+          "55.5904737",
+          "37.6641953",
+          "37.6650171"
+        ]
+      },
+      {
+        "place_id": 195795348,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 181771780,
+        "lat": "55.5929708",
+        "lon": "37.6636068",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Бирюлёвская улица",
+        "display_name": "Бирюлёвская улица, Бирюлёво, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115404, Россия",
+        "address": {
+          "road": "Бирюлёвская улица",
+          "neighbourhood": "Бирюлёво",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115404",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5909216",
+          "55.5950078",
+          "37.6630569",
+          "37.6641082"
+        ]
+      },
+      {
+        "place_id": 195844866,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 47453101,
+        "lat": "55.5989258",
+        "lon": "37.6625831",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Бирюлёвская улица",
+        "display_name": "Бирюлёвская улица, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115404, Россия",
+        "address": {
+          "road": "Бирюлёвская улица",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115404",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5961794",
+          "55.6016918",
+          "37.6624122",
+          "37.6630589"
+        ]
+      },
+      {
+        "place_id": 195716440,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 23965256,
+        "lat": "55.5954495",
+        "lon": "37.6629493",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Бирюлёвская улица",
+        "display_name": "Бирюлёвская улица, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115404, Россия",
+        "address": {
+          "road": "Бирюлёвская улица",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115404",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5950078",
+          "55.5958913",
+          "37.6628418",
+          "37.6630569"
+        ]
+      },
+      {
+        "place_id": 423048049,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1542880754,
+        "lat": "55.5960356",
+        "lon": "37.6627996",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Бирюлёвская улица",
+        "display_name": "Бирюлёвская улица, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115404, Россия",
+        "address": {
+          "road": "Бирюлёвская улица",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115404",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5958913",
+          "55.5961794",
+          "37.6627560",
+          "37.6628418"
+        ]
+      },
+      {
+        "place_id": 195853372,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 23964913,
+        "lat": "55.5839651",
+        "lon": "37.6687805",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Бирюлёвская улица",
+        "display_name": "Бирюлёвская улица, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115372, Россия",
+        "address": {
+          "road": "Бирюлёвская улица",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115372",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5811966",
+          "55.5867488",
+          "37.6657033",
+          "37.6718643"
+        ]
+      },
+      {
+        "place_id": 196048653,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 23965260,
+        "lat": "55.5872382",
+        "lon": "37.6651474",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Бирюлёвская улица",
+        "display_name": "Бирюлёвская улица, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115372, Россия",
+        "address": {
+          "road": "Бирюлёвская улица",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115372",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5871127",
+          "55.5873747",
+          "37.6650171",
+          "37.6652897"
+        ]
+      },
+      {
+        "place_id": 195725960,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 23965262,
+        "lat": "55.5868278",
+        "lon": "37.6654561",
+        "category": "highway",
+        "type": "residential",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Бирюлёвская улица",
+        "display_name": "Бирюлёвская улица, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115372, Россия",
+        "address": {
+          "road": "Бирюлёвская улица",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115372",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5867488",
+          "55.5868668",
+          "37.6651997",
+          "37.6657033"
+        ]
+      },
+      {
+        "place_id": 195901746,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 999983418,
+        "lat": "55.5906977",
+        "lon": "37.6641518",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Бирюлёвская улица",
+        "display_name": "Бирюлёвская улица, Бирюлёво, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115372, Россия",
+        "address": {
+          "road": "Бирюлёвская улица",
+          "neighbourhood": "Бирюлёво",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115372",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5904737",
+          "55.5909216",
+          "37.6641082",
+          "37.6641953"
+        ]
+      },
+      {
+        "place_id": 195784185,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 28341155,
+        "lat": "55.5868839",
+        "lon": "37.6656987",
+        "category": "highway",
+        "type": "tertiary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Бирюлёвская улица",
+        "display_name": "Бирюлёвская улица, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115372, Россия",
+        "address": {
+          "road": "Бирюлёвская улица",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115372",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5867488",
+          "55.5870144",
+          "37.6656823",
+          "37.6657501"
+        ]
+      },
+      {
+        "place_id": 195945146,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 28341137,
+        "lat": "55.5872270",
+        "lon": "37.6650040",
+        "category": "highway",
+        "type": "residential",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Бирюлёвская улица",
+        "display_name": "Бирюлёвская улица, район Бирюлёво Восточное, Москва, Центральный федеральный округ, 115372, Россия",
+        "address": {
+          "road": "Бирюлёвская улица",
+          "suburb": "район Бирюлёво Восточное",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115372",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.5870849",
+          "55.5873747",
+          "37.6649652",
+          "37.6650171"
+        ]
+      }
+    ]
+  },
+  "Москва, улица Дубининская, 59 к 2": {
+    "query": "Москва Дубининская улица 59к2",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%94%D1%83%D0%B1%D0%B8%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+59%D0%BA2&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:18.142Z",
+    "results": [
+      {
+        "place_id": 194362193,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1210477113,
+        "lat": "55.7206735",
+        "lon": "37.6352004",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, Даниловский район, Москва, Центральный федеральный округ, 111111, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "Даниловский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "111111",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7193113",
+          "55.7220200",
+          "37.6346350",
+          "37.6358021"
+        ]
+      },
+      {
+        "place_id": 194332730,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1210477112,
+        "lat": "55.7180613",
+        "lon": "37.6341020",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, Даниловский район, Москва, Центральный федеральный округ, 111111, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "Даниловский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "111111",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7168204",
+          "55.7193113",
+          "37.6335482",
+          "37.6346350"
+        ]
+      },
+      {
+        "place_id": 195630572,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 83938818,
+        "lat": "55.7243334",
+        "lon": "37.6364832",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7233913",
+          "55.7252838",
+          "37.6362855",
+          "37.6368033"
+        ]
+      },
+      {
+        "place_id": 195684854,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 157320104,
+        "lat": "55.7157624",
+        "lon": "37.6331351",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, Даниловский район, Москва, Центральный федеральный округ, 113093, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "Даниловский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "113093",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7146367",
+          "55.7168204",
+          "37.6331288",
+          "37.6335482"
+        ]
+      },
+      {
+        "place_id": 195701028,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 83938837,
+        "lat": "55.7227061",
+        "lon": "37.6361020",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7220200",
+          "55.7233913",
+          "37.6358021",
+          "37.6364042"
+        ]
+      },
+      {
+        "place_id": 195616059,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 160412244,
+        "lat": "55.7266927",
+        "lon": "37.6373945",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7257340",
+          "55.7276720",
+          "37.6371887",
+          "37.6373952"
+        ]
+      },
+      {
+        "place_id": 194717952,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 593903933,
+        "lat": "55.7238312",
+        "lon": "37.6366102",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7233913",
+          "55.7243156",
+          "37.6364042",
+          "37.6367293"
+        ]
+      },
+      {
+        "place_id": 195639970,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 593903942,
+        "lat": "55.7289574",
+        "lon": "37.6369192",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7285885",
+          "55.7293310",
+          "37.6368722",
+          "37.6369880"
+        ]
+      },
+      {
+        "place_id": 195845974,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 593903944,
+        "lat": "55.7271303",
+        "lon": "37.6371462",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7265967",
+          "55.7276664",
+          "37.6371108",
+          "37.6371756"
+        ]
+      },
+      {
+        "place_id": 195845419,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 592155200,
+        "lat": "55.7263097",
+        "lon": "37.6371177",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7260236",
+          "55.7265967",
+          "37.6370547",
+          "37.6371756"
+        ]
+      },
+      {
+        "place_id": 194161121,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 878619303,
+        "lat": "55.7297179",
+        "lon": "37.6368199",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7293310",
+          "55.7301048",
+          "37.6367845",
+          "37.6368722"
+        ]
+      },
+      {
+        "place_id": 195642846,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 592155197,
+        "lat": "55.7254368",
+        "lon": "37.6368639",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7252838",
+          "55.7255898",
+          "37.6368033",
+          "37.6369245"
+        ]
+      },
+      {
+        "place_id": 194239440,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 30757223,
+        "lat": "55.7281110",
+        "lon": "37.6370400",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7279881",
+          "55.7282172",
+          "37.6369761",
+          "37.6370706"
+        ]
+      },
+      {
+        "place_id": 425151539,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1547406831,
+        "lat": "55.7280959",
+        "lon": "37.6372620",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7279374",
+          "55.7282511",
+          "37.6372221",
+          "37.6372850"
+        ]
+      },
+      {
+        "place_id": 425151541,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1547406834,
+        "lat": "55.7278273",
+        "lon": "37.6370907",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7276664",
+          "55.7279881",
+          "37.6370706",
+          "37.6371108"
+        ]
+      },
+      {
+        "place_id": 195643258,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 593903941,
+        "lat": "55.7285008",
+        "lon": "37.6370278",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7284079",
+          "55.7285885",
+          "37.6369880",
+          "37.6370511"
+        ]
+      },
+      {
+        "place_id": 193536192,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1168587799,
+        "lat": "55.7256703",
+        "lon": "37.6369517",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7255898",
+          "55.7257507",
+          "37.6369245",
+          "37.6369790"
+        ]
+      },
+      {
+        "place_id": 425151538,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1547406830,
+        "lat": "55.7278047",
+        "lon": "37.6373013",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7276720",
+          "55.7279374",
+          "37.6372850",
+          "37.6373175"
+        ]
+      },
+      {
+        "place_id": 195793878,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 592155199,
+        "lat": "55.7258230",
+        "lon": "37.6370024",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7257507",
+          "55.7258952",
+          "37.6369790",
+          "37.6370264"
+        ]
+      },
+      {
+        "place_id": 425151540,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1547406833,
+        "lat": "55.7259594",
+        "lon": "37.6370406",
+        "category": "highway",
+        "type": "secondary",
+        "place_rank": 26,
+        "importance": 0.05342241626611731,
+        "addresstype": "road",
+        "name": "Дубининская улица",
+        "display_name": "Дубининская улица, район Замоскворечье, Москва, Центральный федеральный округ, 115054, Россия",
+        "address": {
+          "road": "Дубининская улица",
+          "suburb": "район Замоскворечье",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115054",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7258952",
+          "55.7260236",
+          "37.6370264",
+          "37.6370547"
+        ]
+      }
+    ]
+  },
+  "Москва, улица Городская, 9": {
+    "query": "Москва Даниловский район Городская улица 9",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%94%D0%B0%D0%BD%D0%B8%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD+%D0%93%D0%BE%D1%80%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D1%8F+%D1%83%D0%BB%D0%B8%D1%86%D0%B0+9&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:19.473Z",
+    "results": [
+      {
+        "place_id": 195974887,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 45820295,
+        "lat": "55.7150778",
+        "lon": "37.6180122",
+        "category": "building",
+        "type": "apartments",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "building",
+        "name": "",
+        "display_name": "9, Городская улица, Даниловский район, Москва, Центральный федеральный округ, 115162, Россия",
+        "address": {
+          "house_number": "9",
+          "road": "Городская улица",
+          "suburb": "Даниловский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "115162",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.7147692",
+          "55.7153659",
+          "37.6179009",
+          "37.6181741"
+        ]
+      }
+    ]
+  },
+  "Москва, проспект Ленинский, 70/11": {
+    "query": "Москва Ленинский проспект 70/11",
+    "source": "https://nominatim.openstreetmap.org/search?q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82+70%2F11&format=jsonv2&addressdetails=1&limit=20&dedupe=0&countrycodes=ru&accept-language=ru",
+    "fetchedAt": "2026-09-16T22:20:20.904Z",
+    "results": [
+      {
+        "place_id": 195725364,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 46657116,
+        "lat": "55.6879261",
+        "lon": "37.5407755",
+        "category": "building",
+        "type": "apartments",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "building",
+        "name": "",
+        "display_name": "70/11, Ленинский проспект, Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия",
+        "address": {
+          "house_number": "70/11",
+          "road": "Ленинский проспект",
+          "suburb": "Гагаринский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "119261",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6868353",
+          "55.6890402",
+          "37.5405653",
+          "37.5442232"
+        ]
+      },
+      {
+        "place_id": 195053810,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 2429119910,
+        "lat": "55.6870995",
+        "lon": "37.5422124",
+        "category": "shop",
+        "type": "music",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "shop",
+        "name": "Звуковой барьер",
+        "display_name": "Звуковой барьер, 70/11, Ленинский проспект (дублёр), Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия",
+        "address": {
+          "shop": "Звуковой барьер",
+          "house_number": "70/11",
+          "road": "Ленинский проспект (дублёр)",
+          "suburb": "Гагаринский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "119261",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6870495",
+          "55.6871495",
+          "37.5421624",
+          "37.5422624"
+        ]
+      },
+      {
+        "place_id": 195125489,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 10168949703,
+        "lat": "55.6883278",
+        "lon": "37.5437654",
+        "category": "amenity",
+        "type": "parcel_locker",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "amenity",
+        "name": "ОмниСДЭК",
+        "display_name": "ОмниСДЭК, 70/11, Ленинский проспект (дублёр), Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия",
+        "address": {
+          "amenity": "ОмниСДЭК",
+          "house_number": "70/11",
+          "road": "Ленинский проспект (дублёр)",
+          "suburb": "Гагаринский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "119261",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6882778",
+          "55.6883778",
+          "37.5437154",
+          "37.5438154"
+        ]
+      },
+      {
+        "place_id": 195129087,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 8595917817,
+        "lat": "55.6884843",
+        "lon": "37.5435453",
+        "category": "shop",
+        "type": "toys",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "shop",
+        "name": "Кораблик",
+        "display_name": "Кораблик, 70/11, Ленинский проспект (дублёр), Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия",
+        "address": {
+          "shop": "Кораблик",
+          "house_number": "70/11",
+          "road": "Ленинский проспект (дублёр)",
+          "suburb": "Гагаринский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "119261",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6884343",
+          "55.6885343",
+          "37.5434953",
+          "37.5435953"
+        ]
+      },
+      {
+        "place_id": 195175374,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 5194875751,
+        "lat": "55.6883974",
+        "lon": "37.5436752",
+        "category": "shop",
+        "type": "erotic",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "shop",
+        "name": "Амурофф",
+        "display_name": "Амурофф, 70/11, Ленинский проспект (дублёр), Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия",
+        "address": {
+          "shop": "Амурофф",
+          "house_number": "70/11",
+          "road": "Ленинский проспект (дублёр)",
+          "suburb": "Гагаринский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "119261",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6883474",
+          "55.6884474",
+          "37.5436252",
+          "37.5437252"
+        ]
+      },
+      {
+        "place_id": 195228302,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 4580960041,
+        "lat": "55.6871464",
+        "lon": "37.5429288",
+        "category": "shop",
+        "type": "furniture",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "shop",
+        "name": "Lorena кухни",
+        "display_name": "Lorena кухни, 70/11, Ленинский проспект (дублёр), Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия",
+        "address": {
+          "shop": "Lorena кухни",
+          "house_number": "70/11",
+          "road": "Ленинский проспект (дублёр)",
+          "suburb": "Гагаринский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "119261",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6870964",
+          "55.6871964",
+          "37.5428788",
+          "37.5429788"
+        ]
+      },
+      {
+        "place_id": 195282642,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 1274623215,
+        "lat": "55.6876972",
+        "lon": "37.5437371",
+        "category": "amenity",
+        "type": "atm",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "amenity",
+        "name": "",
+        "display_name": "70/11, Ленинский проспект (дублёр), Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия",
+        "address": {
+          "house_number": "70/11",
+          "road": "Ленинский проспект (дублёр)",
+          "suburb": "Гагаринский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "119261",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6876472",
+          "55.6877472",
+          "37.5436871",
+          "37.5437871"
+        ]
+      },
+      {
+        "place_id": 195312183,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 11925977272,
+        "lat": "55.6878702",
+        "lon": "37.5439664",
+        "category": "shop",
+        "type": "cosmetics",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "shop",
+        "name": "Иль Де Ботэ",
+        "display_name": "Иль Де Ботэ, 70/11, Ленинский проспект (дублёр), Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия",
+        "address": {
+          "shop": "Иль Де Ботэ",
+          "house_number": "70/11",
+          "road": "Ленинский проспект (дублёр)",
+          "suburb": "Гагаринский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "119261",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6878202",
+          "55.6879202",
+          "37.5439164",
+          "37.5440164"
+        ]
+      },
+      {
+        "place_id": 195689252,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 6005224241,
+        "lat": "55.6869517",
+        "lon": "37.5426604",
+        "category": "shop",
+        "type": "interior_decoration",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "shop",
+        "name": "ОДизайн",
+        "display_name": "ОДизайн, 70\\11, Ленинский проспект (дублёр), Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия",
+        "address": {
+          "shop": "ОДизайн",
+          "house_number": "70\\11",
+          "road": "Ленинский проспект (дублёр)",
+          "suburb": "Гагаринский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "119261",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6869017",
+          "55.6870017",
+          "37.5426104",
+          "37.5427104"
+        ]
+      },
+      {
+        "place_id": 199436516,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 6259475386,
+        "lat": "55.6879826",
+        "lon": "37.5441434",
+        "category": "shop",
+        "type": "cosmetics",
+        "place_rank": 30,
+        "importance": 8.908293278396304e-05,
+        "addresstype": "shop",
+        "name": "Sephora",
+        "display_name": "Sephora, 70/11, Ленинский проспект (дублёр), Гагаринский район, Москва, Центральный федеральный округ, 119261, Россия",
+        "address": {
+          "shop": "Sephora",
+          "house_number": "70/11",
+          "road": "Ленинский проспект (дублёр)",
+          "suburb": "Гагаринский район",
+          "city": "Москва",
+          "state": "Москва",
+          "ISO3166-2-lvl4": "RU-MOW",
+          "region": "Центральный федеральный округ",
+          "postcode": "119261",
+          "country": "Россия",
+          "country_code": "ru"
+        },
+        "boundingbox": [
+          "55.6879326",
+          "55.6880326",
+          "37.5440934",
+          "37.5441934"
+        ]
+      }
+    ]
+  }
+}

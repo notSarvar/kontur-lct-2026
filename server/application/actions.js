@@ -4,6 +4,7 @@ import { advance } from '../domain/lifecycle.js';
 import { replan } from './planning.js';
 import { createOfficialScenario } from '../domain/official-scenario.js';
 import { COLORS } from '../domain/catalog.js';
+import { attachDiff } from '../domain/plan-diff.js';
 const finite = (x, min, max) => typeof x === 'number' && Number.isFinite(x) && x >= min && x <= max;
 export async function applyAction(current, action, opts = {}) {
   let state = structuredClone(current);
@@ -20,7 +21,7 @@ export async function applyAction(current, action, opts = {}) {
         'Seed: целое число от 0 до 4294967295',
       );
       state = createScenario(p);
-      state.settings = current.settings;
+      state.settings = { ...current.settings, roadMode: 'estimate' };
       addEvent(state, 'Создан новый день', `${p.count} заявок · seed ${p.seed}`);
       break;
     }
@@ -51,6 +52,8 @@ export async function applyAction(current, action, opts = {}) {
           approximate: false,
           assumption: null,
           confirmedAt: new Date().toISOString(),
+          precision: 'manual',
+          confirmationNote: String(p.confirmationNote || 'Точка подтверждена диспетчером'),
         };
       for (const j of state.jobs)
         if (j.status === 'manual_review' && j.reviewReason?.code === 'coordinates') {
@@ -60,6 +63,49 @@ export async function applyAction(current, action, opts = {}) {
             if (t.jobId === j.id && t.kind === 'scheduling' && t.status === 'open') t.status = 'resolved';
         }
       addEvent(state, 'Координаты офиса подтверждены');
+      break;
+    }
+    case 'geography.confirm': {
+      const original = state.jobs.find((j) => j.id === p.id);
+      assert(
+        original && !['done', 'working', 'enroute'].includes(original.status),
+        'Уточнять можно только ещё не начатые заявки',
+      );
+      assert(finite(p.lat, -85, 85) && finite(p.lng, -180, 180), 'Укажите координаты здания');
+      assert(
+        typeof p.confirmationNote === 'string' && p.confirmationNote.trim().length > 0,
+        'Укажите источник или результат проверки адреса',
+      );
+      for (const job of state.jobs.filter(
+        (j) => j.address === original.address && !['done', 'working', 'enroute'].includes(j.status),
+      )) {
+        state.history.push({
+          type: 'geography.confirmed',
+          jobId: job.id,
+          time: state.time,
+          before: { lat: job.lat, lng: job.lng },
+          after: { lat: p.lat, lng: p.lng },
+          comment: p.confirmationNote.trim(),
+        });
+        Object.assign(job, {
+          lat: p.lat,
+          lng: p.lng,
+          geocode: {
+            status: 'matched',
+            precision: 'manual',
+            provider: 'dispatcher',
+            confirmedAt: new Date().toISOString(),
+            note: p.confirmationNote.trim(),
+          },
+        });
+        if (job.status === 'manual_review' && job.reviewReason?.code === 'coordinates') {
+          job.status = 'pending';
+          job.reviewReason = null;
+          for (const ticket of state.support)
+            if (ticket.jobId === job.id && ticket.kind === 'scheduling') ticket.status = 'resolved';
+        }
+      }
+      addEvent(state, 'Адрес проверен', original.address);
       break;
     }
     case 'job.resolve': {
@@ -77,6 +123,14 @@ export async function applyAction(current, action, opts = {}) {
       const before = { windowStart: job.windowStart, windowEnd: job.windowEnd, lat: job.lat, lng: job.lng };
       job.originalWindow ??= { start: job.windowStart, end: job.windowEnd };
       Object.assign(job, valid, { status: 'pending', reviewReason: null, pinnedEngineerId: pinned });
+      if (job.lat !== before.lat || job.lng !== before.lng)
+        job.geocode = {
+          status: 'matched',
+          precision: 'manual',
+          provider: 'dispatcher',
+          confirmedAt: new Date().toISOString(),
+          note: p.confirmationNote.trim(),
+        };
       job.notes.push({
         id: crypto.randomUUID(),
         time: state.time,
@@ -116,6 +170,7 @@ export async function applyAction(current, action, opts = {}) {
           createdAt: state.time,
         };
         state.jobs.push(job);
+        if (job.priority === 'urgent') state.settings.mode = 'emergency';
       }
       addEvent(
         state,
@@ -124,6 +179,25 @@ export async function applyAction(current, action, opts = {}) {
         null,
         job.priority === 'urgent' ? 'warning' : 'info',
       );
+      break;
+    }
+    case 'job.assign': {
+      const job = state.jobs.find((j) => j.id === p.id);
+      assert(job?.status === 'pending', 'Переназначать можно только ещё не начатые заявки');
+      assert(
+        p.engineerId === null || state.engineers.some((e) => e.id === p.engineerId),
+        'Инженер не найден',
+      );
+      const before = job.pinnedEngineerId || null;
+      job.pinnedEngineerId = p.engineerId;
+      state.history.push({
+        type: 'job.assignment',
+        jobId: job.id,
+        time: state.time,
+        before,
+        after: p.engineerId,
+      });
+      addEvent(state, p.engineerId ? 'Исполнитель закреплён' : 'Закрепление снято', `№${job.number}`);
       break;
     }
     case 'jobs.random': {
@@ -147,6 +221,7 @@ export async function applyAction(current, action, opts = {}) {
         job.createdAt = state.time;
         state.jobs.push(job);
       }
+      if (generated.jobs.some((job) => job.priority === 'urgent')) state.settings.mode = 'emergency';
       addEvent(state, 'Поступили новые заявки', `${p.count} заявок · seed ${p.seed}`);
       break;
     }
@@ -274,8 +349,17 @@ export async function applyAction(current, action, opts = {}) {
       advance(state, p.time);
       break;
     case 'settings':
-      assert(['estimate', 'osrm'].includes(p.roadMode), 'Неизвестный режим дорожных данных');
-      state.settings = { roadMode: p.roadMode, stability: p.stability !== false };
+      assert(['estimate', 'osrm', 'prepared'].includes(p.roadMode), 'Неизвестный режим дорожных данных');
+      assert(
+        ['economy', 'emergency'].includes(p.mode || state.settings.mode || 'economy'),
+        'Неизвестный режим оптимизации',
+      );
+      state.settings = {
+        ...state.settings,
+        roadMode: p.roadMode,
+        stability: p.stability !== false,
+        mode: p.mode || state.settings.mode || 'economy',
+      };
       break;
     case 'optimize':
       addEvent(state, 'Расписание пересчитано', 'Окна визитов, ресурсы и доступность проверены');
@@ -329,7 +413,7 @@ export async function applyAction(current, action, opts = {}) {
         'Неизвестный закреплённый инженер',
       );
       state.nextNumber = 1 + Math.max(...state.jobs.map((j) => Number(j.number)));
-      state.settings = current.settings;
+      state.settings = { ...current.settings, roadMode: 'estimate' };
       addEvent(state, 'Сценарий импортирован', 'Новый день начинается в 08:00');
       break;
     }
@@ -338,6 +422,7 @@ export async function applyAction(current, action, opts = {}) {
   }
   const skip = ['job.note', 'support.create'].includes(type);
   if (!skip) await replan(state, opts);
+  if (!skip) attachDiff(current, state);
   state.revision = current.revision + 1;
   return state;
 }
