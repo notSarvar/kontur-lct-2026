@@ -1,0 +1,167 @@
+import { chromium } from '@playwright/test';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+const output = path.resolve('reports/team-update-2026-09-17');
+const benchmark = JSON.parse(await fs.readFile('docs/benchmark.json', 'utf8'));
+const total = (field) => benchmark.results.reduce((sum, row) => sum + row[field], 0);
+const assigned = total('assigned');
+const baseline = total('baselineAssigned');
+const rows = benchmark.results
+  .map(
+    (row) =>
+      `<tr><td>${row.region}</td><td>${row.jobs}</td><td>${row.baselineAssigned}</td><td class="accent">${row.assigned}</td></tr>`,
+  )
+  .join('');
+const html = `<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Контур — отчёт команде, 17.09.2026</title>
+<style>
+@page { size: 1600px 900px; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #e4ebe7; color: #253d32; font-family: Arial, sans-serif; }
+.slide { width: 1600px; height: 900px; padding: 44px 58px; background: #f6f8f3; position: relative; break-after: page; overflow: hidden; }
+.slide:last-child { break-after: auto; }
+.top { display: flex; align-items: center; justify-content: space-between; height: 40px; }
+.brand { font-weight: 800; font-size: 31px; letter-spacing: -1.2px; }
+.brand span { color: #1c806a; }
+.tag { font-size: 16px; letter-spacing: 1.9px; text-transform: uppercase; color: #6e8275; }
+.pill { display: inline-block; border-radius: 22px; padding: 10px 18px; background: #e2eee5; color: #206a53; font-size: 17px; }
+h1 { margin: 35px 0 13px; font-size: 58px; font-weight: 700; line-height: 1.1; letter-spacing: -2.2px; }
+.sub { margin: 0; font-size: 25px; line-height: 1.4; color: #627568; }
+.summary { display: grid; grid-template-columns: 790px 1fr; gap: 36px; margin-top: 34px; }
+.result { border-radius: 23px; overflow: hidden; background: white; border: 1px solid #dce5da; }
+.big { background: #253f33; color: white; padding: 26px 30px; display: flex; gap: 36px; align-items: center; }
+.big strong { font-size: 77px; letter-spacing: -4px; white-space: nowrap; }
+.big strong small { color: #a8c5b1; font-size: 35px; letter-spacing: -1px; }
+.big b { display: block; font-size: 25px; line-height: 1.3; color: #d8e9b0; }
+.big p { margin: 8px 0 0; font-size: 19px; line-height: 1.35; color: #d0ded3; }
+.table-wrap { padding: 13px 30px 22px; }
+table { width: 100%; border-collapse: collapse; font-size: 22px; }
+th { text-align: right; font-size: 17px; color: #748475; font-weight: 400; padding: 15px 0; }
+th:first-child, td:first-child { text-align: left; }
+td { text-align: right; border-top: 1px solid #e5eade; padding: 17px 0; }
+.accent { color: #168368; font-weight: 700; }
+.source { font-size: 16px; line-height: 1.45; margin: 16px 0 0; color: #778578; }
+.ready { padding: 4px 0; }
+h2 { font-size: 28px; margin: 0 0 20px; letter-spacing: -.5px; }
+.feature { display: flex; align-items: flex-start; gap: 15px; margin: 0 0 20px; }
+.number { flex: 0 0 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: #e4eee3; color: #247459; font-size: 18px; font-weight: 700; }
+.feature b { font-size: 22px; }
+.feature p { font-size: 19px; color: #6e7d70; line-height: 1.4; margin: 6px 0 0; }
+.next { border-top: 1px solid #d5dfd1; padding-top: 19px; margin-top: 23px; }
+.next b { font-size: 20px; }
+.next p { margin: 7px 0; font-size: 19px; line-height: 1.45; color: #6b776a; }
+.footer { position: absolute; bottom: 31px; left: 58px; right: 58px; display: flex; justify-content: space-between; gap: 24px; font-size: 16px; color: #798779; }
+.screen-title { font-size: 35px; margin: 20px 0; letter-spacing: -1px; }
+.screen-layout { display: grid; grid-template-columns: 960px 1fr; gap: 37px; align-items: start; }
+.capture { width: 960px; height: auto; border: 1px solid #d5dfd5; border-radius: 16px; box-shadow: 0 12px 30px #293f3210; }
+.explain { padding-top: 16px; }
+.eyebrow { text-transform: uppercase; color: #718576; letter-spacing: 2px; font-size: 16px; margin: 0 0 20px; }
+.screen-stat { font-size: 58px; font-weight: 700; letter-spacing: -2px; }
+.screen-stat small { font-size: 23px; letter-spacing: 0; color: #748273; }
+.explain h3 { font-size: 25px; line-height: 1.3; margin: 16px 0 12px; }
+.explain p { font-size: 21px; line-height: 1.4; color: #6d7b6f; margin: 8px 0 18px; }
+.callout { background: #e9eee0; padding: 21px; border-radius: 16px; margin-top: 22px; }
+.callout p { font-size: 19px; margin: 0; color: #637158; }
+.flow { display: flex; gap: 12px; align-items: flex-start; margin: 18px 0; }
+.flow .number { margin-top: 3px; }
+.flow b { font-size: 22px; }
+.flow p { font-size: 18px; line-height: 1.35; margin: 6px 0 0; }
+@media screen { .slide { margin: 20px auto; box-shadow: 0 15px 60px #253d3220; } }
+@media print { html, body { background: white; } }
+</style></head><body>
+<section class="slide">
+  <div class="top"><div class="brand">контур<span>.</span></div><span class="tag">ЛЦТ 2026 · Билайн Бизнес · задача 3</span><span class="pill">Рабочий прототип · 17.09.2026</span></div>
+  <h1>Планирование выездов уже работает</h1>
+  <p class="sub">Заявки → инженеры и расписание → пересчёт при аварии → согласование конфликтов</p>
+  <div class="summary">
+    <div>
+      <div class="result">
+        <div class="big"><strong>${assigned}<small> / ${total('jobs')}</small></strong><div><b>+${assigned - baseline} заявки к базовому плану</b><p>Распределены по маршрутам.<br>Три независимых синтетических участка.</p></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Участок</th><th>Всего</th><th>Базовый</th><th>ALNS</th></tr></thead><tbody>${rows}</tbody></table></div>
+      </div>
+      <p class="source">Источник: docs/benchmark.json · 100 итераций. Один и тот же пул инженеров для обоих алгоритмов. Базовый: первый допустимый исполнитель, заявки по порядку.</p>
+    </div>
+    <div class="ready">
+      <h2>Что готово к демонстрации</h2>
+      <div class="feature"><span class="number">01</span><div><b>Распределение с ограничениями</b><p>Навыки, окна, нормативы работ, смены и поездки. Алгоритм ALNS на JavaScript.</p></div></div>
+      <div class="feature"><span class="number">02</span><div><b>Диспетчер и экран инженера</b><p>Карта, расписание, заявки, аналитика и синхронизация изменений.</p></div></div>
+      <div class="feature"><span class="number">03</span><div><b>Конфликты остаются под контролем</b><p>Очередь «Требует согласования», ручная корректировка и история решений.</p></div></div>
+      <div class="next"><b>Дальше — повысить точность входов</b><p>Проверить 20 заявок без координат и два офиса; подключить реальные поездки на общественном транспорте.</p></div>
+    </div>
+  </div>
+  <div class="footer"><span>Синтетический штат · поездки оценочные · глобальный оптимум не гарантируется</span><span>31 проверка модели + 8 браузерных сценариев пройдены · 01 / 03</span></div>
+</section>
+<section class="slide">
+  <div class="top"><div class="brand">контур<span>.</span></div><span class="tag">Рабочий интерфейс · синтетический Югоцентр</span></div>
+  <h2 class="screen-title">Диспетчер видит план и может его изменить</h2>
+  <div class="screen-layout">
+    <img class="capture" src="01-dispatcher.png" alt="Рабочий экран диспетчера с выбранным маршрутом инженера">
+    <aside class="explain">
+      <div class="eyebrow">На этом экране</div><div class="screen-stat">52 <small>из 56 заявок</small></div>
+      <h3>12 инженеров в маршрутах</h3><p>В синтетическом пуле — 15. Четыре заявки отправлены на согласование.</p>
+      <h3>Маршрут выбранного инженера</h3><p>Виден порядок визитов и плановое время. Остальные инженеры доступны через фильтр.</p>
+      <h3>Оперативный пересчёт</h3><p>Новая авария меняет ещё не начатые визиты. Начатая работа остаётся закреплена.</p>
+      <div class="callout"><p>Пунктир — схема посещений. Время и километры пока рассчитаны по оценочной модели поездок.</p></div>
+    </aside>
+  </div>
+  <div class="footer"><span>Скриншот действующего приложения · интерфейс: 60 итераций ALNS · © OpenStreetMap contributors</span><span>02 / 03</span></div>
+</section>
+<section class="slide">
+  <div class="top"><div class="brand">контур<span>.</span></div><span class="tag">Ручное согласование · история изменений</span></div>
+  <h2 class="screen-title">Если визит не назначен, решение принимает диспетчер</h2>
+  <div class="screen-layout">
+    <img class="capture" src="03-resolution.png" alt="Форма согласования заявки с неподтверждённым адресом">
+    <aside class="explain">
+      <div class="eyebrow">Сценарий на скриншоте</div><h3>Нужно уточнить адрес</h3><p>В координатах есть неоднозначность. Заявка остаётся в очереди и не получает вымышленную точку.</p>
+      <div class="flow"><span class="number">1</span><div><b>Уточнить детали</b><p>Проверить адрес или согласовать новое время с клиентом.</p></div></div>
+      <div class="flow"><span class="number">2</span><div><b>Зафиксировать решение</b><p>Комментарий обязателен. Исходное окно и история сохраняются.</p></div></div>
+      <div class="flow"><span class="number">3</span><div><b>Проверить новый план</b><p>Даже ручное назначение проходит проверку навыков, окна и смены.</p></div></div>
+      <div class="callout"><p>Связь с клиентом — вне прототипа. Окно визита не расширяется автоматически.</p></div>
+    </aside>
+  </div>
+  <div class="footer"><span>Скриншот действующего приложения · в папке отчёта также есть аналитика и экран инженера</span><span>03 / 03</span></div>
+</section>
+</body></html>`;
+await fs.writeFile(path.join(output, 'report.html'), html);
+const browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL || undefined });
+try {
+  const page = await browser.newPage({ viewport: { width: 1600, height: 900 }, deviceScaleFactor: 1 });
+  await page.goto(pathToFileURL(path.join(output, 'report.html')).href);
+  await page.emulateMedia({ media: 'print' });
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await Promise.all([...document.images].map((image) => image.decode()));
+  });
+  const overflow = await page
+    .locator('.slide')
+    .evaluateAll((slides) =>
+      slides
+        .map((slide, index) => ({ page: index + 1, height: slide.scrollHeight, width: slide.scrollWidth }))
+        .filter((slide) => slide.height > 900 || slide.width > 1600),
+    );
+  if (overflow.length) throw new Error(`Report overflows: ${JSON.stringify(overflow)}`);
+  await page.pdf({
+    path: path.join(output, 'kontur-team-report.pdf'),
+    preferCSSPageSize: true,
+    printBackground: true,
+    tagged: true,
+  });
+  await page.pdf({
+    path: path.join(output, 'kontur-summary-slide.pdf'),
+    preferCSSPageSize: true,
+    printBackground: true,
+    pageRanges: '1',
+    tagged: true,
+  });
+  for (let i = 0; i < 3; i++) {
+    await page
+      .locator('.slide')
+      .nth(i)
+      .screenshot({ path: path.join(output, `preview-${i + 1}.png`) });
+  }
+  console.log(`PDF report and single slide saved to ${output}`);
+} finally {
+  await browser.close();
+}

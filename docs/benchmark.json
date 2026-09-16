@@ -1,0 +1,68 @@
+{
+  "generatedAt": "2026-09-16T21:21:18.497Z",
+  "travel": "Estimated walking + public transit, not actual network routes",
+  "iterations": 100,
+  "results": [
+    {
+      "region": "Восток",
+      "jobs": 66,
+      "pool": 18,
+      "geocoded": 62,
+      "assigned": 61,
+      "baselineAssigned": 47,
+      "engineers": 16,
+      "baselineEngineers": 18,
+      "km": 228,
+      "baselineKm": 293.37,
+      "sameJobs": false,
+      "milliseconds": 837,
+      "unassignedReasons": {
+        "coordinates": 4,
+        "capacity": 1
+      },
+      "officeCoordinatesAvailable": true,
+      "officeApproximate": true
+    },
+    {
+      "region": "Юго-восток",
+      "jobs": 83,
+      "pool": 20,
+      "geocoded": 70,
+      "assigned": 64,
+      "baselineAssigned": 41,
+      "engineers": 19,
+      "baselineEngineers": 20,
+      "km": 1133.27,
+      "baselineKm": 1141.71,
+      "sameJobs": false,
+      "milliseconds": 2259,
+      "unassignedReasons": {
+        "coordinates": 13,
+        "window": 3,
+        "capacity": 3
+      },
+      "officeCoordinatesAvailable": true,
+      "officeApproximate": true
+    },
+    {
+      "region": "Югоцентр",
+      "jobs": 56,
+      "pool": 15,
+      "geocoded": 53,
+      "assigned": 52,
+      "baselineAssigned": 37,
+      "engineers": 12,
+      "baselineEngineers": 13,
+      "km": 185.76,
+      "baselineKm": 235.59,
+      "sameJobs": false,
+      "milliseconds": 591,
+      "unassignedReasons": {
+        "coordinates": 3,
+        "capacity": 1
+      },
+      "officeCoordinatesAvailable": true,
+      "officeApproximate": false
+    }
+  ]
+}

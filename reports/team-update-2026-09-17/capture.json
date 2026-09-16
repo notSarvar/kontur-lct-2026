@@ -1,0 +1,25 @@
+{
+  "capturedAt": "2026-09-16T21:40:15.939Z",
+  "dataset": "southcenter",
+  "metrics": {
+    "assigned": 52,
+    "unassigned": 4,
+    "usedEngineers": 12,
+    "km": 193.0626170684873,
+    "pendingKm": 193.0626170684873,
+    "travel": 1110,
+    "pendingTravel": 1110,
+    "work": 2580,
+    "changes": 0,
+    "late": 0,
+    "lateMinutes": 0,
+    "urgentResponse": 0,
+    "baselineTravel": 1076,
+    "baselineKm": 235.59261197608407,
+    "baselineUsedEngineers": 13,
+    "baselineAssigned": 37,
+    "comparable": false,
+    "computeMs": 402
+  },
+  "errors": []
+}

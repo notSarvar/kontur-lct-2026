@@ -1,0 +1,41 @@
+const jobFields = [
+  'id',
+  'number',
+  'title',
+  'address',
+  'lat',
+  'lng',
+  'type',
+  'windowStart',
+  'windowEnd',
+  'duration',
+  'skills',
+  'equipment',
+  'priority',
+  'requiredTransport',
+  'contact',
+  'source',
+  'originalWindow',
+  'pinnedEngineerId',
+  'geocodingCandidates',
+];
+export function exportScenario(state) {
+  return {
+    version: 2,
+    jobs: state.jobs.map((j) =>
+      Object.fromEntries(jobFields.filter((k) => j[k] !== undefined).map((k) => [k, j[k]])),
+    ),
+    engineers: state.engineers.map(
+      ({ id, name, skills, equipment, transport, shiftStart, shiftEnd, home }) => ({
+        id,
+        name,
+        skills,
+        equipment,
+        transport,
+        shiftStart,
+        shiftEnd,
+        home,
+      }),
+    ),
+  };
+}

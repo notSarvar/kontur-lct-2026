@@ -1,0 +1,20 @@
+{
+  "sourceArchive": "Датасет.zip / Обезличивание.zip",
+  "files": [
+    {
+      "file": "Восток Синтетические данные.csv",
+      "encoding": "windows-1251",
+      "sha256": "35b2e2e34ed488579ed722b55345b73989f277b9b710b66b12d01c5ec38a00b9"
+    },
+    {
+      "file": "Юго-восток Синтетические данные.csv",
+      "encoding": "windows-1251",
+      "sha256": "c767a9e38f6d21568651cc4dbebe6acaf0a25f72303018a096fcf3c81fc8f331"
+    },
+    {
+      "file": "Югоцентр Синтетические данные.csv",
+      "encoding": "windows-1251",
+      "sha256": "e553b5b1ad985f2ec62ffe291544a7df1c8622ef5cd80165287d95f45a53a035"
+    }
+  ]
+}

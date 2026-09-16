@@ -1,0 +1,44 @@
+{
+  "source": "Нормативы.xlsx",
+  "columns": [
+    "Название работы",
+    "Дорога до клиента/ТКД, мин.",
+    "Технические работы, мин.",
+    "Документы, мин.",
+    "Базовый норматив, мин."
+  ],
+  "rows": [
+    {
+      "sourceRow": 2,
+      "name": "Подключение клиентов Базовая",
+      "travelMinutes": 20,
+      "technicalMinutes": 60,
+      "documentsMinutes": 10,
+      "totalMinutes": 90
+    },
+    {
+      "sourceRow": 3,
+      "name": "Аварий на ТКД",
+      "travelMinutes": 20,
+      "technicalMinutes": 80,
+      "documentsMinutes": 0,
+      "totalMinutes": 100
+    },
+    {
+      "sourceRow": 4,
+      "name": "Дозаказ оборудования",
+      "travelMinutes": 20,
+      "technicalMinutes": 10,
+      "documentsMinutes": 10,
+      "totalMinutes": 40
+    },
+    {
+      "sourceRow": 5,
+      "name": "Локальная заявка/ремонт у клиента",
+      "travelMinutes": 20,
+      "technicalMinutes": 30,
+      "documentsMinutes": 0,
+      "totalMinutes": 50
+    }
+  ]
+}

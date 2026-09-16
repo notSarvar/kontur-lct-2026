@@ -1,0 +1,18 @@
+{
+  "east": {
+    "lat": 55.702260,
+    "lng": 37.773780,
+    "approximate": true,
+    "assumption": "В CSV: Юных Ленинцев, 83с4. Для демонстрации принята точка дома 83к4; требуется подтвердить корпус/строение.",
+    "source": "https://www.mos.ru/upload/documents/files/9349/1_Prilojenie2_ReestrMNO.pdf",
+    "sourceDescription": "Городской реестр, строка 18205: Москва, Юных Ленинцев ул. 83 к.4, 55.702260 37.773780"
+  },
+  "southeast": {
+    "lat": 55.601950,
+    "lng": 37.664752,
+    "approximate": true,
+    "assumption": "В CSV: Бирюлёвская, 1с1. Для демонстрации принята точка дома 1к1; требуется подтвердить корпус/строение.",
+    "source": "https://www.mos.ru/upload/documents/files/9349/1_Prilojenie2_ReestrMNO.pdf",
+    "sourceDescription": "Городской реестр, строка 46719: Бирюлёвская улица, дом 1, корпус 1, 37.664752 55.601950"
+  }
+}
