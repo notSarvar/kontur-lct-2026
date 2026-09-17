@@ -4,6 +4,37 @@ async function act(request, type, payload = {}) {
   expect(response.ok()).toBeTruthy();
   return response.json();
 }
+test('BK and HD assumptions are visible and changing from emergency to information resets urgency', async ({
+  page,
+  request,
+}) => {
+  const s = await act(request, 'dataset.load', { id: 'east' });
+  expect(s.jobs.filter((j) => j.type === 'emergency')).toHaveLength(3);
+  const info = s.jobs.find((j) => j.type === 'information');
+  expect(info.priority).toBe('normal');
+  expect(info.duration).toBe(30);
+  await page.goto('/');
+  await page
+    .locator('.sidebar nav')
+    .getByRole('button', { name: /Заявки/ })
+    .click();
+  await page
+    .getByRole('row')
+    .filter({ hasText: String(info.number) })
+    .click();
+  await expect(page.getByRole('dialog')).toContainText('BK:');
+  await expect(page.getByRole('dialog')).toContainText('HD:');
+  await expect(page.getByRole('dialog')).toContainText('Отдельного норматива для информации нет');
+  await page.getByLabel('Закрыть', { exact: true }).click();
+  await page.getByRole('button', { name: 'Новая заявка', exact: true }).click();
+  await page.getByLabel('Тип работ', { exact: true }).selectOption('emergency');
+  await expect(page.getByLabel('Приоритет', { exact: true })).toHaveValue('urgent');
+  await page.getByLabel('Тип работ', { exact: true }).selectOption('information');
+  await expect(page.getByLabel('Приоритет', { exact: true })).toHaveValue('normal');
+  await expect(page.getByLabel('Длительность, минут', { exact: true })).toHaveValue('30');
+  await page.getByLabel('Тип работ', { exact: true }).selectOption('additional');
+  await expect(page.getByRole('radio', { name: 'Дозаказ', exact: true })).toBeChecked();
+});
 test('official regions, synthetic staff and mandatory metrics work in the dispatcher UI', async ({
   page,
   request,
@@ -53,6 +84,7 @@ test('dispatcher resolves an emergency-displaced request and the audit survives 
     windowStart: 540,
     windowEnd: 540,
     duration: 60,
+    originalWindow: undefined,
   };
   s = await act(request, 'import', { jobs: [job], engineers: s.engineers });
   const original = s.jobs[0].id;

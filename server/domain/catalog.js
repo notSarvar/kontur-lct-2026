@@ -1,14 +1,23 @@
+import { OFFICIAL_POLICY } from './official-policy.js';
 export const SKILLS = {
   local: 'Локальные работы',
-  connection: 'Подключения и дозаказы',
-  emergency: 'Аварийные работы',
+  connection: 'Подключение',
+  additional: 'Дозаказ',
+  emergency: 'Аварийные работы (синтетический навык)',
 };
 export const EQUIPMENT = { tester: 'Тестер', router: 'Роутер', tools: 'Инструменты' };
 export const TYPES = {
   local: { name: 'Локальная заявка / ремонт', skill: 'local', equipment: [], duration: 30 },
   connection: { name: 'Подключение клиента', skill: 'connection', equipment: [], duration: 70 },
-  additional: { name: 'Дозаказ оборудования', skill: 'connection', equipment: [], duration: 20 },
-  emergency: { name: 'Авария на ТКД', skill: 'emergency', equipment: [], duration: 80 },
+  additional: { name: 'Дозаказ оборудования', skill: 'additional', equipment: [], duration: 20 },
+  emergency: { name: 'Авария на ТКД', skill: OFFICIAL_POLICY.globalSkill, equipment: [], duration: 80 },
+  information: {
+    name: 'Информация о глобальной проблеме',
+    skill: OFFICIAL_POLICY.globalSkill,
+    equipment: [],
+    duration: OFFICIAL_POLICY.informationServiceMinutes,
+    durationAssumption: OFFICIAL_POLICY.informationDurationAssumption,
+  },
 };
 export const COLORS = [
   '#237d68',

@@ -57,7 +57,7 @@ export function validateEngineer(e) {
     'Выберите квалификации',
   );
   assert(Array.isArray(e.equipment) && e.equipment.every((k) => k in EQUIPMENT), 'Проверьте оборудование');
-  assert(e.skills.length <= 3, 'У инженера может быть не более трёх навыков');
+  assert(e.skills.length <= Object.keys(SKILLS).length, 'Проверьте набор навыков инженера');
   assert(['car', 'bike', 'foot', 'transit', 'none'].includes(e.transport), 'Проверьте транспорт');
   assert(
     finite(e.shiftStart, 0, 1439) && finite(e.shiftEnd, e.shiftStart + 1, 1440),

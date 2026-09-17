@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import { OFFICIAL_POLICY } from '../server/domain/official-policy.js';
 import { createOfficialScenario } from '../server/domain/official-scenario.js';
 import { solve } from '../server/optimization/solver.js';
 import { getTravel } from '../server/infrastructure/routing.js';
@@ -35,10 +36,11 @@ for (const roadMode of ['estimate', 'prepared'])
     }
 console.table(report.map(({ unassignedReasons, ...row }) => row));
 await fs.writeFile(
-  new URL('../docs/benchmark-v2.json', import.meta.url),
+  new URL('../docs/benchmark-v3.json', import.meta.url),
   JSON.stringify(
     {
       generatedAt: new Date().toISOString(),
+      policy: OFFICIAL_POLICY,
       travel:
         'estimate: approximate walking/transit; prepared: cached foot routing + estimated public transit. No transit schedules.',
       iterations: 100,

@@ -21,7 +21,7 @@ export default function JobForm({ job, state, urgent, onClose, save, busy }) {
           windowStart: defaultStart,
           windowEnd: Math.min(1439, defaultStart + 120),
           duration: urgent ? 80 : 30,
-          skills: [urgent ? 'emergency' : 'local'],
+          skills: [catalog.types[urgent ? 'emergency' : 'local'].skill],
           equipment: [],
           requiredTransport: 'any',
           priority: urgent ? 'urgent' : 'normal',
@@ -40,7 +40,7 @@ export default function JobForm({ job, state, urgent, onClose, save, busy }) {
       equipment: t.equipment,
       duration: t.duration,
       requiredTransport: 'any',
-      priority: key === 'emergency' ? 'urgent' : f.priority,
+      priority: key === 'emergency' ? 'urgent' : 'normal',
     }));
   };
   return (
@@ -123,7 +123,13 @@ export default function JobForm({ job, state, urgent, onClose, save, busy }) {
               </Field>
             </div>
             <div className="form-row">
-              <Field label="Длительность, минут">
+              <Field
+                label="Длительность, минут"
+                hint={
+                  catalog.types[form.type]?.durationAssumption ||
+                  'Работа на адресе; дорога считается отдельно'
+                }
+              >
                 <input
                   required
                   type="number"

@@ -22,6 +22,7 @@ const jobFields = [
 export function exportScenario(state) {
   return {
     version: 2,
+    catalogVersion: state.catalogVersion,
     jobs: state.jobs.map((j) =>
       Object.fromEntries(jobFields.filter((k) => j[k] !== undefined).map((k) => [k, j[k]])),
     ),

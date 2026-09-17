@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import { readGeocache, resolvedPoint, normalizeAddress } from '../infrastructure/geocoding.js';
 import { createScenario } from './scenario.js';
 import { SKILLS, COLORS } from './catalog.js';
+import { OFFICIAL_POLICY } from './official-policy.js';
 
 export function deriveEngineers(jobs, office, regionId) {
   const engineers = [],
@@ -77,6 +78,7 @@ export async function createOfficialScenario(id) {
       id,
       name: dataset.name,
       date: dataset.date,
+      policyVersion: OFFICIAL_POLICY.version,
       office,
       roster: { method: roster.method, demand: roster.demand },
       source: dataset.file,

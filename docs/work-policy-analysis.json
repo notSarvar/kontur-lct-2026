@@ -1,0 +1,2168 @@
+{
+  "generatedAt": "2026-09-17T19:26:24.250Z",
+  "policy": {
+    "version": "bk-hd-v1",
+    "informationServiceMinutes": 30,
+    "globalSkill": "emergency",
+    "globalSkillAssumption": "Для глобальной проблемы сохранён отдельный синтетический аварийный навык. Квалификация этих выездов в приведённом Q&A не определена.",
+    "informationDurationAssumption": "Отдельного норматива для информации нет: принято 30 минут на адресе по аналогии с локальной работой, дорога считается отдельно. Состав работ не подтверждён одним названием HD."
+  },
+  "counts": [
+    {
+      "region": "east",
+      "jobs": 66,
+      "emergency": 3,
+      "information": 5,
+      "broadEmergencies": 0,
+      "shortEmergencies": 3,
+      "monitoring": 1
+    },
+    {
+      "region": "southeast",
+      "jobs": 83,
+      "emergency": 12,
+      "information": 0,
+      "broadEmergencies": 11,
+      "shortEmergencies": 1,
+      "monitoring": 0
+    },
+    {
+      "region": "southcenter",
+      "jobs": 56,
+      "emergency": 0,
+      "information": 1,
+      "broadEmergencies": 0,
+      "shortEmergencies": 0,
+      "monitoring": 0
+    }
+  ],
+  "sensitivity": {
+    "method": "Fixed derived roster per region, same prepared walking matrix and estimated transit, economy mode, 100 iterations. Only information service minutes change. Alternative values are hypotheses, not Excel norms.",
+    "results": [
+      {
+        "region": "east",
+        "informationServiceMinutes": 20,
+        "pool": 17,
+        "assigned": 60,
+        "usedEngineers": 15,
+        "km": 234.68,
+        "matrixId": "2c7fbf82ba1ce5e9531cb50d8f2e46c8caf380099e1415ca083abad62b2a2675",
+        "plannedServiceMinutes": 2870,
+        "assignment": [
+          {
+            "jobId": "east:68476",
+            "engineerId": "east:eng-1",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "east:76678",
+            "engineerId": "east:eng-1",
+            "start": 659,
+            "end": 689
+          },
+          {
+            "jobId": "east:4893",
+            "engineerId": "east:eng-1",
+            "start": 720,
+            "end": 750
+          },
+          {
+            "jobId": "east:48227",
+            "engineerId": "east:eng-1",
+            "start": 773,
+            "end": 803
+          },
+          {
+            "jobId": "east:24076",
+            "engineerId": "east:eng-1",
+            "start": 817,
+            "end": 847
+          },
+          {
+            "jobId": "east:26645",
+            "engineerId": "east:eng-1",
+            "start": 960,
+            "end": 990
+          },
+          {
+            "jobId": "east:50219",
+            "engineerId": "east:eng-2",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "east:32807",
+            "engineerId": "east:eng-2",
+            "start": 651,
+            "end": 681
+          },
+          {
+            "jobId": "east:60720",
+            "engineerId": "east:eng-2",
+            "start": 720,
+            "end": 750
+          },
+          {
+            "jobId": "east:41912",
+            "engineerId": "east:eng-2",
+            "start": 779,
+            "end": 809
+          },
+          {
+            "jobId": "east:48174",
+            "engineerId": "east:eng-3",
+            "start": 1080,
+            "end": 1110
+          },
+          {
+            "jobId": "east:17892",
+            "engineerId": "east:eng-3",
+            "start": 1128,
+            "end": 1158
+          },
+          {
+            "jobId": "east:21571",
+            "engineerId": "east:eng-3",
+            "start": 1192,
+            "end": 1222
+          },
+          {
+            "jobId": "east:47670",
+            "engineerId": "east:eng-3",
+            "start": 1244,
+            "end": 1274
+          },
+          {
+            "jobId": "east:73572",
+            "engineerId": "east:eng-4",
+            "start": 858,
+            "end": 888
+          },
+          {
+            "jobId": "east:48238",
+            "engineerId": "east:eng-4",
+            "start": 904,
+            "end": 934
+          },
+          {
+            "jobId": "east:76643",
+            "engineerId": "east:eng-4",
+            "start": 1080,
+            "end": 1110
+          },
+          {
+            "jobId": "east:30243",
+            "engineerId": "east:eng-4",
+            "start": 1121,
+            "end": 1151
+          },
+          {
+            "jobId": "east:51115",
+            "engineerId": "east:eng-4",
+            "start": 1186,
+            "end": 1216
+          },
+          {
+            "jobId": "east:43506",
+            "engineerId": "east:eng-4",
+            "start": 1239,
+            "end": 1269
+          },
+          {
+            "jobId": "east:52405",
+            "engineerId": "east:eng-5",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "east:7939",
+            "engineerId": "east:eng-5",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "east:93086",
+            "engineerId": "east:eng-5",
+            "start": 798,
+            "end": 868
+          },
+          {
+            "jobId": "east:77563",
+            "engineerId": "east:eng-6",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "east:34366",
+            "engineerId": "east:eng-6",
+            "start": 691,
+            "end": 761
+          },
+          {
+            "jobId": "east:53587",
+            "engineerId": "east:eng-6",
+            "start": 768,
+            "end": 838
+          },
+          {
+            "jobId": "east:71388",
+            "engineerId": "east:eng-6",
+            "start": 850,
+            "end": 920
+          },
+          {
+            "jobId": "east:30769",
+            "engineerId": "east:eng-6",
+            "start": 939,
+            "end": 1009
+          },
+          {
+            "jobId": "east:98182",
+            "engineerId": "east:eng-7",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "east:29890",
+            "engineerId": "east:eng-7",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "east:94409",
+            "engineerId": "east:eng-7",
+            "start": 810,
+            "end": 880
+          },
+          {
+            "jobId": "east:82808",
+            "engineerId": "east:eng-7",
+            "start": 902,
+            "end": 972
+          },
+          {
+            "jobId": "east:74949",
+            "engineerId": "east:eng-8",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "east:23380",
+            "engineerId": "east:eng-8",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "east:41077",
+            "engineerId": "east:eng-8",
+            "start": 803,
+            "end": 873
+          },
+          {
+            "jobId": "east:82388",
+            "engineerId": "east:eng-8",
+            "start": 892,
+            "end": 962
+          },
+          {
+            "jobId": "east:61540",
+            "engineerId": "east:eng-9",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "east:18754",
+            "engineerId": "east:eng-9",
+            "start": 1080,
+            "end": 1150
+          },
+          {
+            "jobId": "east:84627",
+            "engineerId": "east:eng-9",
+            "start": 1200,
+            "end": 1270
+          },
+          {
+            "jobId": "east:46393",
+            "engineerId": "east:eng-9",
+            "start": 1287,
+            "end": 1357
+          },
+          {
+            "jobId": "east:87693",
+            "engineerId": "east:eng-10",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "east:35675",
+            "engineerId": "east:eng-10",
+            "start": 1057,
+            "end": 1127
+          },
+          {
+            "jobId": "east:86160",
+            "engineerId": "east:eng-10",
+            "start": 1155,
+            "end": 1225
+          },
+          {
+            "jobId": "east:57866",
+            "engineerId": "east:eng-11",
+            "start": 859,
+            "end": 929
+          },
+          {
+            "jobId": "east:10135",
+            "engineerId": "east:eng-11",
+            "start": 1080,
+            "end": 1150
+          },
+          {
+            "jobId": "east:50104",
+            "engineerId": "east:eng-11",
+            "start": 1174,
+            "end": 1244
+          },
+          {
+            "jobId": "east:74198",
+            "engineerId": "east:eng-11",
+            "start": 1270,
+            "end": 1340
+          },
+          {
+            "jobId": "east:33527",
+            "engineerId": "east:eng-14",
+            "start": 600,
+            "end": 620
+          },
+          {
+            "jobId": "east:69967",
+            "engineerId": "east:eng-14",
+            "start": 650,
+            "end": 670
+          },
+          {
+            "jobId": "east:22634",
+            "engineerId": "east:eng-15",
+            "start": 878,
+            "end": 898
+          },
+          {
+            "jobId": "east:98815",
+            "engineerId": "east:eng-15",
+            "start": 1080,
+            "end": 1100
+          },
+          {
+            "jobId": "east:92031",
+            "engineerId": "east:eng-15",
+            "start": 1147,
+            "end": 1167
+          },
+          {
+            "jobId": "east:31260",
+            "engineerId": "east:eng-15",
+            "start": 1200,
+            "end": 1220
+          },
+          {
+            "jobId": "east:54964",
+            "engineerId": "east:eng-16",
+            "start": 600,
+            "end": 620
+          },
+          {
+            "jobId": "east:24980",
+            "engineerId": "east:eng-16",
+            "start": 670,
+            "end": 750
+          },
+          {
+            "jobId": "east:17349",
+            "engineerId": "east:eng-16",
+            "start": 840,
+            "end": 860
+          },
+          {
+            "jobId": "east:15648",
+            "engineerId": "east:eng-16",
+            "start": 960,
+            "end": 980
+          },
+          {
+            "jobId": "east:41962",
+            "engineerId": "east:eng-17",
+            "start": 960,
+            "end": 980
+          },
+          {
+            "jobId": "east:97886",
+            "engineerId": "east:eng-17",
+            "start": 997,
+            "end": 1017
+          },
+          {
+            "jobId": "east:57299",
+            "engineerId": "east:eng-17",
+            "start": 1200,
+            "end": 1280
+          }
+        ]
+      },
+      {
+        "region": "east",
+        "informationServiceMinutes": 30,
+        "pool": 17,
+        "assigned": 60,
+        "usedEngineers": 15,
+        "km": 234.68,
+        "matrixId": "2c7fbf82ba1ce5e9531cb50d8f2e46c8caf380099e1415ca083abad62b2a2675",
+        "plannedServiceMinutes": 2920,
+        "assignment": [
+          {
+            "jobId": "east:68476",
+            "engineerId": "east:eng-1",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "east:76678",
+            "engineerId": "east:eng-1",
+            "start": 659,
+            "end": 689
+          },
+          {
+            "jobId": "east:4893",
+            "engineerId": "east:eng-1",
+            "start": 720,
+            "end": 750
+          },
+          {
+            "jobId": "east:48227",
+            "engineerId": "east:eng-1",
+            "start": 773,
+            "end": 803
+          },
+          {
+            "jobId": "east:24076",
+            "engineerId": "east:eng-1",
+            "start": 817,
+            "end": 847
+          },
+          {
+            "jobId": "east:26645",
+            "engineerId": "east:eng-1",
+            "start": 960,
+            "end": 990
+          },
+          {
+            "jobId": "east:50219",
+            "engineerId": "east:eng-2",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "east:32807",
+            "engineerId": "east:eng-2",
+            "start": 651,
+            "end": 681
+          },
+          {
+            "jobId": "east:60720",
+            "engineerId": "east:eng-2",
+            "start": 720,
+            "end": 750
+          },
+          {
+            "jobId": "east:41912",
+            "engineerId": "east:eng-2",
+            "start": 779,
+            "end": 809
+          },
+          {
+            "jobId": "east:48174",
+            "engineerId": "east:eng-3",
+            "start": 1080,
+            "end": 1110
+          },
+          {
+            "jobId": "east:17892",
+            "engineerId": "east:eng-3",
+            "start": 1128,
+            "end": 1158
+          },
+          {
+            "jobId": "east:21571",
+            "engineerId": "east:eng-3",
+            "start": 1192,
+            "end": 1222
+          },
+          {
+            "jobId": "east:47670",
+            "engineerId": "east:eng-3",
+            "start": 1244,
+            "end": 1274
+          },
+          {
+            "jobId": "east:73572",
+            "engineerId": "east:eng-4",
+            "start": 858,
+            "end": 888
+          },
+          {
+            "jobId": "east:48238",
+            "engineerId": "east:eng-4",
+            "start": 904,
+            "end": 934
+          },
+          {
+            "jobId": "east:76643",
+            "engineerId": "east:eng-4",
+            "start": 1080,
+            "end": 1110
+          },
+          {
+            "jobId": "east:30243",
+            "engineerId": "east:eng-4",
+            "start": 1121,
+            "end": 1151
+          },
+          {
+            "jobId": "east:51115",
+            "engineerId": "east:eng-4",
+            "start": 1186,
+            "end": 1216
+          },
+          {
+            "jobId": "east:43506",
+            "engineerId": "east:eng-4",
+            "start": 1239,
+            "end": 1269
+          },
+          {
+            "jobId": "east:52405",
+            "engineerId": "east:eng-5",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "east:7939",
+            "engineerId": "east:eng-5",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "east:93086",
+            "engineerId": "east:eng-5",
+            "start": 798,
+            "end": 868
+          },
+          {
+            "jobId": "east:77563",
+            "engineerId": "east:eng-6",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "east:34366",
+            "engineerId": "east:eng-6",
+            "start": 691,
+            "end": 761
+          },
+          {
+            "jobId": "east:53587",
+            "engineerId": "east:eng-6",
+            "start": 768,
+            "end": 838
+          },
+          {
+            "jobId": "east:71388",
+            "engineerId": "east:eng-6",
+            "start": 850,
+            "end": 920
+          },
+          {
+            "jobId": "east:30769",
+            "engineerId": "east:eng-6",
+            "start": 939,
+            "end": 1009
+          },
+          {
+            "jobId": "east:98182",
+            "engineerId": "east:eng-7",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "east:29890",
+            "engineerId": "east:eng-7",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "east:94409",
+            "engineerId": "east:eng-7",
+            "start": 810,
+            "end": 880
+          },
+          {
+            "jobId": "east:82808",
+            "engineerId": "east:eng-7",
+            "start": 902,
+            "end": 972
+          },
+          {
+            "jobId": "east:74949",
+            "engineerId": "east:eng-8",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "east:23380",
+            "engineerId": "east:eng-8",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "east:41077",
+            "engineerId": "east:eng-8",
+            "start": 803,
+            "end": 873
+          },
+          {
+            "jobId": "east:82388",
+            "engineerId": "east:eng-8",
+            "start": 892,
+            "end": 962
+          },
+          {
+            "jobId": "east:61540",
+            "engineerId": "east:eng-9",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "east:18754",
+            "engineerId": "east:eng-9",
+            "start": 1080,
+            "end": 1150
+          },
+          {
+            "jobId": "east:84627",
+            "engineerId": "east:eng-9",
+            "start": 1200,
+            "end": 1270
+          },
+          {
+            "jobId": "east:46393",
+            "engineerId": "east:eng-9",
+            "start": 1287,
+            "end": 1357
+          },
+          {
+            "jobId": "east:87693",
+            "engineerId": "east:eng-10",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "east:35675",
+            "engineerId": "east:eng-10",
+            "start": 1057,
+            "end": 1127
+          },
+          {
+            "jobId": "east:86160",
+            "engineerId": "east:eng-10",
+            "start": 1155,
+            "end": 1225
+          },
+          {
+            "jobId": "east:57866",
+            "engineerId": "east:eng-11",
+            "start": 859,
+            "end": 929
+          },
+          {
+            "jobId": "east:10135",
+            "engineerId": "east:eng-11",
+            "start": 1080,
+            "end": 1150
+          },
+          {
+            "jobId": "east:50104",
+            "engineerId": "east:eng-11",
+            "start": 1174,
+            "end": 1244
+          },
+          {
+            "jobId": "east:74198",
+            "engineerId": "east:eng-11",
+            "start": 1270,
+            "end": 1340
+          },
+          {
+            "jobId": "east:33527",
+            "engineerId": "east:eng-14",
+            "start": 600,
+            "end": 620
+          },
+          {
+            "jobId": "east:69967",
+            "engineerId": "east:eng-14",
+            "start": 650,
+            "end": 670
+          },
+          {
+            "jobId": "east:22634",
+            "engineerId": "east:eng-15",
+            "start": 878,
+            "end": 898
+          },
+          {
+            "jobId": "east:98815",
+            "engineerId": "east:eng-15",
+            "start": 1080,
+            "end": 1100
+          },
+          {
+            "jobId": "east:92031",
+            "engineerId": "east:eng-15",
+            "start": 1147,
+            "end": 1167
+          },
+          {
+            "jobId": "east:31260",
+            "engineerId": "east:eng-15",
+            "start": 1200,
+            "end": 1220
+          },
+          {
+            "jobId": "east:54964",
+            "engineerId": "east:eng-16",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "east:24980",
+            "engineerId": "east:eng-16",
+            "start": 680,
+            "end": 760
+          },
+          {
+            "jobId": "east:17349",
+            "engineerId": "east:eng-16",
+            "start": 840,
+            "end": 870
+          },
+          {
+            "jobId": "east:15648",
+            "engineerId": "east:eng-16",
+            "start": 960,
+            "end": 990
+          },
+          {
+            "jobId": "east:41962",
+            "engineerId": "east:eng-17",
+            "start": 960,
+            "end": 990
+          },
+          {
+            "jobId": "east:97886",
+            "engineerId": "east:eng-17",
+            "start": 1007,
+            "end": 1037
+          },
+          {
+            "jobId": "east:57299",
+            "engineerId": "east:eng-17",
+            "start": 1200,
+            "end": 1280
+          }
+        ]
+      },
+      {
+        "region": "east",
+        "informationServiceMinutes": 50,
+        "pool": 17,
+        "assigned": 60,
+        "usedEngineers": 15,
+        "km": 234.68,
+        "matrixId": "2c7fbf82ba1ce5e9531cb50d8f2e46c8caf380099e1415ca083abad62b2a2675",
+        "plannedServiceMinutes": 3020,
+        "assignment": [
+          {
+            "jobId": "east:68476",
+            "engineerId": "east:eng-1",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "east:76678",
+            "engineerId": "east:eng-1",
+            "start": 659,
+            "end": 689
+          },
+          {
+            "jobId": "east:4893",
+            "engineerId": "east:eng-1",
+            "start": 720,
+            "end": 750
+          },
+          {
+            "jobId": "east:48227",
+            "engineerId": "east:eng-1",
+            "start": 773,
+            "end": 803
+          },
+          {
+            "jobId": "east:24076",
+            "engineerId": "east:eng-1",
+            "start": 817,
+            "end": 847
+          },
+          {
+            "jobId": "east:26645",
+            "engineerId": "east:eng-1",
+            "start": 960,
+            "end": 990
+          },
+          {
+            "jobId": "east:50219",
+            "engineerId": "east:eng-2",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "east:32807",
+            "engineerId": "east:eng-2",
+            "start": 651,
+            "end": 681
+          },
+          {
+            "jobId": "east:60720",
+            "engineerId": "east:eng-2",
+            "start": 720,
+            "end": 750
+          },
+          {
+            "jobId": "east:41912",
+            "engineerId": "east:eng-2",
+            "start": 779,
+            "end": 809
+          },
+          {
+            "jobId": "east:48174",
+            "engineerId": "east:eng-3",
+            "start": 1080,
+            "end": 1110
+          },
+          {
+            "jobId": "east:17892",
+            "engineerId": "east:eng-3",
+            "start": 1128,
+            "end": 1158
+          },
+          {
+            "jobId": "east:21571",
+            "engineerId": "east:eng-3",
+            "start": 1192,
+            "end": 1222
+          },
+          {
+            "jobId": "east:47670",
+            "engineerId": "east:eng-3",
+            "start": 1244,
+            "end": 1274
+          },
+          {
+            "jobId": "east:73572",
+            "engineerId": "east:eng-4",
+            "start": 858,
+            "end": 888
+          },
+          {
+            "jobId": "east:48238",
+            "engineerId": "east:eng-4",
+            "start": 904,
+            "end": 934
+          },
+          {
+            "jobId": "east:76643",
+            "engineerId": "east:eng-4",
+            "start": 1080,
+            "end": 1110
+          },
+          {
+            "jobId": "east:30243",
+            "engineerId": "east:eng-4",
+            "start": 1121,
+            "end": 1151
+          },
+          {
+            "jobId": "east:51115",
+            "engineerId": "east:eng-4",
+            "start": 1186,
+            "end": 1216
+          },
+          {
+            "jobId": "east:43506",
+            "engineerId": "east:eng-4",
+            "start": 1239,
+            "end": 1269
+          },
+          {
+            "jobId": "east:52405",
+            "engineerId": "east:eng-5",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "east:7939",
+            "engineerId": "east:eng-5",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "east:93086",
+            "engineerId": "east:eng-5",
+            "start": 798,
+            "end": 868
+          },
+          {
+            "jobId": "east:77563",
+            "engineerId": "east:eng-6",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "east:34366",
+            "engineerId": "east:eng-6",
+            "start": 691,
+            "end": 761
+          },
+          {
+            "jobId": "east:53587",
+            "engineerId": "east:eng-6",
+            "start": 768,
+            "end": 838
+          },
+          {
+            "jobId": "east:71388",
+            "engineerId": "east:eng-6",
+            "start": 850,
+            "end": 920
+          },
+          {
+            "jobId": "east:30769",
+            "engineerId": "east:eng-6",
+            "start": 939,
+            "end": 1009
+          },
+          {
+            "jobId": "east:98182",
+            "engineerId": "east:eng-7",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "east:29890",
+            "engineerId": "east:eng-7",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "east:94409",
+            "engineerId": "east:eng-7",
+            "start": 810,
+            "end": 880
+          },
+          {
+            "jobId": "east:82808",
+            "engineerId": "east:eng-7",
+            "start": 902,
+            "end": 972
+          },
+          {
+            "jobId": "east:74949",
+            "engineerId": "east:eng-8",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "east:23380",
+            "engineerId": "east:eng-8",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "east:41077",
+            "engineerId": "east:eng-8",
+            "start": 803,
+            "end": 873
+          },
+          {
+            "jobId": "east:82388",
+            "engineerId": "east:eng-8",
+            "start": 892,
+            "end": 962
+          },
+          {
+            "jobId": "east:61540",
+            "engineerId": "east:eng-9",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "east:18754",
+            "engineerId": "east:eng-9",
+            "start": 1080,
+            "end": 1150
+          },
+          {
+            "jobId": "east:84627",
+            "engineerId": "east:eng-9",
+            "start": 1200,
+            "end": 1270
+          },
+          {
+            "jobId": "east:46393",
+            "engineerId": "east:eng-9",
+            "start": 1287,
+            "end": 1357
+          },
+          {
+            "jobId": "east:87693",
+            "engineerId": "east:eng-10",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "east:35675",
+            "engineerId": "east:eng-10",
+            "start": 1057,
+            "end": 1127
+          },
+          {
+            "jobId": "east:86160",
+            "engineerId": "east:eng-10",
+            "start": 1155,
+            "end": 1225
+          },
+          {
+            "jobId": "east:57866",
+            "engineerId": "east:eng-11",
+            "start": 859,
+            "end": 929
+          },
+          {
+            "jobId": "east:10135",
+            "engineerId": "east:eng-11",
+            "start": 1080,
+            "end": 1150
+          },
+          {
+            "jobId": "east:50104",
+            "engineerId": "east:eng-11",
+            "start": 1174,
+            "end": 1244
+          },
+          {
+            "jobId": "east:74198",
+            "engineerId": "east:eng-11",
+            "start": 1270,
+            "end": 1340
+          },
+          {
+            "jobId": "east:33527",
+            "engineerId": "east:eng-14",
+            "start": 600,
+            "end": 620
+          },
+          {
+            "jobId": "east:69967",
+            "engineerId": "east:eng-14",
+            "start": 650,
+            "end": 670
+          },
+          {
+            "jobId": "east:22634",
+            "engineerId": "east:eng-15",
+            "start": 878,
+            "end": 898
+          },
+          {
+            "jobId": "east:98815",
+            "engineerId": "east:eng-15",
+            "start": 1080,
+            "end": 1100
+          },
+          {
+            "jobId": "east:92031",
+            "engineerId": "east:eng-15",
+            "start": 1147,
+            "end": 1167
+          },
+          {
+            "jobId": "east:31260",
+            "engineerId": "east:eng-15",
+            "start": 1200,
+            "end": 1220
+          },
+          {
+            "jobId": "east:54964",
+            "engineerId": "east:eng-16",
+            "start": 600,
+            "end": 650
+          },
+          {
+            "jobId": "east:24980",
+            "engineerId": "east:eng-16",
+            "start": 700,
+            "end": 780
+          },
+          {
+            "jobId": "east:17349",
+            "engineerId": "east:eng-16",
+            "start": 840,
+            "end": 890
+          },
+          {
+            "jobId": "east:15648",
+            "engineerId": "east:eng-16",
+            "start": 960,
+            "end": 1010
+          },
+          {
+            "jobId": "east:41962",
+            "engineerId": "east:eng-17",
+            "start": 960,
+            "end": 1010
+          },
+          {
+            "jobId": "east:97886",
+            "engineerId": "east:eng-17",
+            "start": 1027,
+            "end": 1077
+          },
+          {
+            "jobId": "east:57299",
+            "engineerId": "east:eng-17",
+            "start": 1200,
+            "end": 1280
+          }
+        ]
+      },
+      {
+        "region": "southcenter",
+        "informationServiceMinutes": 20,
+        "pool": 15,
+        "assigned": 54,
+        "usedEngineers": 14,
+        "km": 206.52,
+        "matrixId": "796e31f36fadc9cc66574405e50d7ea86e5850fd2f1a165d0de45c2001ca94c4",
+        "plannedServiceMinutes": 2630,
+        "assignment": [
+          {
+            "jobId": "southcenter:20263",
+            "engineerId": "southcenter:eng-1",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "southcenter:5406",
+            "engineerId": "southcenter:eng-1",
+            "start": 651,
+            "end": 681
+          },
+          {
+            "jobId": "southcenter:46513",
+            "engineerId": "southcenter:eng-1",
+            "start": 700,
+            "end": 730
+          },
+          {
+            "jobId": "southcenter:13203",
+            "engineerId": "southcenter:eng-1",
+            "start": 840,
+            "end": 870
+          },
+          {
+            "jobId": "southcenter:17896",
+            "engineerId": "southcenter:eng-1",
+            "start": 894,
+            "end": 924
+          },
+          {
+            "jobId": "southcenter:90709",
+            "engineerId": "southcenter:eng-1",
+            "start": 963,
+            "end": 993
+          },
+          {
+            "jobId": "southcenter:12263",
+            "engineerId": "southcenter:eng-2",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "southcenter:80308",
+            "engineerId": "southcenter:eng-2",
+            "start": 665,
+            "end": 695
+          },
+          {
+            "jobId": "southcenter:26845",
+            "engineerId": "southcenter:eng-2",
+            "start": 720,
+            "end": 750
+          },
+          {
+            "jobId": "southcenter:51133",
+            "engineerId": "southcenter:eng-2",
+            "start": 768,
+            "end": 798
+          },
+          {
+            "jobId": "southcenter:84074",
+            "engineerId": "southcenter:eng-2",
+            "start": 818,
+            "end": 848
+          },
+          {
+            "jobId": "southcenter:61311",
+            "engineerId": "southcenter:eng-2",
+            "start": 960,
+            "end": 990
+          },
+          {
+            "jobId": "southcenter:87819",
+            "engineerId": "southcenter:eng-3",
+            "start": 877,
+            "end": 907
+          },
+          {
+            "jobId": "southcenter:86002",
+            "engineerId": "southcenter:eng-3",
+            "start": 924,
+            "end": 954
+          },
+          {
+            "jobId": "southcenter:93276",
+            "engineerId": "southcenter:eng-3",
+            "start": 967,
+            "end": 997
+          },
+          {
+            "jobId": "southcenter:35265",
+            "engineerId": "southcenter:eng-3",
+            "start": 1023,
+            "end": 1053
+          },
+          {
+            "jobId": "southcenter:77795",
+            "engineerId": "southcenter:eng-3",
+            "start": 1080,
+            "end": 1110
+          },
+          {
+            "jobId": "southcenter:27023",
+            "engineerId": "southcenter:eng-3",
+            "start": 1120,
+            "end": 1150
+          },
+          {
+            "jobId": "southcenter:92618",
+            "engineerId": "southcenter:eng-3",
+            "start": 1168,
+            "end": 1198
+          },
+          {
+            "jobId": "southcenter:26177",
+            "engineerId": "southcenter:eng-3",
+            "start": 1223,
+            "end": 1253
+          },
+          {
+            "jobId": "southcenter:95501",
+            "engineerId": "southcenter:eng-3",
+            "start": 1274,
+            "end": 1304
+          },
+          {
+            "jobId": "southcenter:86864",
+            "engineerId": "southcenter:eng-4",
+            "start": 960,
+            "end": 990
+          },
+          {
+            "jobId": "southcenter:99841",
+            "engineerId": "southcenter:eng-4",
+            "start": 1080,
+            "end": 1110
+          },
+          {
+            "jobId": "southcenter:26896",
+            "engineerId": "southcenter:eng-4",
+            "start": 1121,
+            "end": 1151
+          },
+          {
+            "jobId": "southcenter:24132",
+            "engineerId": "southcenter:eng-4",
+            "start": 1200,
+            "end": 1230
+          },
+          {
+            "jobId": "southcenter:94431",
+            "engineerId": "southcenter:eng-5",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "southcenter:79707",
+            "engineerId": "southcenter:eng-5",
+            "start": 702,
+            "end": 772
+          },
+          {
+            "jobId": "southcenter:79719",
+            "engineerId": "southcenter:eng-5",
+            "start": 782,
+            "end": 852
+          },
+          {
+            "jobId": "southcenter:23142",
+            "engineerId": "southcenter:eng-6",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "southcenter:10776",
+            "engineerId": "southcenter:eng-6",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "southcenter:90373",
+            "engineerId": "southcenter:eng-6",
+            "start": 806,
+            "end": 876
+          },
+          {
+            "jobId": "southcenter:94447",
+            "engineerId": "southcenter:eng-7",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "southcenter:93544",
+            "engineerId": "southcenter:eng-7",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "southcenter:55711",
+            "engineerId": "southcenter:eng-7",
+            "start": 810,
+            "end": 880
+          },
+          {
+            "jobId": "southcenter:16024",
+            "engineerId": "southcenter:eng-8",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "southcenter:19203",
+            "engineerId": "southcenter:eng-8",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "southcenter:76452",
+            "engineerId": "southcenter:eng-8",
+            "start": 805,
+            "end": 875
+          },
+          {
+            "jobId": "southcenter:80548",
+            "engineerId": "southcenter:eng-9",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "southcenter:94575",
+            "engineerId": "southcenter:eng-9",
+            "start": 1080,
+            "end": 1150
+          },
+          {
+            "jobId": "southcenter:78540",
+            "engineerId": "southcenter:eng-9",
+            "start": 1167,
+            "end": 1237
+          },
+          {
+            "jobId": "southcenter:52576",
+            "engineerId": "southcenter:eng-9",
+            "start": 1263,
+            "end": 1333
+          },
+          {
+            "jobId": "southcenter:75881",
+            "engineerId": "southcenter:eng-10",
+            "start": 864,
+            "end": 934
+          },
+          {
+            "jobId": "southcenter:76944",
+            "engineerId": "southcenter:eng-10",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "southcenter:66315",
+            "engineerId": "southcenter:eng-10",
+            "start": 1044,
+            "end": 1114
+          },
+          {
+            "jobId": "southcenter:23637",
+            "engineerId": "southcenter:eng-10",
+            "start": 1200,
+            "end": 1270
+          },
+          {
+            "jobId": "southcenter:97770",
+            "engineerId": "southcenter:eng-10",
+            "start": 1290,
+            "end": 1360
+          },
+          {
+            "jobId": "southcenter:85188",
+            "engineerId": "southcenter:eng-11",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "southcenter:47560",
+            "engineerId": "southcenter:eng-11",
+            "start": 1058,
+            "end": 1128
+          },
+          {
+            "jobId": "southcenter:32840",
+            "engineerId": "southcenter:eng-11",
+            "start": 1147,
+            "end": 1217
+          },
+          {
+            "jobId": "southcenter:19376",
+            "engineerId": "southcenter:eng-12",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "southcenter:6185",
+            "engineerId": "southcenter:eng-12",
+            "start": 1080,
+            "end": 1150
+          },
+          {
+            "jobId": "southcenter:49105",
+            "engineerId": "southcenter:eng-13",
+            "start": 1200,
+            "end": 1220
+          },
+          {
+            "jobId": "southcenter:78036",
+            "engineerId": "southcenter:eng-13",
+            "start": 1242,
+            "end": 1262
+          },
+          {
+            "jobId": "southcenter:18023",
+            "engineerId": "southcenter:eng-14",
+            "start": 840,
+            "end": 860
+          }
+        ]
+      },
+      {
+        "region": "southcenter",
+        "informationServiceMinutes": 30,
+        "pool": 15,
+        "assigned": 54,
+        "usedEngineers": 14,
+        "km": 206.52,
+        "matrixId": "796e31f36fadc9cc66574405e50d7ea86e5850fd2f1a165d0de45c2001ca94c4",
+        "plannedServiceMinutes": 2640,
+        "assignment": [
+          {
+            "jobId": "southcenter:20263",
+            "engineerId": "southcenter:eng-1",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "southcenter:5406",
+            "engineerId": "southcenter:eng-1",
+            "start": 651,
+            "end": 681
+          },
+          {
+            "jobId": "southcenter:46513",
+            "engineerId": "southcenter:eng-1",
+            "start": 700,
+            "end": 730
+          },
+          {
+            "jobId": "southcenter:13203",
+            "engineerId": "southcenter:eng-1",
+            "start": 840,
+            "end": 870
+          },
+          {
+            "jobId": "southcenter:17896",
+            "engineerId": "southcenter:eng-1",
+            "start": 894,
+            "end": 924
+          },
+          {
+            "jobId": "southcenter:90709",
+            "engineerId": "southcenter:eng-1",
+            "start": 963,
+            "end": 993
+          },
+          {
+            "jobId": "southcenter:12263",
+            "engineerId": "southcenter:eng-2",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "southcenter:80308",
+            "engineerId": "southcenter:eng-2",
+            "start": 665,
+            "end": 695
+          },
+          {
+            "jobId": "southcenter:26845",
+            "engineerId": "southcenter:eng-2",
+            "start": 720,
+            "end": 750
+          },
+          {
+            "jobId": "southcenter:51133",
+            "engineerId": "southcenter:eng-2",
+            "start": 768,
+            "end": 798
+          },
+          {
+            "jobId": "southcenter:84074",
+            "engineerId": "southcenter:eng-2",
+            "start": 818,
+            "end": 848
+          },
+          {
+            "jobId": "southcenter:61311",
+            "engineerId": "southcenter:eng-2",
+            "start": 960,
+            "end": 990
+          },
+          {
+            "jobId": "southcenter:87819",
+            "engineerId": "southcenter:eng-3",
+            "start": 877,
+            "end": 907
+          },
+          {
+            "jobId": "southcenter:86002",
+            "engineerId": "southcenter:eng-3",
+            "start": 924,
+            "end": 954
+          },
+          {
+            "jobId": "southcenter:93276",
+            "engineerId": "southcenter:eng-3",
+            "start": 967,
+            "end": 997
+          },
+          {
+            "jobId": "southcenter:35265",
+            "engineerId": "southcenter:eng-3",
+            "start": 1023,
+            "end": 1053
+          },
+          {
+            "jobId": "southcenter:77795",
+            "engineerId": "southcenter:eng-3",
+            "start": 1080,
+            "end": 1110
+          },
+          {
+            "jobId": "southcenter:27023",
+            "engineerId": "southcenter:eng-3",
+            "start": 1120,
+            "end": 1150
+          },
+          {
+            "jobId": "southcenter:92618",
+            "engineerId": "southcenter:eng-3",
+            "start": 1168,
+            "end": 1198
+          },
+          {
+            "jobId": "southcenter:26177",
+            "engineerId": "southcenter:eng-3",
+            "start": 1223,
+            "end": 1253
+          },
+          {
+            "jobId": "southcenter:95501",
+            "engineerId": "southcenter:eng-3",
+            "start": 1274,
+            "end": 1304
+          },
+          {
+            "jobId": "southcenter:86864",
+            "engineerId": "southcenter:eng-4",
+            "start": 960,
+            "end": 990
+          },
+          {
+            "jobId": "southcenter:99841",
+            "engineerId": "southcenter:eng-4",
+            "start": 1080,
+            "end": 1110
+          },
+          {
+            "jobId": "southcenter:26896",
+            "engineerId": "southcenter:eng-4",
+            "start": 1121,
+            "end": 1151
+          },
+          {
+            "jobId": "southcenter:24132",
+            "engineerId": "southcenter:eng-4",
+            "start": 1200,
+            "end": 1230
+          },
+          {
+            "jobId": "southcenter:94431",
+            "engineerId": "southcenter:eng-5",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "southcenter:79707",
+            "engineerId": "southcenter:eng-5",
+            "start": 702,
+            "end": 772
+          },
+          {
+            "jobId": "southcenter:79719",
+            "engineerId": "southcenter:eng-5",
+            "start": 782,
+            "end": 852
+          },
+          {
+            "jobId": "southcenter:23142",
+            "engineerId": "southcenter:eng-6",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "southcenter:10776",
+            "engineerId": "southcenter:eng-6",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "southcenter:90373",
+            "engineerId": "southcenter:eng-6",
+            "start": 806,
+            "end": 876
+          },
+          {
+            "jobId": "southcenter:94447",
+            "engineerId": "southcenter:eng-7",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "southcenter:93544",
+            "engineerId": "southcenter:eng-7",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "southcenter:55711",
+            "engineerId": "southcenter:eng-7",
+            "start": 810,
+            "end": 880
+          },
+          {
+            "jobId": "southcenter:16024",
+            "engineerId": "southcenter:eng-8",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "southcenter:19203",
+            "engineerId": "southcenter:eng-8",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "southcenter:76452",
+            "engineerId": "southcenter:eng-8",
+            "start": 805,
+            "end": 875
+          },
+          {
+            "jobId": "southcenter:80548",
+            "engineerId": "southcenter:eng-9",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "southcenter:94575",
+            "engineerId": "southcenter:eng-9",
+            "start": 1080,
+            "end": 1150
+          },
+          {
+            "jobId": "southcenter:78540",
+            "engineerId": "southcenter:eng-9",
+            "start": 1167,
+            "end": 1237
+          },
+          {
+            "jobId": "southcenter:52576",
+            "engineerId": "southcenter:eng-9",
+            "start": 1263,
+            "end": 1333
+          },
+          {
+            "jobId": "southcenter:75881",
+            "engineerId": "southcenter:eng-10",
+            "start": 864,
+            "end": 934
+          },
+          {
+            "jobId": "southcenter:76944",
+            "engineerId": "southcenter:eng-10",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "southcenter:66315",
+            "engineerId": "southcenter:eng-10",
+            "start": 1044,
+            "end": 1114
+          },
+          {
+            "jobId": "southcenter:23637",
+            "engineerId": "southcenter:eng-10",
+            "start": 1200,
+            "end": 1270
+          },
+          {
+            "jobId": "southcenter:97770",
+            "engineerId": "southcenter:eng-10",
+            "start": 1290,
+            "end": 1360
+          },
+          {
+            "jobId": "southcenter:85188",
+            "engineerId": "southcenter:eng-11",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "southcenter:47560",
+            "engineerId": "southcenter:eng-11",
+            "start": 1058,
+            "end": 1128
+          },
+          {
+            "jobId": "southcenter:32840",
+            "engineerId": "southcenter:eng-11",
+            "start": 1147,
+            "end": 1217
+          },
+          {
+            "jobId": "southcenter:19376",
+            "engineerId": "southcenter:eng-12",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "southcenter:6185",
+            "engineerId": "southcenter:eng-12",
+            "start": 1080,
+            "end": 1150
+          },
+          {
+            "jobId": "southcenter:49105",
+            "engineerId": "southcenter:eng-13",
+            "start": 1200,
+            "end": 1220
+          },
+          {
+            "jobId": "southcenter:78036",
+            "engineerId": "southcenter:eng-13",
+            "start": 1242,
+            "end": 1262
+          },
+          {
+            "jobId": "southcenter:18023",
+            "engineerId": "southcenter:eng-14",
+            "start": 840,
+            "end": 870
+          }
+        ]
+      },
+      {
+        "region": "southcenter",
+        "informationServiceMinutes": 50,
+        "pool": 15,
+        "assigned": 54,
+        "usedEngineers": 14,
+        "km": 206.52,
+        "matrixId": "796e31f36fadc9cc66574405e50d7ea86e5850fd2f1a165d0de45c2001ca94c4",
+        "plannedServiceMinutes": 2660,
+        "assignment": [
+          {
+            "jobId": "southcenter:20263",
+            "engineerId": "southcenter:eng-1",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "southcenter:5406",
+            "engineerId": "southcenter:eng-1",
+            "start": 651,
+            "end": 681
+          },
+          {
+            "jobId": "southcenter:46513",
+            "engineerId": "southcenter:eng-1",
+            "start": 700,
+            "end": 730
+          },
+          {
+            "jobId": "southcenter:13203",
+            "engineerId": "southcenter:eng-1",
+            "start": 840,
+            "end": 870
+          },
+          {
+            "jobId": "southcenter:17896",
+            "engineerId": "southcenter:eng-1",
+            "start": 894,
+            "end": 924
+          },
+          {
+            "jobId": "southcenter:90709",
+            "engineerId": "southcenter:eng-1",
+            "start": 963,
+            "end": 993
+          },
+          {
+            "jobId": "southcenter:12263",
+            "engineerId": "southcenter:eng-2",
+            "start": 600,
+            "end": 630
+          },
+          {
+            "jobId": "southcenter:80308",
+            "engineerId": "southcenter:eng-2",
+            "start": 665,
+            "end": 695
+          },
+          {
+            "jobId": "southcenter:26845",
+            "engineerId": "southcenter:eng-2",
+            "start": 720,
+            "end": 750
+          },
+          {
+            "jobId": "southcenter:51133",
+            "engineerId": "southcenter:eng-2",
+            "start": 768,
+            "end": 798
+          },
+          {
+            "jobId": "southcenter:84074",
+            "engineerId": "southcenter:eng-2",
+            "start": 818,
+            "end": 848
+          },
+          {
+            "jobId": "southcenter:61311",
+            "engineerId": "southcenter:eng-2",
+            "start": 960,
+            "end": 990
+          },
+          {
+            "jobId": "southcenter:87819",
+            "engineerId": "southcenter:eng-3",
+            "start": 877,
+            "end": 907
+          },
+          {
+            "jobId": "southcenter:86002",
+            "engineerId": "southcenter:eng-3",
+            "start": 924,
+            "end": 954
+          },
+          {
+            "jobId": "southcenter:93276",
+            "engineerId": "southcenter:eng-3",
+            "start": 967,
+            "end": 997
+          },
+          {
+            "jobId": "southcenter:35265",
+            "engineerId": "southcenter:eng-3",
+            "start": 1023,
+            "end": 1053
+          },
+          {
+            "jobId": "southcenter:77795",
+            "engineerId": "southcenter:eng-3",
+            "start": 1080,
+            "end": 1110
+          },
+          {
+            "jobId": "southcenter:27023",
+            "engineerId": "southcenter:eng-3",
+            "start": 1120,
+            "end": 1150
+          },
+          {
+            "jobId": "southcenter:92618",
+            "engineerId": "southcenter:eng-3",
+            "start": 1168,
+            "end": 1198
+          },
+          {
+            "jobId": "southcenter:26177",
+            "engineerId": "southcenter:eng-3",
+            "start": 1223,
+            "end": 1253
+          },
+          {
+            "jobId": "southcenter:95501",
+            "engineerId": "southcenter:eng-3",
+            "start": 1274,
+            "end": 1304
+          },
+          {
+            "jobId": "southcenter:86864",
+            "engineerId": "southcenter:eng-4",
+            "start": 960,
+            "end": 990
+          },
+          {
+            "jobId": "southcenter:99841",
+            "engineerId": "southcenter:eng-4",
+            "start": 1080,
+            "end": 1110
+          },
+          {
+            "jobId": "southcenter:26896",
+            "engineerId": "southcenter:eng-4",
+            "start": 1121,
+            "end": 1151
+          },
+          {
+            "jobId": "southcenter:24132",
+            "engineerId": "southcenter:eng-4",
+            "start": 1200,
+            "end": 1230
+          },
+          {
+            "jobId": "southcenter:94431",
+            "engineerId": "southcenter:eng-5",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "southcenter:79707",
+            "engineerId": "southcenter:eng-5",
+            "start": 702,
+            "end": 772
+          },
+          {
+            "jobId": "southcenter:79719",
+            "engineerId": "southcenter:eng-5",
+            "start": 782,
+            "end": 852
+          },
+          {
+            "jobId": "southcenter:23142",
+            "engineerId": "southcenter:eng-6",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "southcenter:10776",
+            "engineerId": "southcenter:eng-6",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "southcenter:90373",
+            "engineerId": "southcenter:eng-6",
+            "start": 806,
+            "end": 876
+          },
+          {
+            "jobId": "southcenter:94447",
+            "engineerId": "southcenter:eng-7",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "southcenter:93544",
+            "engineerId": "southcenter:eng-7",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "southcenter:55711",
+            "engineerId": "southcenter:eng-7",
+            "start": 810,
+            "end": 880
+          },
+          {
+            "jobId": "southcenter:16024",
+            "engineerId": "southcenter:eng-8",
+            "start": 600,
+            "end": 670
+          },
+          {
+            "jobId": "southcenter:19203",
+            "engineerId": "southcenter:eng-8",
+            "start": 720,
+            "end": 790
+          },
+          {
+            "jobId": "southcenter:76452",
+            "engineerId": "southcenter:eng-8",
+            "start": 805,
+            "end": 875
+          },
+          {
+            "jobId": "southcenter:80548",
+            "engineerId": "southcenter:eng-9",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "southcenter:94575",
+            "engineerId": "southcenter:eng-9",
+            "start": 1080,
+            "end": 1150
+          },
+          {
+            "jobId": "southcenter:78540",
+            "engineerId": "southcenter:eng-9",
+            "start": 1167,
+            "end": 1237
+          },
+          {
+            "jobId": "southcenter:52576",
+            "engineerId": "southcenter:eng-9",
+            "start": 1263,
+            "end": 1333
+          },
+          {
+            "jobId": "southcenter:75881",
+            "engineerId": "southcenter:eng-10",
+            "start": 864,
+            "end": 934
+          },
+          {
+            "jobId": "southcenter:76944",
+            "engineerId": "southcenter:eng-10",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "southcenter:66315",
+            "engineerId": "southcenter:eng-10",
+            "start": 1044,
+            "end": 1114
+          },
+          {
+            "jobId": "southcenter:23637",
+            "engineerId": "southcenter:eng-10",
+            "start": 1200,
+            "end": 1270
+          },
+          {
+            "jobId": "southcenter:97770",
+            "engineerId": "southcenter:eng-10",
+            "start": 1290,
+            "end": 1360
+          },
+          {
+            "jobId": "southcenter:85188",
+            "engineerId": "southcenter:eng-11",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "southcenter:47560",
+            "engineerId": "southcenter:eng-11",
+            "start": 1058,
+            "end": 1128
+          },
+          {
+            "jobId": "southcenter:32840",
+            "engineerId": "southcenter:eng-11",
+            "start": 1147,
+            "end": 1217
+          },
+          {
+            "jobId": "southcenter:19376",
+            "engineerId": "southcenter:eng-12",
+            "start": 960,
+            "end": 1030
+          },
+          {
+            "jobId": "southcenter:6185",
+            "engineerId": "southcenter:eng-12",
+            "start": 1080,
+            "end": 1150
+          },
+          {
+            "jobId": "southcenter:49105",
+            "engineerId": "southcenter:eng-13",
+            "start": 1200,
+            "end": 1220
+          },
+          {
+            "jobId": "southcenter:78036",
+            "engineerId": "southcenter:eng-13",
+            "start": 1242,
+            "end": 1262
+          },
+          {
+            "jobId": "southcenter:18023",
+            "engineerId": "southcenter:eng-14",
+            "start": 840,
+            "end": 890
+          }
+        ]
+      }
+    ]
+  }
+}

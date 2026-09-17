@@ -5,6 +5,7 @@ import { replan } from '../application/planning.js';
 import { readGeocache, resolvedPoint } from './geocoding.js';
 import { hasCoordinates } from '../optimization/travel.js';
 import { attachDiff } from '../domain/plan-diff.js';
+import { migrateWorkPolicy } from '../domain/policy-migration.js';
 
 export async function loadState(directory) {
   await fs.mkdir(directory, { recursive: true });
@@ -16,7 +17,16 @@ export async function loadState(directory) {
   }
   if (saved?.version === 2) {
     const before = structuredClone(saved);
-    let refreshed = false;
+    const norms = JSON.parse(
+      await fs.readFile(new URL('../../data/beeline/norms.json', import.meta.url), 'utf8'),
+    );
+    let refreshed = migrateWorkPolicy(saved, norms);
+    if (refreshed)
+      await fs.writeFile(
+        path.join(directory, `state-before-bk-hd-${Date.now()}.backup.json`),
+        JSON.stringify(before),
+        { flag: 'wx' },
+      );
     saved.settings.mode ||= 'economy';
     if (saved.dataset) {
       const cache = await readGeocache();

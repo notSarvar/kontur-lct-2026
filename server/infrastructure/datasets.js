@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import { OFFICIAL_POLICY } from '../domain/official-policy.js';
 
 const dataRoot = new URL('../../data/beeline/', import.meta.url);
 export const OFFICIAL_DATASETS = [
@@ -6,17 +7,47 @@ export const OFFICIAL_DATASETS = [
   { id: 'southeast', name: 'Юго-восток', file: 'Юго-восток Синтетические данные.csv' },
   { id: 'southcenter', name: 'Югоцентр', file: 'Югоцентр Синтетические данные.csv' },
 ];
-export const OFFICIAL_SKILLS = {
-  local: 'Локальные работы',
-  connection: 'Работы на подключение и дозаказы',
-  emergency: 'Аварийные работы',
-};
 const workTypes = {
   Подключение: { type: 'connection', skill: 'connection', norm: 'Подключение клиентов Базовая' },
-  Дозаказ: { type: 'additional', skill: 'connection', norm: 'Дозаказ оборудования' },
+  Дозаказ: { type: 'additional', skill: 'additional', norm: 'Дозаказ оборудования' },
   'Локальная заявка': { type: 'local', skill: 'local', norm: 'Локальная заявка/ремонт у клиента' },
-  'Глобальная проблема': { type: 'emergency', skill: 'emergency', norm: 'Аварий на ТКД' },
 };
+
+export function officialWork(fields, norms, policy = OFFICIAL_POLICY) {
+  const bk = fields['Тип заявки BK'],
+    hd = fields['Тип заявки HD'];
+  let work = workTypes[bk];
+  if (bk === 'Глобальная проблема') {
+    if (hd === 'Информация')
+      return {
+        type: 'information',
+        skills: [policy.globalSkill],
+        priority: 'normal',
+        duration: policy.informationServiceMinutes,
+        normRow: null,
+        assumptions: [policy.globalSkillAssumption, policy.informationDurationAssumption],
+        priorityBasis: 'HD = Информация: обычный приоритет; исходное окно сохраняется',
+      };
+    if (hd !== 'Авария') throw new Error(`Неизвестный HD глобальной проблемы: ${hd}`);
+    work = { type: 'emergency', skill: policy.globalSkill, norm: 'Аварий на ТКД' };
+  }
+  if (!work) throw new Error(`Неизвестный тип работ: ${bk}`);
+  const norm = norms.rows.find((n) => n.name === work.norm);
+  if (!norm || norm.travelMinutes + norm.technicalMinutes + norm.documentsMinutes !== norm.totalMinutes)
+    throw new Error(`Не найден или некорректен норматив: ${work.norm}`);
+  return {
+    type: work.type,
+    skills: [work.skill],
+    priority: work.type === 'emergency' ? 'urgent' : 'normal',
+    duration: norm.technicalMinutes + norm.documentsMinutes,
+    normRow: norm.sourceRow,
+    assumptions: bk === 'Глобальная проблема' ? [policy.globalSkillAssumption] : [],
+    priorityBasis:
+      work.type === 'emergency'
+        ? 'HD = Авария: срочно независимо от ширины окна'
+        : 'Обычный приоритет; ширина окна сама по себе не означает аварию',
+  };
+}
 
 // Preserve quoted delimiters and newlines, which occur in exported address fields.
 export function parseCsv(text) {
@@ -105,13 +136,7 @@ export function normalizeOfficialCsv(text, dataset, norms) {
     if (start.date !== end.date || end.minutes < start.minutes)
       throw new Error(`Некорректное окно заявки ${id}`);
     if (!source['Адрес']) throw new Error(`Отсутствует адрес заявки ${id}`);
-    const work = workTypes[source['Тип заявки BK']];
-    if (!work) throw new Error(`Неизвестный тип работ: ${source['Тип заявки BK']}`);
-    const norm = norms.rows.find((n) => n.name === work.norm);
-    if (!norm || norm.travelMinutes + norm.technicalMinutes + norm.documentsMinutes !== norm.totalMinutes) {
-      throw new Error(`Не найден или некорректен норматив: ${work.norm}`);
-    }
-    // User decision: all global problems, including «Информация», are emergencies.
+    const work = officialWork(source, norms);
     jobs.push({
       id: `${dataset.id}:${id}`,
       number: id,
@@ -125,17 +150,24 @@ export function normalizeOfficialCsv(text, dataset, norms) {
       lng: null,
       windowStart: start.minutes,
       windowEnd: end.minutes,
-      duration: norm.technicalMinutes + norm.documentsMinutes,
-      skills: [work.skill],
+      duration: work.duration,
+      skills: work.skills,
       equipment: [],
       requiredTransport: 'any',
-      priority: work.type === 'emergency' ? 'urgent' : 'normal',
+      priority: work.priority,
       status: 'pending',
       engineerId: null,
       notes: [],
       actualStart: null,
       actualEnd: null,
-      source: { file: dataset.file, fields: source, normRow: norm.sourceRow },
+      source: {
+        file: dataset.file,
+        fields: source,
+        normRow: work.normRow,
+        policyVersion: OFFICIAL_POLICY.version,
+        assumptions: work.assumptions,
+        priorityBasis: work.priorityBasis,
+      },
       review: [],
     });
   }

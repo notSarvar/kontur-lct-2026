@@ -42,6 +42,16 @@ export default function JobDetails({ job: j, state, onClose, edit, act, busy, as
             Приоритет<b>{j.priority === 'urgent' ? 'Авария' : 'Обычная'}</b>
           </span>
         </div>
+        {j.source?.fields && (
+          <div className="analysis-note">
+            <b>BK:</b> {j.source.fields['Тип заявки BK']} · <b>HD:</b> {j.source.fields['Тип заявки HD']}
+            <br />
+            {j.source.priorityBasis}
+            {j.source.assumptions?.map((text, i) => (
+              <p key={i}>Допущение: {text}</p>
+            ))}
+          </div>
+        )}
         {s && (
           <div className={`schedule-explanation ${s.late ? 'warning' : ''}`}>
             <ShieldCheck size={20} />

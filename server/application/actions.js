@@ -5,6 +5,9 @@ import { replan } from './planning.js';
 import { createOfficialScenario } from '../domain/official-scenario.js';
 import { COLORS } from '../domain/catalog.js';
 import { attachDiff } from '../domain/plan-diff.js';
+import fs from 'node:fs/promises';
+import { migrateWorkPolicy } from '../domain/policy-migration.js';
+import { OFFICIAL_POLICY } from '../domain/official-policy.js';
 const finite = (x, min, max) => typeof x === 'number' && Number.isFinite(x) && x >= min && x <= max;
 export async function applyAction(current, action, opts = {}) {
   let state = structuredClone(current);
@@ -415,6 +418,16 @@ export async function applyAction(current, action, opts = {}) {
       state.nextNumber = 1 + Math.max(...state.jobs.map((j) => Number(j.number)));
       state.settings = { ...current.settings, roadMode: 'estimate' };
       addEvent(state, 'Сценарий импортирован', 'Новый день начинается в 08:00');
+      if (
+        p.catalogVersion !== OFFICIAL_POLICY.version &&
+        state.jobs.some((j) => j.source?.fields?.['Тип заявки BK'] && !j.source.policyVersion)
+      ) {
+        delete state.catalogVersion;
+        const norms = JSON.parse(
+          await fs.readFile(new URL('../../data/beeline/norms.json', import.meta.url), 'utf8'),
+        );
+        migrateWorkPolicy(state, norms);
+      }
       break;
     }
     default:

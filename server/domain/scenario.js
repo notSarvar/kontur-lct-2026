@@ -1,5 +1,6 @@
 import { SKILLS, TYPES, COLORS, DEPOT } from './catalog.js';
 import { LOCATIONS } from './locations.js';
+import { OFFICIAL_POLICY } from './official-policy.js';
 export function rng(seed) {
   let a = seed >>> 0;
   return () => {
@@ -13,9 +14,9 @@ export function rng(seed) {
 export function createScenario({ seed = 42, count = 18, engineerCount = 4 } = {}) {
   const random = rng(seed);
   const combinations = [
-    ['local', 'connection'],
+    ['local', 'connection', 'additional'],
     ['emergency', 'local'],
-    ['connection', 'emergency'],
+    ['connection', 'additional', 'emergency'],
     Object.keys(SKILLS),
   ];
   const engineers = Array.from({ length: engineerCount }, (_, i) => ({
@@ -65,6 +66,7 @@ export function createScenario({ seed = 42, count = 18, engineerCount = 4 } = {}
   });
   return {
     version: 2,
+    catalogVersion: OFFICIAL_POLICY.version,
     revision: 0,
     seed,
     time: 480,
