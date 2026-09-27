@@ -30,9 +30,22 @@ export function baseline(jobs, engineers, evaluate) {
   return solution;
 }
 
-function insertions(job, solution, engineers, evaluate) {
+function insertions(job, solution, engineers, evaluate, cache) {
   const choices = [];
+  let jobCache = cache?.get(job.id);
+  if (cache && !jobCache) {
+    jobCache = new Map();
+    cache.set(job.id, jobCache);
+  }
   for (let e = 0; e < engineers.length; e++) {
+    if (evaluate.compatible && !evaluate.compatible(engineers[e], job)) continue;
+    const previous = jobCache?.get(e);
+    // Lists are replaced, never mutated. The evaluator's context is immutable
+    // during repair, so an unchanged list has exactly the same insertion cost.
+    if (previous?.list === solution.lists[e]) {
+      if (previous.best) choices.push(previous.best);
+      continue;
+    }
     let best = null;
     for (let p = 0; p <= solution.lists[e].length; p++) {
       const list = [...solution.lists[e].slice(0, p), job, ...solution.lists[e].slice(p)];
@@ -43,20 +56,20 @@ function insertions(job, solution, engineers, evaluate) {
       const delta = routeCost(route, evaluate.mode).map((value, i) => value - oldCost[i]);
       if (!best || compare(delta, best.delta) < 0) best = { e, list, route, delta };
     }
+    if (jobCache) jobCache.set(e, { list: solution.lists[e], best });
     if (best) choices.push(best);
   }
   return choices.sort((a, b) => compare(a.delta, b.delta));
 }
 
-export function repair(solution, pool, engineers, evaluate, regret = true) {
+export function repair(solution, pool, engineers, evaluate, regret = true, { cacheInsertions = true } = {}) {
   const remaining = [...pool];
-  // Cache insertion options per route revision. Only changed routes need recalculation
-  // in larger implementations; the current bounded dataset uses full feasibility checks.
+  const cache = cacheInsertions ? new Map() : null;
   while (remaining.length) {
     let chosen = null;
     for (let i = 0; i < remaining.length; i++) {
       const job = remaining[i],
-        choices = insertions(job, solution, engineers, evaluate);
+        choices = insertions(job, solution, engineers, evaluate, cache);
       if (!choices.length) continue;
       const first = choices[0],
         second = choices[1];
@@ -75,7 +88,8 @@ export function repair(solution, pool, engineers, evaluate, regret = true) {
     const { first, i } = chosen;
     solution.lists[first.e] = first.list;
     solution.routes[first.e] = first.route;
-    remaining.splice(i, 1);
+    const [inserted] = remaining.splice(i, 1);
+    cache?.delete(inserted.id);
   }
   solution.unassigned = remaining;
   return solution;
@@ -137,6 +151,8 @@ export function improve(initial, jobs, engineers, evaluate, { seed = 42, iterati
       routes: lists.map((l, i) => evaluate(engineers[i], l)),
       unassigned: [],
     };
+    // A real travel matrix need not satisfy the triangle inequality.
+    if (candidate.routes.some((r) => !r)) continue;
     repair(candidate, [...current.unassigned, ...removed], engineers, evaluate, step % 3 !== 0);
     if (better(candidate, best)) {
       best = candidate;

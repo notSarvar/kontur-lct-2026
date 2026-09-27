@@ -47,7 +47,7 @@ export default function PlanChanges({ diff, engineers = [] }) {
     );
   };
   return (
-    <>
+    <div className="plan-changes">
       <div className="table-scroll">
         <table className="diff-metrics">
           <thead>
@@ -79,7 +79,7 @@ export default function PlanChanges({ diff, engineers = [] }) {
         При добавлении и удалении заявок объём работы меняется. Расстояния сравнивайте вместе с покрытием;
         качество поездок указано в плане.
       </p>
-      <h3>Изменения заявок · {diff.jobChanges.length}</h3>
+      <h3 className="changes-heading">Изменения заявок · {diff.jobChanges.length}</h3>
       {diff.jobChanges.length ? (
         <div className="table-scroll diff-list">
           <table>
@@ -116,15 +116,35 @@ export default function PlanChanges({ diff, engineers = [] }) {
       ) : (
         <p>Назначения и расписание не изменились.</p>
       )}
-      <h3>Изменения маршрутов · {diff.routeChanges.length}</h3>
-      <div className="route-diff-list">
-        {diff.routeChanges.map((c) => (
-          <p key={c.engineerId}>
-            <b>{engineerName(c.engineerId)}</b>: {c.before?.stops.length || 0} → {c.after?.stops.length || 0}{' '}
-            визитов · {(c.before?.km || 0).toFixed(1)} → {(c.after?.km || 0).toFixed(1)} км
-          </p>
-        ))}
-      </div>
-    </>
+      <h3 className="changes-heading">Изменения маршрутов · {diff.routeChanges.length}</h3>
+      {diff.routeChanges.length ? (
+        <div className="table-scroll route-diff-list">
+          <table className="route-diff-table">
+            <thead>
+              <tr>
+                <th>Инженер</th>
+                <th>Визиты</th>
+                <th>Расстояние, км</th>
+              </tr>
+            </thead>
+            <tbody>
+              {diff.routeChanges.map((c) => (
+                <tr key={c.engineerId}>
+                  <td>{engineerName(c.engineerId)}</td>
+                  <td>
+                    {c.before?.stops.length || 0} → {c.after?.stops.length || 0}
+                  </td>
+                  <td>
+                    {(c.before?.km || 0).toFixed(1)} → {(c.after?.km || 0).toFixed(1)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p className="muted">Маршруты не изменились.</p>
+      )}
+    </div>
   );
 }

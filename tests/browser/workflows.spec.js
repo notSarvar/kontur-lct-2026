@@ -1,3 +1,4 @@
+import { openHackathon } from './workspaces.js';
 import { test, expect } from '@playwright/test';
 test.describe.configure({ mode: 'serial' });
 async function action(request, type, payload = {}) {
@@ -13,22 +14,27 @@ test('dispatcher, map, graph and all navigation screens render without errors', 
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Рабочий день под контролем' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Карта выездов', exact: true })).toBeVisible();
   await expect(page.locator('.job-pin')).toHaveCount(18);
   await page.getByRole('button', { name: 'График', exact: true }).click();
   await expect(page.locator('.timeline-row')).toHaveCount(4);
   await page.getByRole('button', { name: 'Карта', exact: true }).click();
-  for (const [nav, heading] of [
-    ['Заявки', 'Каждая заявка на своём месте'],
-    ['Команда', 'Люди, на которых всё держится'],
-    ['Аналитика', 'Результат в цифрах'],
-    ['Поддержка', 'Помощь там, где она нужна'],
+  for (const [nav, selector] of [
+    ['Заявки', '.jobs-panel'],
+    ['Команда', '.team-directory'],
+    ['Аналитика', '.analytics-grid'],
+    ['Поддержка', '.support-panel'],
   ]) {
     await page
       .locator('.sidebar nav')
       .getByRole('button', { name: new RegExp(nav) })
       .click();
-    await expect(page.getByRole('heading', { name: heading })).toBeVisible();
+    await expect(page.locator(selector)).toBeVisible();
+    await expect(page.locator('.dispatch-metrics')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Новая заявка', exact: true })).toHaveCount(
+      nav === 'Заявки' ? 1 : 0,
+    );
+    await expect(page.getByRole('button', { name: 'Пересчитать план', exact: true })).toHaveCount(0);
   }
   expect(errors).toEqual([]);
 });
@@ -41,6 +47,10 @@ test('custom input creates a real new route assignment, report syncs to a second
   const second = await context.newPage();
   await second.goto('/');
   await second.getByRole('tab', { name: 'Инженер', exact: true }).click();
+  await page
+    .locator('.sidebar nav')
+    .getByRole('button', { name: /Заявки/ })
+    .click();
   await page.getByRole('button', { name: 'Новая заявка', exact: true }).click();
   await page.getByLabel('Название заявки', { exact: true }).fill('Тест: диагностика офиса');
   await page.getByLabel('Адрес / название объекта').fill('Тестовый офис на карте');
@@ -83,7 +93,9 @@ test('simulated execution, break, manual completion, issue handling and history 
   await page.locator('.phone').getByRole('button', { name: 'Перерыв 30 мин' }).click();
   await expect(page.locator('.phone-break')).toBeVisible();
   await page.locator('.phone').getByRole('button', { name: 'Завершить работу', exact: true }).click();
-  await expect(page.locator('.phone-summary')).toContainText('1');
+  await expect(
+    page.locator('.phone').getByRole('button', { name: 'Завершить работу', exact: true }),
+  ).toHaveCount(0);
   s = await (await request.get('/api/state')).json();
   expect(s.jobs.find((j) => j.id === stop.jobId).status).toBe('done');
   await page.getByRole('tab', { name: 'Диспетчер', exact: true }).click();
@@ -109,6 +121,7 @@ test('overload, editing resources and invalid API inputs produce meaningful resu
   request,
 }) => {
   await page.goto('/');
+  await openHackathon(page);
   await page.getByRole('button', { name: 'Новый сценарий', exact: true }).click();
   await page.getByRole('button', { name: 'Высокая нагрузка' }).click();
   await page.getByRole('button', { name: 'Сгенерировать день' }).click();
@@ -116,6 +129,7 @@ test('overload, editing resources and invalid API inputs produce meaningful resu
   let s = await (await request.get('/api/state')).json();
   expect(s.jobs).toHaveLength(35);
   expect(s.plan.unassigned.length).toBeGreaterThan(0);
+  await page.goto('/');
   await page
     .locator('.sidebar nav')
     .getByRole('button', { name: /Команда/ })
@@ -146,11 +160,13 @@ test('batch arrival, edited windows and import/export work through the interface
   request,
 }) => {
   await page.goto('/');
+  await openHackathon(page);
   await page.getByRole('button', { name: 'Случайные заявки', exact: true }).click();
   await page.getByRole('button', { name: 'Добавить и перепланировать' }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
   let s = await (await request.get('/api/state')).json();
   expect(s.jobs).toHaveLength(21);
+  await page.goto('/');
   await page
     .locator('.sidebar nav')
     .getByRole('button', { name: /Заявки/ })
@@ -166,6 +182,7 @@ test('batch arrival, edited windows and import/export work through the interface
   expect(s.jobs[0].windowEnd).toBe(481);
   expect(s.jobs[0].engineerId).toBeNull();
   const exported = await (await request.get('/api/export')).json();
+  await openHackathon(page);
   await page.locator('input[type=file]').setInputFiles({
     name: 'scenario.json',
     mimeType: 'application/json',

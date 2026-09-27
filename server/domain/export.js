@@ -18,16 +18,18 @@ const jobFields = [
   'originalWindow',
   'pinnedEngineerId',
   'geocodingCandidates',
+  'sop',
 ];
 export function exportScenario(state) {
   return {
     version: 2,
     catalogVersion: state.catalogVersion,
+    sopTemplates: state.sopTemplates,
     jobs: state.jobs.map((j) =>
       Object.fromEntries(jobFields.filter((k) => j[k] !== undefined).map((k) => [k, j[k]])),
     ),
     engineers: state.engineers.map(
-      ({ id, name, skills, equipment, transport, shiftStart, shiftEnd, home }) => ({
+      ({ id, name, skills, equipment, transport, shiftStart, shiftEnd, home, workHistory }) => ({
         id,
         name,
         skills,
@@ -36,6 +38,7 @@ export function exportScenario(state) {
         shiftStart,
         shiftEnd,
         home,
+        workHistory,
       }),
     ),
   };

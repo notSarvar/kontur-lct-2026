@@ -87,7 +87,7 @@ export default function ScenarioForm({ state, onClose, save, busy }) {
         <p className="inline-warning">
           <TriangleAlert size={16} />
           Текущий день, отчёты и история заменятся. Время вернётся к 08:00. Перед заменой можно экспортировать
-          входные данные в разделе «Заявки».
+          входные данные кнопкой «Экспорт JSON» в пульте хакатона.
         </p>
         <div className="form-actions">
           <Button type="button" onClick={onClose}>

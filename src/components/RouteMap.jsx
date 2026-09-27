@@ -83,14 +83,14 @@ export default function RouteMap({
       if (route.segments)
         for (const segment of route.segments)
           L.polyline(segment.coordinates, {
-            color: engineer.color,
+            color: selected === 'all' ? '#94a6a0' : '#237d68',
             weight: selected === 'all' ? 3 : 4,
             opacity: 0.75,
             dashArray: segment.roadGeometry ? null : '7 6',
           }).addTo(layers.current);
       if (!route.segments && route.geometry?.length > 1)
         L.polyline(route.geometry, {
-          color: engineer.color,
+          color: selected === 'all' ? '#94a6a0' : '#237d68',
           weight: selected === 'all' ? 3 : 4,
           opacity: 0.75,
           dashArray: route.roadGeometry ? null : '7 6',
@@ -101,7 +101,7 @@ export default function RouteMap({
         if (!job || !Number.isFinite(job.lat) || !Number.isFinite(job.lng)) return;
         const icon = L.divIcon({
           className: 'job-pin-wrap',
-          html: `<div class="job-pin ${job.priority === 'urgent' ? 'urgent-pin' : ''}" style="--pin:${engineer.color}">${i + 1}</div>`,
+          html: `<div class="job-pin ${job.priority === 'urgent' ? 'urgent-pin' : ''}" style="--pin:${job.priority === 'urgent' ? '#b97723' : '#647c73'}">${i + 1}</div>`,
           iconSize: [28, 34],
           iconAnchor: [14, 30],
         });
@@ -142,13 +142,13 @@ export default function RouteMap({
         zIndexOffset: 1000,
         icon: L.divIcon({
           className: 'engineer-pin-wrap',
-          html: `<div class="engineer-pin" style="--pin:${e.color}"><svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="6" r="3"/><path d="M5 21v-3a7 7 0 0 1 14 0v3M8 14v7m8-7v7"/></svg></div>`,
+          html: `<div class="engineer-pin" style="--pin:#647c73"><svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="6" r="3"/><path d="M5 21v-3a7 7 0 0 1 14 0v3M8 14v7m8-7v7"/></svg></div>`,
           iconSize: [36, 36],
           iconAnchor: [18, 18],
         }),
       })
         .addTo(layers.current)
-        .bindTooltip(`${esc(e.name)} · положение в симуляции`);
+        .bindTooltip(esc(e.name));
       positions.push([e.position.lat, e.position.lng]);
     }
     const nextKey = `${state.dataset?.id || state.seed}-${selected}-${state.jobs.length}`;

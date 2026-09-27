@@ -28,20 +28,20 @@ try {
   if (!response.ok()) throw new Error(await response.text());
   const state = await response.json();
   await page.goto(target);
-  await page.getByRole('heading', { name: 'Рабочий день под контролем' }).waitFor();
+  await page.getByRole('heading', { name: 'Карта выездов', exact: true }).waitFor();
   await waitForMap();
   await page.evaluate(() => document.fonts.ready);
   const route = [...state.plan.routes].sort((a, b) => b.stops.length - a.stops.length)[0];
   const engineer = state.engineers.find((item) => item.id === route.engineerId);
-  await page.locator('.engineer-filters').getByRole('button', { name: engineer.name, exact: true }).click();
+  await page.getByLabel('Инженер на карте и графике').selectOption(engineer.id);
   await waitForMap();
   await page.screenshot({ path: path.join(output, '01-dispatcher.png') });
-  await page
-    .locator('.sidebar nav')
-    .getByRole('button', { name: /Аналитика/ })
-    .click();
-  await page.getByRole('heading', { name: 'ALNS и базовый алгоритм' }).waitFor();
+  const { workspace } = await (await page.request.get(`${target}/api/state`)).json();
+  await page.goto(workspace.hackathonUrl);
+  await page.locator('.simulation').waitFor();
+  await page.getByRole('heading', { name: 'Текущий план и базовый алгоритм' }).waitFor();
   await page.screenshot({ path: path.join(output, '02-analytics.png') });
+  await page.goto(target);
   await page
     .locator('.sidebar nav')
     .getByRole('button', { name: /Поддержка/ })

@@ -1,4 +1,5 @@
 import { hasCoordinates } from './travel.js';
+import { workloadBase, balanceCost } from '../domain/engineer-metrics.js';
 
 export function incompatibilities(job, engineer) {
   const reasons = [];
@@ -35,6 +36,7 @@ export function contextFor(state, engineer) {
 
 export function createEvaluator(state, leg, previous = {}) {
   const contexts = new Map(state.engineers.map((e) => [e.id, contextFor(state, e)]));
+  const loads = new Map(state.engineers.map((e) => [e.id, workloadBase(state, e, contexts.get(e.id))]));
   const compatible = new Map(
     state.engineers.map((e) => [
       e.id,
@@ -95,12 +97,16 @@ export function createEvaluator(state, leg, previous = {}) {
       work,
       changes,
       urgentResponse,
+      balance: state.settings.balanceWork ? balanceCost(loads.get(engineer.id), work) : 0,
+      // Integer metres per leg are shared with the OR-Tools model.
+      distanceCost: stops.reduce((sum, s) => sum + Math.round(s.km * 1000), 0),
       late: 0,
       end: time,
       used: Boolean(stops.length || context.locked),
     };
   };
   evaluate.mode = state.settings.mode || 'economy';
+  evaluate.compatible = (engineer, job) => compatible.get(engineer.id)?.get(job.id) === true;
   return evaluate;
 }
 
@@ -109,8 +115,9 @@ export function routeCost(route, mode = 'economy') {
     response = route.urgentResponse;
   return [
     ...(mode === 'emergency' ? [response, people] : [people, response]),
+    route.balance || 0,
     route.changes,
-    route.km,
+    route.distanceCost ?? Math.round(route.km * 1000),
     route.drive,
   ];
 }
@@ -121,7 +128,7 @@ export function objective(solution) {
       const cost = routeCost(route, solution.mode);
       return sum.map((value, i) => value + cost[i]);
     },
-    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
   );
   return [
     solution.unassigned.filter((j) => j.priority === 'urgent').length,

@@ -65,6 +65,15 @@ export function validateEngineer(e) {
   );
   const p = e.home || e.position;
   assert(p && finite(p.lat, -85, 85) && finite(p.lng, -180, 180), 'Проверьте координаты базы');
+  const history = e.workHistory || { workMinutes: 0, availableMinutes: 0, label: '' };
+  assert(
+    finite(history.availableMinutes, 0, 100000) && finite(history.workMinutes, 0, history.availableMinutes),
+    'История: работа должна быть от 0 до доступного времени прошлых смен (не более 100 000 мин)',
+  );
+  assert(
+    typeof history.label === 'string' && history.label.length <= 150,
+    'Укажите период истории (до 150 символов)',
+  );
   return {
     name: e.name.trim(),
     skills: [...new Set(e.skills)],
@@ -73,5 +82,10 @@ export function validateEngineer(e) {
     shiftStart: e.shiftStart,
     shiftEnd: e.shiftEnd,
     home: { lat: p.lat, lng: p.lng },
+    workHistory: {
+      workMinutes: history.workMinutes,
+      availableMinutes: history.availableMinutes,
+      label: history.label.trim(),
+    },
   };
 }

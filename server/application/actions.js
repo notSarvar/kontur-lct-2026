@@ -8,11 +8,20 @@ import { attachDiff } from '../domain/plan-diff.js';
 import fs from 'node:fs/promises';
 import { migrateWorkPolicy } from '../domain/policy-migration.js';
 import { OFFICIAL_POLICY } from '../domain/official-policy.js';
+import { ensureSops, sopAction, validateSop, sopCopy } from '../domain/sop.js';
+import { attachEngineerMetrics } from '../domain/engineer-metrics.js';
+import { optimizerSettings } from '../optimization/settings.js';
 const finite = (x, min, max) => typeof x === 'number' && Number.isFinite(x) && x >= min && x <= max;
 export async function applyAction(current, action, opts = {}) {
   let state = structuredClone(current);
   const { type, payload: p = {} } = action;
   switch (type) {
+    case 'sop.template.save':
+    case 'job.sop.apply':
+    case 'job.sop.save':
+    case 'job.sop.check':
+      sopAction(state, type, p);
+      break;
     case 'generate': {
       assert(Number.isInteger(p.count) && p.count >= 1 && p.count <= 100, 'Число заявок: 1–100');
       assert(
@@ -274,6 +283,10 @@ export async function applyAction(current, action, opts = {}) {
         (j) => j.engineerId === p.id && ['enroute', 'working'].includes(j.status),
       );
       const start = Math.max(state.time, active?.lockedStop?.end || 0);
+      engineer.breaks = (engineer.breaks || [])
+        .map((b) => ({ ...b, end: Math.min(b.end, state.time) }))
+        .filter((b) => b.end > b.start);
+      if (p.minutes) engineer.breaks.push({ start, end: start + p.minutes });
       engineer.pausedUntil = p.minutes ? start + p.minutes : 0;
       addEvent(
         state,
@@ -316,6 +329,17 @@ export async function applyAction(current, action, opts = {}) {
       const job = state.jobs.find((j) => j.id === p.id);
       assert(job && job.status !== 'done', 'Заявка недоступна');
       const text = String(p.text || 'Нужна помощь диспетчера').slice(0, 2000);
+      if (['enroute', 'working'].includes(job.status) && job.lockedStop) {
+        job.attempts ??= [];
+        job.attempts.push({
+          engineerId: job.engineerId,
+          stop: structuredClone(job.lockedStop),
+          start: job.actualStart,
+          end: state.time,
+        });
+        job.lockedStop = null;
+        job.actualStart = null;
+      }
       state.support.push({ id: crypto.randomUUID(), jobId: job.id, time: state.time, text, status: 'open' });
       job.status = 'blocked';
       addEvent(state, 'Нужна помощь на объекте', `№${job.number} · ${text}`, job.engineerId, 'warning');
@@ -359,6 +383,7 @@ export async function applyAction(current, action, opts = {}) {
       );
       state.settings = {
         ...state.settings,
+        ...optimizerSettings({ ...state.settings, ...p }),
         roadMode: p.roadMode,
         stability: p.stability !== false,
         mode: p.mode || state.settings.mode || 'economy',
@@ -392,6 +417,9 @@ export async function applyAction(current, action, opts = {}) {
         id: typeof j.id === 'string' && j.id.length < 128 ? j.id : `job-${i + 1}`,
         number: /^\d{1,12}$/.test(String(j.number)) ? j.number : 1001 + i,
         source: j.source,
+        ...(j.sop
+          ? { sop: { ...sopCopy({ ...j.sop, ...validateSop(j.sop) }), templateId: j.sop.templateId } }
+          : {}),
         originalWindow: j.originalWindow,
         pinnedEngineerId: j.pinnedEngineerId || null,
         geocodingCandidates: Array.isArray(j.geocodingCandidates)
@@ -417,6 +445,15 @@ export async function applyAction(current, action, opts = {}) {
       );
       state.nextNumber = 1 + Math.max(...state.jobs.map((j) => Number(j.number)));
       state.settings = { ...current.settings, roadMode: 'estimate' };
+      if (Array.isArray(p.sopTemplates)) {
+        assert(p.sopTemplates.length === 3, 'Ожидается три стандартных регламента');
+        ensureSops(state);
+        for (const template of state.sopTemplates) {
+          const imported = p.sopTemplates.find((t) => t.id === template.id);
+          assert(imported, 'Не найден стандартный регламент');
+          Object.assign(template, validateSop(imported), { version: template.version + 1, edited: true });
+        }
+      }
       addEvent(state, 'Сценарий импортирован', 'Новый день начинается в 08:00');
       if (
         p.catalogVersion !== OFFICIAL_POLICY.version &&
@@ -433,8 +470,17 @@ export async function applyAction(current, action, opts = {}) {
     default:
       assert(false, 'Неизвестное действие');
   }
-  const skip = ['job.note', 'support.create'].includes(type);
+  ensureSops(state);
+  const skip = [
+    'job.note',
+    'support.create',
+    'sop.template.save',
+    'job.sop.apply',
+    'job.sop.save',
+    'job.sop.check',
+  ].includes(type);
   if (!skip) await replan(state, opts);
+  else attachEngineerMetrics(state);
   if (!skip) attachDiff(current, state);
   state.revision = current.revision + 1;
   return state;

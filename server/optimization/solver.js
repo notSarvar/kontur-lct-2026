@@ -19,11 +19,49 @@ export function solve(state, matrix = {}, options = {}) {
   let best = better(greedy, reference) ? greedy : reference;
   const regret = repair(emptySolution(state.engineers, evaluate), sorted, state.engineers, evaluate, true);
   if (better(regret, best)) best = regret;
-  const result = improve(best, pending, state.engineers, evaluate, {
-    seed: state.seed,
-    iterations: options.iterations ?? 60,
-  });
-  best = result.solution;
+  let result = { diagnostics: { iterations: 0, restarts: 0, improvements: 0 } };
+  if (options.externalLists) {
+    const seen = new Set(),
+      byPending = new Map(pending.map((j) => [j.id, j]));
+    if (options.externalLists.length !== state.engineers.length)
+      throw new Error('Solver returned invalid engineer count');
+    const lists = options.externalLists.map((ids) =>
+      ids.map((id) => {
+        if (!byPending.has(id) || seen.has(id)) throw new Error('Solver returned duplicate or unknown job');
+        seen.add(id);
+        return byPending.get(id);
+      }),
+    );
+    const routes = lists.map((l, i) => evaluate(state.engineers[i], l));
+    if (routes.some((r) => !r)) throw new Error('Solver returned an infeasible route');
+    const candidate = {
+      mode: evaluate.mode,
+      lists,
+      routes,
+      unassigned: pending.filter((j) => !seen.has(j.id)),
+    };
+    const retainedInitial = better(best, candidate);
+    if (!retainedInitial) best = candidate;
+    result.diagnostics = { ...options.externalDiagnostics, retainedInitial };
+  } else {
+    const iterations = options.iterations ?? state.settings.alnsIterations ?? 60;
+    const restarts = options.restarts ?? state.settings.alnsRestarts ?? 1;
+    const runs = [];
+    for (let run = 0; run < restarts; run++) {
+      const next = improve(best, pending, state.engineers, evaluate, {
+        seed: (state.seed ?? 42) + run * 104729,
+        iterations,
+      });
+      if (better(next.solution, best)) best = next.solution;
+      runs.push(next.diagnostics);
+    }
+    result.diagnostics = {
+      iterations,
+      restarts,
+      runs,
+      improvements: runs.reduce((s, r) => s + r.improvements, 0),
+    };
+  }
 
   function reason(job) {
     if (!hasCoordinates(job))
@@ -128,6 +166,7 @@ export function solve(state, matrix = {}, options = {}) {
     changes,
     objective: objective(best),
     diagnostics: result.diagnostics,
+    solver: options.externalLists ? 'ortools' : 'alns',
     baseline: { routes: reference.routes, unassigned: reference.unassigned.map((j) => j.id) },
     metrics: {
       assigned: routes.reduce((s, r) => s + r.stops.length, 0),
@@ -154,8 +193,9 @@ export function solve(state, matrix = {}, options = {}) {
           .join(','),
       computeMs: Math.round(performance.now() - started),
     },
-    algorithm:
-      'ALNS: regret-2 вставка, случайное и связанное удаление, освобождение маршрута; адаптивный выбор операций. Эвристика без гарантии глобального оптимума.',
+    algorithm: options.externalLists
+      ? 'Google OR-Tools CP-SAT: последовательная оптимизация приоритетов с ограничением времени. Результат проверен общим валидатором; статус каждого этапа — в сравнении.'
+      : `ALNS: regret-2 и адаптивное удаление/вставка; ${result.diagnostics.iterations} итераций × ${result.diagnostics.restarts} запусков. Эвристика без гарантии глобального оптимума.`,
     at: state.time,
     computedAt: new Date().toISOString(),
   };

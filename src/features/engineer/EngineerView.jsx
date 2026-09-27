@@ -18,6 +18,7 @@ import {
 import { time, minutes, transport } from '../../shared/format.js';
 import { Button, Avatar, Badge, Event } from '../../components/ui.jsx';
 import RouteMap from '../../components/RouteMap.jsx';
+import { WorkloadSummary } from '../team/Workload.jsx';
 
 export default function EngineerView({ state, engineer: e, setEngineer, tab, setTab, open, act, busy }) {
   const r = state.plan.routes.find((r) => r.engineerId === e.id),
@@ -26,17 +27,10 @@ export default function EngineerView({ state, engineer: e, setEngineer, tab, set
     job = next ? byId[next.jobId] : null,
     completed = state.jobs.filter((j) => j.engineerId === e.id && j.status === 'done');
   const events = state.notifications.filter((n) => n.engineerId === e.id || !n.engineerId);
+  const workload = state.plan.engineerMetrics?.find((m) => m.engineerId === e.id);
   return (
     <>
       <div className="page-heading">
-        <div>
-          <div className="eyebrow">
-            <span />
-            ПРИЛОЖЕНИЕ ИНЖЕНЕРА
-          </div>
-          <h1>Весь рабочий день — под рукой</h1>
-          <p>То же расписание. Заметки и изменения сразу видны диспетчеру.</p>
-        </div>
         <select
           aria-label="Выбрать инженера"
           value={e.id}
@@ -74,16 +68,22 @@ export default function EngineerView({ state, engineer: e, setEngineer, tab, set
                 <>
                   <div className="phone-summary">
                     <div>
-                      <b>{r.stops.length}</b>
-                      <span>выездов впереди</span>
-                    </div>
-                    <div>
-                      <b>{completed.length}</b>
-                      <span>выполнено</span>
+                      <b>
+                        {Math.round(workload?.remaining.work ?? r.work)}
+                        <small> мин</small>
+                      </b>
+                      <span>работы впереди</span>
                     </div>
                     <div>
                       <b>
-                        {Math.round(r.drive)}
+                        {(workload?.remaining.km ?? r.totalKm).toFixed(1)}
+                        <small> км</small>
+                      </b>
+                      <span>путь · расчёт</span>
+                    </div>
+                    <div>
+                      <b>
+                        {Math.round(workload?.remaining.travel ?? r.remainingDrive)}
                         <small> мин</small>
                       </b>
                       <span>в дороге</span>
@@ -231,6 +231,7 @@ export default function EngineerView({ state, engineer: e, setEngineer, tab, set
                     </p>
                   ))}
                   <h4>Моя статистика</h4>
+                  <WorkloadSummary metrics={state.plan.engineerMetrics?.find((m) => m.engineerId === e.id)} />
                   <p>
                     {completed.length} выполнено ·{' '}
                     {completed.filter((j) => j.actualStart <= j.windowEnd).length} в срок
@@ -282,6 +283,7 @@ export default function EngineerView({ state, engineer: e, setEngineer, tab, set
               <Radio size={18} />
             </div>
             <div className="context-facts">
+              <WorkloadSummary metrics={state.plan.engineerMetrics?.find((m) => m.engineerId === e.id)} />
               <span>
                 Состояние
                 <b>

@@ -24,7 +24,7 @@ test('live provider check and delivery screenshots', async ({ page, request }) =
   page.on('pageerror', (e) => errors.push(e.message));
   await fs.mkdir('screenshots', { recursive: true });
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Рабочий день под контролем' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Карта выездов', exact: true })).toBeVisible();
   await page
     .waitForFunction(
       () =>

@@ -1,2 +1,3 @@
 # Preserve the original Windows-1251 CSV bytes and SHA-256 checksums.
 data/beeline/*.csv -text -diff
+data/experiments/**/*.csv -text -diff

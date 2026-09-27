@@ -1,48 +1,36 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   ArrowUpRight,
-  ArrowRight,
-  ArrowUpFromLine,
   Bell,
   Check,
   CheckCheck,
-  ChevronRight,
   CircleHelp,
   Clock3,
-  Coffee,
-  Download,
   Gauge,
   Headphones,
-  Layers3,
   LayoutDashboard,
   ListTodo,
   Loader2,
   MapPin,
-  Navigation,
   Pause,
-  Play,
   Plus,
   RefreshCw,
   Route,
   Search,
   Settings2,
-  ShieldCheck,
-  Shuffle,
-  SlidersHorizontal,
   Smartphone,
   TriangleAlert,
   Users,
-  Wrench,
   X,
-  Zap,
 } from 'lucide-react';
-import { time, duration, transport, statusText } from '../shared/format.js';
-import { Button, Avatar, Badge, Modal, Metric, Empty, Event } from '../components/ui.jsx';
+import { time, statusText } from '../shared/format.js';
+import { Button, Modal, Metric, Empty, Event } from '../components/ui.jsx';
 import RouteMap from '../components/RouteMap.jsx';
 import Timeline from '../components/Timeline.jsx';
 import JobsTable from '../features/jobs/JobsTable.jsx';
 import JobForm from '../features/jobs/JobForm.jsx';
 import JobDetails from '../features/jobs/JobDetails.jsx';
+import { SopTemplates } from '../features/jobs/Sop.jsx';
 import Analytics from '../features/analytics/Analytics.jsx';
 import EngineerView from '../features/engineer/EngineerView.jsx';
 import EngineerForm from '../features/team/EngineerForm.jsx';
@@ -54,6 +42,12 @@ import OfficeForm from '../features/scenarios/OfficeForm.jsx';
 import PlanPreview from '../features/plans/PlanPreview.jsx';
 import AssignmentForm from '../features/plans/AssignmentForm.jsx';
 import GeographyPanel from '../features/scenarios/GeographyPanel.jsx';
+import Attention from '../features/jobs/Attention.jsx';
+import TeamPlan from '../features/team/TeamPlan.jsx';
+import TeamList from '../features/team/TeamList.jsx';
+import Availability from '../features/team/Availability.jsx';
+import { freeWindows } from '../features/team/availability.js';
+import Hackathon from '../features/scenarios/Hackathon.jsx';
 
 export default function App() {
   const [state, setState] = useState(null),
@@ -61,7 +55,7 @@ export default function App() {
     [busy, setBusy] = useState(false),
     [online, setOnline] = useState(false);
   const [mode, setMode] = useState('dispatch'),
-    [page, setPage] = useState('overview'),
+    [section, setPage] = useState('overview'),
     [selected, setSelected] = useState('all'),
     [mobileEngineer, setMobileEngineer] = useState('eng-1');
   const [modal, setModal] = useState(null),
@@ -71,11 +65,17 @@ export default function App() {
     [phoneTab, setPhoneTab] = useState('route');
   const [search, setSearch] = useState(''),
     [filter, setFilter] = useState('all'),
-    [timeline, setTimeline] = useState(false);
+    [timeline, setTimeline] = useState(false),
+    [focusWindow, setFocusWindow] = useState(null);
   const stateRef = useRef(state),
-    busyRef = useRef(false),
-    fileRef = useRef();
+    busyRef = useRef(false);
+  const isHackathon = state?.workspace?.mode === 'hackathon';
+  const page = isHackathon ? 'demo' : section;
+  useEffect(() => {
+    document.title = isHackathon ? 'Контур — пульт хакатона' : 'Контур — маршруты выездной команды';
+  }, [isHackathon]);
   stateRef.current = state;
+  useEffect(() => setFocusWindow(null), [state?.revision]);
   const accept = (next) => setState((prev) => (!prev || next.revision >= prev.revision ? next : prev));
   const load = async () => {
     try {
@@ -206,7 +206,12 @@ export default function App() {
     );
   const currentJob = modal?.type === 'job' ? jobs.find((j) => j.id === modal.id) : null;
   const openCount = state.support.filter((t) => t.status === 'open').length;
-  const routes = plan.routes.filter((r) => selected === 'all' || r.engineerId === selected);
+  const freeNow = engineers.filter((e) => freeWindows(state, e).some((w) => w.start === state.time)).length;
+  const goJobs = (nextFilter = 'all') => {
+    setFilter(nextFilter);
+    setSearch('');
+    setPage('jobs');
+  };
   const visibleJobs = jobs.filter(
     (j) =>
       (filter === 'all' ||
@@ -217,16 +222,6 @@ export default function App() {
             : j.status === filter)) &&
       `${j.title} ${j.address} ${j.number}`.toLowerCase().includes(search.toLowerCase()),
   );
-  const exportFile = async () => {
-    const response = await fetch('/api/export');
-    const blob = new Blob([JSON.stringify(await response.json(), null, 2)], { type: 'application/json' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `kontur-scenario-${state.seed}.json`;
-    a.click();
-    URL.revokeObjectURL(a.href);
-  };
-  const urgent = () => open({ type: 'newJob', urgent: true });
   const sidebarItems = [
     ['overview', LayoutDashboard, 'Обзор дня'],
     ['jobs', ListTodo, 'Заявки'],
@@ -235,7 +230,7 @@ export default function App() {
     ['support', Headphones, 'Поддержка'],
   ];
   return (
-    <div className="application">
+    <div className={`application ${isHackathon ? 'hackathon-workspace' : ''}`}>
       <header className="topbar">
         <a
           className="brand"
@@ -251,27 +246,41 @@ export default function App() {
           </span>
           контур<span className="brand-dot">.</span>
         </a>
-        <div className="mode-switch" role="tablist" aria-label="Режим приложения">
-          <button
-            role="tab"
-            aria-selected={mode === 'dispatch'}
-            className={mode === 'dispatch' ? 'active' : ''}
-            onClick={() => setMode('dispatch')}
-          >
-            <LayoutDashboard size={16} />
-            Диспетчер
-          </button>
-          <button
-            role="tab"
-            aria-selected={mode === 'engineer'}
-            className={mode === 'engineer' ? 'active' : ''}
-            onClick={() => setMode('engineer')}
-          >
-            <Smartphone size={16} />
-            Инженер
-          </button>
-        </div>
+        {isHackathon ? (
+          <span className="workspace-tag">Хакатон</span>
+        ) : (
+          <div className="mode-switch" role="tablist" aria-label="Режим приложения">
+            <button
+              role="tab"
+              aria-selected={mode === 'dispatch'}
+              className={mode === 'dispatch' ? 'active' : ''}
+              onClick={() => setMode('dispatch')}
+            >
+              <LayoutDashboard size={16} />
+              Диспетчер
+            </button>
+            <button
+              role="tab"
+              aria-selected={mode === 'engineer'}
+              className={mode === 'engineer' ? 'active' : ''}
+              onClick={() => setMode('engineer')}
+            >
+              <Smartphone size={16} />
+              Инженер
+            </button>
+          </div>
+        )}
         <div className="top-right">
+          {isHackathon && (
+            <a
+              className="button product-link"
+              href={state.workspace.productUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Открыть продукт <ArrowUpRight size={16} />
+            </a>
+          )}
           <span className={`connection ${online ? '' : 'offline'}`}>
             <i />
             {online ? 'Синхронизировано' : 'Переподключение'}
@@ -288,191 +297,190 @@ export default function App() {
         </div>
       </header>
       <div className="app-body">
-        <aside className="sidebar">
-          <div className="workspace">
-            <span className="workspace-icon">
-              <Layers3 size={18} />
-            </span>
-            <div>
-              Выездная служба<small>Лаборатория маршрутов</small>
-            </div>
-          </div>
-          <div className="nav-label">РАБОЧЕЕ ПРОСТРАНСТВО</div>
-          <nav>
-            {sidebarItems.map(([id, Icon, label]) => (
-              <button
-                key={id}
-                className={page === id && mode === 'dispatch' ? 'active' : ''}
-                onClick={() => {
-                  setPage(id);
-                  setMode('dispatch');
-                }}
-              >
-                <Icon size={18} />
-                {label}
-                {id === 'jobs' && <span className="nav-count">{jobs.length}</span>}
-                {id === 'support' && openCount > 0 && <span className="nav-count alert">{openCount}</span>}
+        {!isHackathon && (
+          <aside className="sidebar">
+            <nav>
+              {sidebarItems.map(([id, Icon, label]) => (
+                <button
+                  key={id}
+                  className={page === id && mode === 'dispatch' ? 'active' : ''}
+                  onClick={() => {
+                    setPage(id);
+                    setMode('dispatch');
+                    if (id === 'jobs') {
+                      setFilter('all');
+                      setSearch('');
+                    }
+                  }}
+                >
+                  <Icon size={18} />
+                  {label}
+                  {id === 'jobs' && <span className="nav-count">{jobs.length}</span>}
+                  {id === 'support' && openCount > 0 && <span className="nav-count alert">{openCount}</span>}
+                </button>
+              ))}
+            </nav>
+            <div className="sidebar-bottom">
+              <button onClick={() => open({ type: 'settings' })}>
+                <Settings2 size={17} />
+                Настройки расчёта
               </button>
-            ))}
-          </nav>
-          <div className="sidebar-bottom">
-            <div className="scenario-label">
-              <span className="pulse-dot" />
-              {state.dataset ? `Участок: ${state.dataset.name}` : 'Учебный сценарий'}
-              <small>
-                {state.dataset ? `${state.dataset.date} · штат синтетический` : `Заявки · seed ${state.seed}`}
-              </small>
+              <button onClick={() => open({ type: 'help' })}>
+                <CircleHelp size={17} />
+                Как это работает
+                <ArrowUpRight size={14} />
+              </button>
             </div>
-            <button onClick={() => open({ type: 'settings' })}>
-              <Settings2 size={17} />
-              Настройки расчёта
-            </button>
-            <button onClick={() => open({ type: 'help' })}>
-              <CircleHelp size={17} />
-              Как это работает
-              <ArrowUpRight size={14} />
-            </button>
-          </div>
-        </aside>
+          </aside>
+        )}
         <main className={`main ${mode === 'engineer' ? 'mobile-mode' : ''}`}>
           {mode === 'dispatch' ? (
             <>
-              <div className="page-heading">
-                <div>
-                  <div className="eyebrow">
-                    <span />
-                    ОПЕРАТИВНОЕ УПРАВЛЕНИЕ <span className="eyebrow-sep">/</span> МОСКВА
-                  </div>
-                  <h1>
-                    {
-                      {
-                        overview: 'Рабочий день под контролем',
-                        jobs: 'Каждая заявка на своём месте',
-                        team: 'Люди, на которых всё держится',
-                        analytics: 'Результат в цифрах',
-                        support: 'Помощь там, где она нужна',
-                      }[page]
+              {!isHackathon && (
+                <select
+                  className="mobile-workspace-nav"
+                  aria-label="Раздел приложения"
+                  value={page}
+                  onChange={(e) => {
+                    if (e.target.value === 'settings') {
+                      open({ type: 'settings' });
+                      return;
                     }
-                  </h1>
-                  <p>Планируйте выезды, следите за командой и реагируйте на изменения.</p>
-                </div>
-                <div className="heading-actions">
-                  <select
-                    aria-label="Режим планирования"
-                    disabled={busy}
-                    value={state.settings.mode || 'economy'}
-                    onChange={(event) => act('settings', { ...state.settings, mode: event.target.value })}
-                  >
-                    <option value="economy">Экономия</option>
-                    <option value="emergency">Аварийное реагирование</option>
-                  </select>
-                  <Button
-                    icon={RefreshCw}
-                    disabled={busy}
-                    onClick={() => act('optimize', {}, 'Маршруты пересчитаны')}
-                  >
-                    Пересчитать
-                  </Button>
-                  <Button icon={Plus} variant="primary" onClick={() => open({ type: 'newJob' })}>
-                    Новая заявка
-                  </Button>
-                </div>
-              </div>
-              {state.dataset && (
-                <div className="dataset-banner">
-                  <span>
-                    <b>{state.dataset.name}</b> · {state.dataset.date} · {jobs.length} заявок ·{' '}
-                    {engineers.length} синтетических инженеров. Общественный транспорт: оценка, без
-                    расписаний. {state.dataset.office.approximate && 'Точка офиса предварительная.'}
-                  </span>
-                  <Button onClick={() => open({ type: 'office' })}>Офис участка</Button>
-                  <Button onClick={() => open({ type: 'geography' })}>
-                    География: {state.geography?.issues.length || 0} на проверке
-                  </Button>
-                </div>
+                    setPage(e.target.value);
+                    setSearch('');
+                    setFilter('all');
+                  }}
+                >
+                  {sidebarItems.map(([id, , label]) => (
+                    <option key={id} value={id}>
+                      {label}
+                    </option>
+                  ))}
+                  <option value="settings">Настройки расчёта</option>
+                </select>
               )}
-              <div className="metrics-grid">
-                <Metric
-                  icon={ListTodo}
-                  label="Заявки на сегодня"
-                  value={jobs.length}
-                  detail={`${plan.metrics.assigned} в маршрутах · ${done.length} выполнено`}
-                  color="green"
-                />
-                <Metric
-                  icon={Users}
-                  label="Задействовано инженеров"
-                  value={plan.metrics.usedEngineers}
-                  detail={`из ${engineers.length} в команде`}
-                  color="purple"
-                />
-                <Metric
-                  icon={Navigation}
-                  label="Длина маршрутов"
-                  value={`${plan.metrics.km.toFixed(1)} км`}
-                  detail={`${duration(plan.metrics.travel)} в пути · ${plan.roadSource === 'osrm' ? 'по дорогам' : plan.roadSource === 'prepared' ? 'пешком по дорогам, ОТ оценочно' : 'оценка'}`}
-                  color="blue"
-                />
-                <Metric
-                  icon={ShieldCheck}
-                  label="Требуют внимания"
-                  value={atRisk.length}
-                  detail={
-                    atRisk.length
-                      ? 'Согласование времени, адреса или помощь'
-                      : 'Все текущие назначения в срок'
-                  }
-                  color={atRisk.length ? 'orange' : 'green'}
-                />
+              <div className="dispatch-toolbar">
+                <div className="day-context">
+                  <b>{state.dataset?.name || 'Рабочий день'}</b>
+                  <span>{state.dataset?.date || 'Сегодня'}</span>
+                  <time>
+                    <Clock3 size={14} />
+                    {time(state.time)}
+                  </time>
+                </div>
+                {isHackathon && (
+                  <div className="hackathon-actions">
+                    <Button icon={Settings2} onClick={() => open({ type: 'settings' })}>
+                      Настройки расчёта
+                    </Button>
+                    <Button icon={CircleHelp} onClick={() => open({ type: 'help' })}>
+                      Как это работает
+                    </Button>
+                  </div>
+                )}
               </div>
               {page === 'overview' && (
                 <>
+                  <div className="metrics-grid dispatch-metrics">
+                    <Metric
+                      icon={ListTodo}
+                      label="Заявки на сегодня"
+                      value={jobs.length}
+                      detail={`${plan.metrics.assigned} в маршрутах`}
+                      color="green"
+                      onClick={() => goJobs()}
+                    />
+                    <Metric
+                      icon={CheckCheck}
+                      label="Выполнено"
+                      value={done.length}
+                      detail={`из ${jobs.length} заявок`}
+                      color="green"
+                      onClick={() => goJobs('done')}
+                    />
+                    <Metric
+                      icon={Users}
+                      label="Инженеры с выездами"
+                      value={
+                        <>
+                          {plan.metrics.usedEngineers}
+                          <span className="metric-total"> / {engineers.length}</span>
+                        </>
+                      }
+                      detail="задействовано / всего в команде"
+                      color="green"
+                      onClick={() => setPage('team')}
+                    />
+                  </div>
+                  <Attention
+                    state={state}
+                    jobs={atRisk}
+                    onJob={(id) => open({ type: 'job', id })}
+                    onAll={() => goJobs('risk')}
+                    onGeography={() => open({ type: 'geography' })}
+                  />
                   <div className="operations-grid">
                     <section className="panel map-panel">
                       <div className="panel-heading">
-                        <div>
-                          <h2>
-                            Карта выездов{' '}
-                            <span className="live-label">
-                              <i />
-                              LIVE
-                            </span>
-                          </h2>
-                          <p>Маршруты команды и точки обслуживания</p>
-                        </div>
-                        <div className="small-segment">
-                          <button className={!timeline ? 'active' : ''} onClick={() => setTimeline(false)}>
-                            <MapPin size={14} />
-                            Карта
-                          </button>
-                          <button className={timeline ? 'active' : ''} onClick={() => setTimeline(true)}>
-                            <Clock3 size={14} />
-                            График
+                        <h2>{timeline ? 'График выездов' : 'Карта выездов'}</h2>
+                        <div className="schedule-view-actions">
+                          <div className="small-segment" aria-label="Вид расписания">
+                            <button
+                              className={!timeline ? 'active' : ''}
+                              aria-pressed={!timeline}
+                              onClick={() => setTimeline(false)}
+                            >
+                              <MapPin size={14} />
+                              Карта
+                            </button>
+                            <button
+                              className={timeline ? 'active' : ''}
+                              aria-pressed={timeline}
+                              onClick={() => setTimeline(true)}
+                            >
+                              <Clock3 size={14} />
+                              График
+                            </button>
+                          </div>
+                          <button
+                            className="icon-button"
+                            aria-label="Пересчитать план"
+                            title="Пересчитать план вручную"
+                            disabled={busy}
+                            onClick={() => act('optimize', {}, 'Маршруты пересчитаны')}
+                          >
+                            <RefreshCw size={16} className={busy ? 'spin' : ''} />
                           </button>
                         </div>
                       </div>
-                      <div className="engineer-filters">
-                        <button
-                          className={selected === 'all' ? 'selected' : ''}
-                          onClick={() => setSelected('all')}
+                      <div className="schedule-toolbar">
+                        <select
+                          aria-label="Инженер на карте и графике"
+                          value={selected}
+                          onChange={(e) => {
+                            setSelected(e.target.value);
+                            setFocusWindow(null);
+                          }}
                         >
-                          Вся команда <span>{engineers.length}</span>
-                        </button>
-                        {engineers.map((e) => (
-                          <button
-                            key={e.id}
-                            className={selected === e.id ? 'selected' : ''}
-                            onClick={() => setSelected(e.id)}
-                          >
-                            <i style={{ background: e.color }} />
-                            {e.name}
-                          </button>
-                        ))}
+                          <option value="all">Вся команда · {engineers.length}</option>
+                          {engineers.map((e) => (
+                            <option key={e.id} value={e.id}>
+                              {e.name}
+                            </option>
+                          ))}
+                        </select>
+                        <Button icon={Clock3} onClick={() => open({ type: 'availability' })}>
+                          Свободный инженер{' '}
+                          <span className="button-count" title="Есть окно от 30 минут прямо сейчас">
+                            {freeNow} сейчас
+                          </span>
+                        </Button>
                       </div>
                       {timeline ? (
                         <Timeline
                           state={state}
                           selected={selected}
+                          focusWindow={focusWindow}
                           onJob={(id) => open({ type: 'job', id })}
                         />
                       ) : (
@@ -489,121 +497,20 @@ export default function App() {
                           Объект <i className="legend-square" />
                           Инженер
                         </span>
-                        <span title={plan.roadDetail}>
-                          {plan.roadSource === 'osrm'
-                            ? 'OSRM · дороги'
-                            : plan.roadSource === 'prepared'
-                              ? 'Пешком по дорогам · ОТ оценочно'
-                              : plan.roadSource === 'mixed'
-                                ? 'Дороги + оценка'
-                                : plan.roadSource === 'fallback'
-                                  ? 'OSRM недоступен · оценка'
-                                  : 'Оценочное время'}
-                          <CircleHelp size={13} />
-                        </span>
+                        <button className="text-button" onClick={() => open({ type: 'travelInfo' })}>
+                          Время в пути: {plan.roadSource === 'prepared' ? 'смешанный расчёт' : 'оценка'}{' '}
+                          <CircleHelp size={14} />
+                        </button>
                       </div>
                     </section>
-                    <section className="panel route-panel">
-                      <div className="panel-heading">
-                        <div>
-                          <h2>План команды</h2>
-                          <p>Оставшиеся визиты на сегодня</p>
-                        </div>
-                        <span className="count-circle">{plan.metrics.assigned}</span>
-                      </div>
-                      <div className="route-list">
-                        {routes.map((route) => {
-                          const e = engineers.find((x) => x.id === route.engineerId);
-                          return (
-                            <div className="engineer-route" key={e.id}>
-                              <button
-                                className="route-person"
-                                onClick={() => {
-                                  setMobileEngineer(e.id);
-                                  setMode('engineer');
-                                }}
-                              >
-                                <Avatar engineer={e} />
-                                <span>
-                                  <b>{e.name}</b>
-                                  <small>
-                                    {route.stops.length} выездов · {duration(route.drive)} в пути ·{' '}
-                                    {route.totalKm.toFixed(1)} км
-                                  </small>
-                                </span>
-                                <ChevronRight size={16} />
-                              </button>
-                              {e.pausedUntil > state.time && (
-                                <div className="break-label">
-                                  <Coffee size={13} />
-                                  Перерыв / недоступен до {time(e.pausedUntil)}
-                                </div>
-                              )}
-                              <div className="route-stops">
-                                {route.stops.slice(0, selected === 'all' ? 2 : 8).map((s, i) => {
-                                  const j = jobs.find((j) => j.id === s.jobId);
-                                  return (
-                                    <button
-                                      className="route-stop"
-                                      key={j.id}
-                                      onClick={() => open({ type: 'job', id: j.id })}
-                                    >
-                                      <span className="stop-number" style={{ '--person': e.color }}>
-                                        {i + 1}
-                                      </span>
-                                      <span>
-                                        <b>{j.address}</b>
-                                        <small>
-                                          {j.title}
-                                          {j.priority === 'urgent' ? ' · срочно' : ''}
-                                        </small>
-                                      </span>
-                                      <time className={s.late ? 'late' : ''}>{time(s.start)}</time>
-                                    </button>
-                                  );
-                                })}
-                                {!route.stops.length && (
-                                  <p className="empty-inline">Нет запланированных выездов</p>
-                                )}
-                                {selected === 'all' && route.stops.length > 2 && (
-                                  <button className="more-stops" onClick={() => setSelected(e.id)}>
-                                    Ещё {route.stops.length - 2} выезда <ArrowRight size={12} />
-                                  </button>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <div className="route-panel-footer">
-                        <ShieldCheck size={15} />
-                        Ресурсы и окна проверены алгоритмом
-                      </div>
-                    </section>
+                    <TeamPlan
+                      state={state}
+                      selected={selected}
+                      onJob={(id) => open({ type: 'job', id })}
+                      onEngineer={(id) => open({ type: 'engineer', id })}
+                      onAdd={() => open({ type: 'engineer' })}
+                    />
                   </div>
-                  <section className="panel attention-panel">
-                    <div className="attention-icon">
-                      <ShieldCheck size={20} />
-                    </div>
-                    <div>
-                      <h3>
-                        {atRisk.length
-                          ? `${atRisk.length} заявок требуют решения`
-                          : 'Можно двигаться по плану'}
-                      </h3>
-                      <p>
-                        {atRisk.length
-                          ? 'Проверьте ограничения, сроки и обращения с объектов.'
-                          : 'Добавьте срочную заявку и посмотрите, как команда адаптируется к изменениям.'}
-                      </p>
-                    </div>
-                    <Button
-                      icon={atRisk.length ? ArrowRight : Zap}
-                      onClick={() => (atRisk.length ? (setPage('jobs'), setFilter('risk')) : urgent())}
-                    >
-                      {atRisk.length ? 'Проверить заявки' : 'Проверить срочный выезд'}
-                    </Button>
-                  </section>
                 </>
               )}
               {page === 'jobs' && (
@@ -631,28 +538,9 @@ export default function App() {
                         </option>
                       ))}
                     </select>
-                    <Button icon={Download} onClick={exportFile}>
-                      Экспорт JSON
+                    <Button icon={Plus} variant="primary" onClick={() => open({ type: 'newJob' })}>
+                      Новая заявка
                     </Button>
-                    <Button icon={ArrowUpFromLine} onClick={() => fileRef.current.click()}>
-                      Импорт
-                    </Button>
-                    <input
-                      ref={fileRef}
-                      type="file"
-                      accept=".json"
-                      hidden
-                      onChange={async (e) => {
-                        const f = e.target.files[0];
-                        if (f)
-                          try {
-                            open({ type: 'import', data: JSON.parse(await f.text()) });
-                          } catch {
-                            setToast({ text: 'Не удалось прочитать JSON', error: true });
-                          }
-                        e.target.value = '';
-                      }}
-                    />
                   </div>
                   <JobsTable
                     jobs={visibleJobs}
@@ -664,69 +552,22 @@ export default function App() {
                 </section>
               )}
               {page === 'team' && (
-                <div className="team-grid">
-                  <Button icon={Plus} onClick={() => open({ type: 'engineer' })}>
-                    Добавить инженера
-                  </Button>
-                  {engineers.map((e) => {
-                    const route = plan.routes.find((r) => r.engineerId === e.id);
-                    return (
-                      <section className="panel team-card" key={e.id}>
-                        <div className="team-card-header">
-                          <Avatar engineer={e} size="large" />
-                          <span>
-                            <h2>{e.name}</h2>
-                            <p>
-                              {transport[e.transport]} · {time(e.shiftStart)}–{time(e.shiftEnd)}
-                            </p>
-                          </span>
-                        </div>
-                        <div className="tags">
-                          {e.skills.map((k) => (
-                            <Badge key={k} tone="green">
-                              {catalog.skills[k]}
-                            </Badge>
-                          ))}
-                        </div>
-                        <div className="equipment-list">
-                          {e.equipment.map((k) => (
-                            <span key={k}>
-                              <Wrench size={13} />
-                              {catalog.equipment[k]}
-                            </span>
-                          ))}
-                        </div>
-                        <div className="team-numbers">
-                          <span>
-                            <b>{route.stops.length}</b>выездов
-                          </span>
-                          <span>
-                            <b>{duration(route.work)}</b>работы
-                          </span>
-                          <span>
-                            <b>{route.totalKm.toFixed(1)} км</b>оценка пути
-                          </span>
-                        </div>
-                        <div className="team-card-footer">
-                          <Button icon={Settings2} onClick={() => open({ type: 'engineer', id: e.id })}>
-                            Ресурсы
-                          </Button>
-                          <Button
-                            icon={Smartphone}
-                            onClick={() => {
-                              setMobileEngineer(e.id);
-                              setMode('engineer');
-                            }}
-                          >
-                            Открыть приложение
-                          </Button>
-                        </div>
-                      </section>
-                    );
-                  })}
-                </div>
+                <TeamList
+                  state={state}
+                  edit={(id) => open({ type: 'engineer', id })}
+                  showApp={(id) => {
+                    setMobileEngineer(id);
+                    setMode('engineer');
+                  }}
+                />
               )}
               {page === 'analytics' && <Analytics state={state} />}
+              {isHackathon && (
+                <Hackathon
+                  {...{ state, open, act, busy, running, setRunning, speed, setSpeed }}
+                  onError={(text) => setToast({ text, error: true })}
+                />
+              )}
               {page === 'support' && (
                 <section className="panel support-panel">
                   <div className="panel-heading">
@@ -790,89 +631,7 @@ export default function App() {
               busy={busy}
             />
           )}
-          <section className="simulation">
-            <div className="simulation-top">
-              <div className="simulation-title">
-                <span className="simulation-icon">
-                  <SlidersHorizontal size={19} />
-                </span>
-                <div>
-                  <h3>Лаборатория рабочего дня</h3>
-                  <p>Время симуляции · передвижение и выполнение заявок</p>
-                </div>
-              </div>
-              <div className="simulation-actions">
-                <Button icon={Layers3} onClick={() => open({ type: 'dataset' })}>
-                  Данные Билайн
-                </Button>
-                <Button icon={Plus} onClick={() => open({ type: 'random' })}>
-                  Случайные заявки
-                </Button>
-                <Button icon={Shuffle} onClick={() => open({ type: 'generate' })}>
-                  Новый сценарий
-                </Button>
-                <Button icon={Zap} onClick={urgent}>
-                  Срочная заявка
-                </Button>
-              </div>
-            </div>
-            <div className="simulation-controls">
-              <button
-                className={`play-button ${running ? 'playing' : ''}`}
-                aria-label={running ? 'Пауза симуляции' : 'Запустить симуляцию'}
-                onClick={() => setRunning(!running)}
-                disabled={state.time >= 1440}
-              >
-                {running ? <Pause size={18} /> : <Play size={18} />}
-              </button>
-              <div className="simulation-clock">
-                {time(state.time)}
-                <small>{running ? 'Симуляция идёт' : 'На паузе'}</small>
-              </div>
-              <div className="slider-wrap">
-                <input
-                  aria-label="Время рабочего дня"
-                  type="range"
-                  min="480"
-                  max="1440"
-                  step="5"
-                  value={state.time}
-                  disabled={busy}
-                  style={{ '--progress': `${((state.time - 480) / 960) * 100}%` }}
-                  onChange={(e) => {
-                    setRunning(false);
-                    act('clock', { time: Number(e.target.value) });
-                  }}
-                />
-                <div className="slider-labels">
-                  <span>08:00</span>
-                  <span>12:00</span>
-                  <span>16:00</span>
-                  <span>20:00</span>
-                  <span>24:00</span>
-                </div>
-              </div>
-              <select
-                aria-label="Скорость симуляции"
-                value={speed}
-                onChange={(e) => setSpeed(Number(e.target.value))}
-              >
-                <option value="1">1 мин / шаг</option>
-                <option value="5">5 мин / шаг</option>
-                <option value="15">15 мин / шаг</option>
-              </select>
-              <Button
-                onClick={() => act('clock', { time: Math.min(1440, state.time + 30) })}
-                disabled={busy || state.time >= 1440}
-              >
-                +30 мин
-              </Button>
-            </div>
-          </section>
           <footer className="page-footer">
-            <span>
-              КОНТУР <i /> Планирование с учётом реальности
-            </span>
             <span>
               {busy ? (
                 <>
@@ -880,11 +639,15 @@ export default function App() {
                   Считаем расписание…
                 </>
               ) : (
-                <>
-                  Расчёт {plan.metrics.computeMs} мс · обновлено в {time(plan.at)}
-                </>
+                <>План обновлён в {time(plan.at)}</>
               )}
             </span>
+            {running && (
+              <button className="text-button" onClick={() => setRunning(false)}>
+                <Pause size={13} />
+                Остановить симуляцию
+              </button>
+            )}
           </footer>
         </main>
       </div>
@@ -930,7 +693,34 @@ export default function App() {
           act={act}
           assign={() => open({ type: 'assignment', id: currentJob.id })}
           busy={busy}
+          demo={isHackathon}
         />
+      )}
+      {modal?.type === 'availability' && (
+        <Availability
+          state={state}
+          onClose={() => setModal(null)}
+          onSelect={(id, window) => {
+            setSelected(id);
+            setFocusWindow(window);
+            setTimeline(true);
+            setPage('overview');
+            setMode('dispatch');
+            setModal(null);
+          }}
+        />
+      )}
+      {modal?.type === 'travelInfo' && (
+        <Modal title="Как рассчитано время в пути" onClose={() => setModal(null)}>
+          <div className="modal-body form-stack">
+            <p>{plan.roadDetail}</p>
+            <p>
+              Общественный транспорт пока рассчитывается без расписаний и пересадок. Учитывайте эту
+              погрешность при согласовании времени с клиентом.
+            </p>
+            <Button onClick={() => open({ type: 'settings' })}>Настройки расчёта</Button>
+          </div>
+        </Modal>
       )}
       {modal?.type === 'assignment' && (
         <AssignmentForm
@@ -1028,12 +818,16 @@ export default function App() {
       {modal?.type === 'settings' && (
         <Settings
           state={state}
+          onTemplates={() => setModal({ type: 'sopTemplates' })}
           busy={busy}
           onClose={() => setModal(null)}
           save={async (p) => {
             if (await act('settings', p, 'Настройки применены')) setModal(null);
           }}
         />
+      )}
+      {modal?.type === 'sopTemplates' && (
+        <SopTemplates state={state} busy={busy} act={act} onClose={() => setModal(null)} />
       )}
       {modal?.type === 'notifications' && (
         <Modal

@@ -1,59 +1,123 @@
-import React from 'react';
-
+import React, { useEffect, useRef, useState } from 'react';
 import { time } from '../shared/format.js';
-import { Avatar } from '../components/ui.jsx';
+import { Avatar } from './ui.jsx';
 
-export default function Timeline({ state, selected, onJob }) {
+export default function Timeline({ state, selected, onJob, focusWindow }) {
+  const [zoom, setZoom] = useState(1);
+  const viewport = useRef(null);
+  const start = Math.floor(Math.min(480, ...state.engineers.map((e) => e.shiftStart)) / 60) * 60;
+  const end = 1440;
+  const span = end - start;
+  const width = span * 2.4 * zoom;
+  const percent = (minute) => ((minute - start) / span) * 100;
+  const jobs = new Map(state.jobs.map((job) => [job.id, job]));
+  const routes = state.plan.routes.filter((r) => selected === 'all' || r.engineerId === selected);
+  useEffect(() => {
+    const target = focusWindow?.start ?? state.time;
+    if (viewport.current) viewport.current.scrollLeft = Math.max(0, (target - start) * 2.4 * zoom - 40);
+  }, [focusWindow, zoom, selected, start]);
   return (
-    <div className="timeline">
-      <div className="timeline-axis">
-        <span>08:00</span>
-        <span>12:00</span>
-        <span>16:00</span>
-        <span>20:00</span>
-        <span>24:00</span>
+    <div className="gantt">
+      <div className="gantt-toolbar">
+        <span>
+          <i className="gantt-work-key" />
+          Работа <i className="gantt-travel-key" />
+          Дорога <i className="gantt-urgent-key" />
+          Срочная
+        </span>
+        <label>
+          Масштаб{' '}
+          <select aria-label="Масштаб графика" value={zoom} onChange={(e) => setZoom(Number(e.target.value))}>
+            <option value="0.5">Обзор</option>
+            <option value="1">Обычный</option>
+            <option value="2">Крупный</option>
+          </select>
+        </label>
       </div>
-      {state.plan.routes
-        .filter((r) => selected === 'all' || r.engineerId === selected)
-        .map((r) => {
-          const e = state.engineers.find((e) => e.id === r.engineerId);
-          return (
-            <div className="timeline-row" key={e.id}>
-              <div>
-                <Avatar engineer={e} size="small" />
-                <b>{e.name}</b>
-              </div>
-              <div className="timeline-track">
-                <i className="now-line" style={{ left: `${((state.time - 480) / 960) * 100}%` }} />
-                {r.stops.map((s) => (
-                  <React.Fragment key={s.jobId}>
-                    <span
-                      className="timeline-travel"
+      {focusWindow && (
+        <p className="gantt-focus-note">
+          Свободное окно: {time(focusWindow.start)}–{time(focusWindow.end)} · без учёта новой поездки
+        </p>
+      )}
+      <div
+        className="gantt-scroll"
+        ref={viewport}
+        tabIndex={0}
+        role="region"
+        aria-label="График инженеров с горизонтальной прокруткой"
+      >
+        <div
+          className="gantt-content"
+          style={{ width: width + 148, '--hour-width': `${width / (span / 60)}px` }}
+        >
+          <div className="gantt-axis">
+            <div className="gantt-corner">Инженер</div>
+            <div className="gantt-hours">
+              {Array.from({ length: span / 60 + 1 }, (_, i) => (
+                <time key={i} style={{ left: `${((i * 60) / span) * 100}%` }}>
+                  {time(start + i * 60)}
+                </time>
+              ))}
+            </div>
+          </div>
+          {routes.map((r) => {
+            const e = state.engineers.find((person) => person.id === r.engineerId);
+            return (
+              <div className="timeline-row gantt-row" key={e.id}>
+                <div className="gantt-person">
+                  <Avatar engineer={e} size="small" />
+                  <b title={e.name}>{e.name}</b>
+                </div>
+                <div className="gantt-track">
+                  {state.time >= start && state.time <= end && (
+                    <i
+                      className="gantt-now"
+                      style={{ left: `${percent(state.time)}%` }}
+                      title={`Сейчас ${time(state.time)}`}
+                    />
+                  )}
+                  {focusWindow && selected === e.id && (
+                    <div
+                      className="gantt-free-window"
                       style={{
-                        left: `${((s.depart - 480) / 960) * 100}%`,
-                        width: `${(s.travel / 960) * 100}%`,
-                        background: e.color,
+                        left: `${percent(focusWindow.start)}%`,
+                        width: `${((focusWindow.end - focusWindow.start) / span) * 100}%`,
                       }}
                     />
-                    <button
-                      onClick={() => onJob(s.jobId)}
-                      title={`${time(s.start)}–${time(s.end)}`}
-                      style={{
-                        left: `${((s.start - 480) / 960) * 100}%`,
-                        width: `${((s.end - s.start) / 960) * 100}%`,
-                        background: e.color,
-                      }}
-                    >
-                      #{state.jobs.find((j) => j.id === s.jobId).number}
-                    </button>
-                  </React.Fragment>
-                ))}
+                  )}
+                  {r.stops.map((s) => {
+                    const job = jobs.get(s.jobId);
+                    const label = `Заявка №${job.number} · ${job.title} · ${time(s.start)}–${time(s.end)} · ${job.address}`;
+                    return (
+                      <React.Fragment key={s.jobId}>
+                        <span
+                          className="gantt-travel"
+                          title={`Дорога: ${s.travel} мин`}
+                          style={{ left: `${percent(s.depart)}%`, width: `${(s.travel / span) * 100}%` }}
+                        />
+                        <button
+                          className={`gantt-job ${s.late ? 'problem' : job.priority === 'urgent' ? 'urgent' : ''}`}
+                          onClick={() => onJob(s.jobId)}
+                          title={label}
+                          aria-label={label}
+                          style={{
+                            left: `${percent(s.start)}%`,
+                            width: `${((s.end - s.start) / span) * 100}%`,
+                          }}
+                        >
+                          <span>№{job.number}</span>
+                        </button>
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          );
-        })}
-      <p className="timeline-note">
-        Полосы — работа на объекте · штриховка — дорога · вертикаль — текущее время
+            );
+          })}
+        </div>
+      </div>
+      <p className="gantt-hint">
+        Нажмите на визит, чтобы открыть заявку. Прокручивайте график по горизонтали или меняйте масштаб.
       </p>
     </div>
   );

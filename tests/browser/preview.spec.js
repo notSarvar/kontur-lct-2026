@@ -53,7 +53,9 @@ test('ordinary manual reassignment supports cancel, apply, pin and stale preview
   await expect(page.getByRole('dialog')).toHaveCount(0);
   current = await (await request.get('/api/state')).json();
   expect(current.jobs[0].pinnedEngineerId).toBe(target.id);
-  await page.getByLabel('Режим планирования').selectOption('emergency');
+  await page.getByRole('button', { name: 'Настройки расчёта', exact: true }).click();
+  await page.getByLabel('Цель планирования').selectOption('emergency');
+  await page.getByRole('button', { name: 'Применить и пересчитать', exact: true }).click();
   await expect(page.getByRole('dialog')).toContainText('Аварийное реагирование');
   await act(request, 'job.note', { id: job.id, text: 'Изменение в другой вкладке' });
   await expect(page.getByRole('button', { name: 'Применить план' })).toBeDisabled();
@@ -66,7 +68,7 @@ test('prepared walking data and geography review are visible and work without a 
 }) => {
   await act(request, 'dataset.load', { id: 'east' });
   await page.goto('/');
-  await page.getByRole('button', { name: /География:/ }).click();
+  await page.getByRole('button', { name: /Проверить адреса/ }).click();
   await expect(page.getByRole('dialog')).toContainText('83с4');
   await expect(page.getByLabel('Адрес для проверки')).toBeVisible();
   await page.getByRole('button', { name: 'Закрыть', exact: true }).click();
@@ -77,7 +79,7 @@ test('prepared walking data and geography review are visible and work without a 
     s.plan.routes.flatMap((r) => r.stops).some((stop) => stop.travelMode === 'foot' && !stop.estimated),
   ).toBeTruthy();
   await page.reload();
-  await page.getByRole('button', { name: 'Пересчитать', exact: true }).click();
+  await page.getByRole('button', { name: 'Пересчитать план', exact: true }).click();
   await expect(page.getByRole('dialog')).toContainText('FOSSGIS');
   await expect(page.getByRole('button', { name: 'Применить план' })).toBeEnabled();
   await page.getByRole('button', { name: 'Отменить изменения' }).click();

@@ -1,9 +1,14 @@
-import { solve } from '../optimization/solver.js';
+import { solveSelected } from '../optimization/runner.js';
 import { getTravel, addGeometries } from '../infrastructure/routing.js';
 import { addEvent } from '../domain/scenario.js';
 import { geographyStatus } from '../domain/geography.js';
+import { attachEngineerMetrics } from '../domain/engineer-metrics.js';
+import { ensureSops } from '../domain/sop.js';
+import { optimizerSettings } from '../optimization/settings.js';
 
 export async function replan(state, { roads = true, iterations } = {}) {
+  ensureSops(state);
+  state.settings = { ...state.settings, ...optimizerSettings(state.settings) };
   state.geography = geographyStatus(state);
   const old = {};
   for (const r of state.plan?.routes || []) for (const s of r.stops) old[s.jobId] = r.engineerId;
@@ -14,7 +19,7 @@ export async function replan(state, { roads = true, iterations } = {}) {
         source: 'estimate',
         detail: 'Ходьба и общественный транспорт: оценка по координатам, без расписаний и дорожной сети.',
       };
-  state.plan = solve(state, travel.matrix, { iterations });
+  state.plan = await solveSelected(state, travel.matrix, { iterations });
   state.plan.roadSource = travel.source;
   state.plan.matrixId = travel.matrixId || null;
   state.plan.roadDetail = travel.detail;
@@ -49,5 +54,6 @@ export async function replan(state, { roads = true, iterations } = {}) {
     addEvent(state, 'Требует согласования', `№${job.number}: ${entry.text}`, null, 'warning');
   }
   await addGeometries(state);
+  attachEngineerMetrics(state);
   return state;
 }

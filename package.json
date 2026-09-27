@@ -13,7 +13,8 @@
     "format:check": "prettier --check server src tests scripts docs README.md package.json",
     "data:geocode": "node scripts/geocode.mjs",
     "data:walking": "node scripts/prepare-walking.mjs",
-    "benchmark": "node scripts/benchmark.mjs"
+    "benchmark": "node scripts/benchmark.mjs",
+    "benchmark:optimizers": "node scripts/compare-optimizers.mjs"
   },
   "dependencies": {
     "leaflet": "1.9.4",

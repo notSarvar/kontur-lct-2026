@@ -1,3 +1,4 @@
+import { openHackathon } from './workspaces.js';
 import { test, expect } from '@playwright/test';
 async function act(request, type, payload = {}) {
   const response = await request.post('/api/action', { data: { type, payload } });
@@ -22,6 +23,7 @@ test('BK and HD assumptions are visible and changing from emergency to informati
     .getByRole('row')
     .filter({ hasText: String(info.number) })
     .click();
+  await page.getByText('Исходные данные и допущения', { exact: true }).click();
   await expect(page.getByRole('dialog')).toContainText('BK:');
   await expect(page.getByRole('dialog')).toContainText('HD:');
   await expect(page.getByRole('dialog')).toContainText('Отдельного норматива для информации нет');
@@ -43,6 +45,7 @@ test('official regions, synthetic staff and mandatory metrics work in the dispat
   page.on('pageerror', (e) => errors.push(e.message));
   await act(request, 'dataset.load', { id: 'southcenter' });
   await page.goto('/');
+  await openHackathon(page);
   await expect(page.locator('.dataset-banner')).toContainText('56 заявок');
   await page.getByRole('button', { name: 'Данные Билайн', exact: true }).click();
   await page.getByLabel('Участок', { exact: true }).selectOption('east');
@@ -50,12 +53,17 @@ test('official regions, synthetic staff and mandatory metrics work in the dispat
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await expect(page.locator('.dataset-banner')).toContainText('66 заявок');
   await expect(page.locator('.dataset-banner')).toContainText('Точка офиса предварительная');
+  await page.goto('/');
   await page
     .locator('.sidebar nav')
     .getByRole('button', { name: /Аналитика/ })
     .click();
-  await expect(page.getByRole('heading', { name: 'ALNS и базовый алгоритм' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Итоги рабочего дня' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Текущий план и базовый алгоритм' })).toHaveCount(0);
+  await openHackathon(page);
+  await expect(page.getByRole('heading', { name: 'Текущий план и базовый алгоритм' })).toBeVisible();
   await expect(page.locator('.analytics-grid table').first()).toContainText('Первый доступный');
+  await page.goto('/');
   await page
     .locator('.sidebar nav')
     .getByRole('button', { name: /Команда/ })

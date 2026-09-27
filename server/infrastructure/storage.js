@@ -17,6 +17,13 @@ export async function loadState(directory) {
   }
   if (saved?.version === 2) {
     const before = structuredClone(saved);
+    const extensionsUpgrade = saved.planningExtensionsVersion !== 1;
+    if (extensionsUpgrade)
+      await fs.writeFile(
+        path.join(directory, `state-before-optimizers-sop-${Date.now()}.backup.json`),
+        JSON.stringify(before),
+        { flag: 'wx' },
+      );
     const norms = JSON.parse(
       await fs.readFile(new URL('../../data/beeline/norms.json', import.meta.url), 'utf8'),
     );
@@ -27,6 +34,7 @@ export async function loadState(directory) {
         JSON.stringify(before),
         { flag: 'wx' },
       );
+    refreshed ||= extensionsUpgrade;
     saved.settings.mode ||= 'economy';
     if (saved.dataset) {
       const cache = await readGeocache();

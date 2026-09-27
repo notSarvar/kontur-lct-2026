@@ -52,6 +52,62 @@ export default function EngineerForm({ engineer, catalog, onClose, save, busy })
           </Field>
         </div>
         <fieldset>
+          <legend>Нагрузка до сегодняшней смены</legend>
+          <p className="muted">
+            Укажите сопоставимый период для всей команды. Дорогу и ожидание не включайте в работу. Без истории
+            используются только данные текущего дня.
+          </p>
+          <Field label="Период истории">
+            <input
+              value={form.workHistory?.label || ''}
+              maxLength={150}
+              placeholder="Например, 16–22 сентября"
+              onChange={(e) =>
+                set('workHistory', {
+                  workMinutes: 0,
+                  availableMinutes: 0,
+                  ...form.workHistory,
+                  label: e.target.value,
+                })
+              }
+            />
+          </Field>
+          <div className="form-row">
+            <Field label="Работал на объектах, мин">
+              <input
+                type="number"
+                min="0"
+                max="100000"
+                value={form.workHistory?.workMinutes || 0}
+                onChange={(e) =>
+                  set('workHistory', {
+                    availableMinutes: 0,
+                    label: '',
+                    ...form.workHistory,
+                    workMinutes: Number(e.target.value),
+                  })
+                }
+              />
+            </Field>
+            <Field label="Доступное время смен, мин">
+              <input
+                type="number"
+                min="0"
+                max="100000"
+                value={form.workHistory?.availableMinutes || 0}
+                onChange={(e) =>
+                  set('workHistory', {
+                    workMinutes: 0,
+                    label: '',
+                    ...form.workHistory,
+                    availableMinutes: Number(e.target.value),
+                  })
+                }
+              />
+            </Field>
+          </div>
+        </fieldset>
+        <fieldset>
           <legend>Квалификация</legend>
           <div className="check-grid">
             {Object.entries(catalog.skills).map(([k, v]) => (

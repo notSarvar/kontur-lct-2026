@@ -8,7 +8,11 @@ import { OFFICIAL_DATASETS } from '../infrastructure/datasets.js';
 import { exportScenario } from '../domain/export.js';
 import { applyAction } from '../application/actions.js';
 import { previewAction, activateCandidate, conflict } from '../application/candidates.js';
+import { optimizerCapabilities, compareSolvers } from '../optimization/runner.js';
+import { getTravel } from '../infrastructure/routing.js';
+import { workspaceConfig, workspaceFor } from './workspaces.js';
 export async function startServer() {
+  const workspaces = workspaceConfig();
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
   const production = process.argv.includes('--production');
   const dataDir = process.env.DATA_DIR || path.join(root, '.data');
@@ -26,6 +30,7 @@ export async function startServer() {
         root,
         server: {
           middlewareMode: true,
+          allowedHosts: [workspaces.product.hostname, workspaces.hackathon.hostname],
           hmr: { host: '127.0.0.1', port: Number(process.env.PORT || 4317) + 1000 },
         },
         appType: 'spa',
@@ -49,6 +54,11 @@ export async function startServer() {
   const server = http.createServer(async (req, res) => {
     try {
       const url = new URL(req.url, 'http://localhost');
+      const present = (value) => ({
+        ...value,
+        workspace: workspaceFor(req.headers.host, workspaces),
+        catalog: { skills: SKILLS, equipment: EQUIPMENT, types: TYPES },
+      });
       if (
         ['POST', 'DELETE'].includes(req.method) &&
         req.headers.origin &&
@@ -77,7 +87,7 @@ export async function startServer() {
           state = next;
           candidates.delete(input.id);
           for (const client of clients) client.write(`data: ${state.revision}\n\n`);
-          return { ...state, catalog: { skills: SKILLS, equipment: EQUIPMENT, types: TYPES } };
+          return present(state);
         });
         queue = work.catch(() => {});
         return json(res, await work);
@@ -86,9 +96,24 @@ export async function startServer() {
         candidates.delete(url.pathname.split('/').at(-1));
         return json(res, { ok: true });
       }
-      if (url.pathname === '/api/state' && req.method === 'GET')
-        return json(res, { ...state, catalog: { skills: SKILLS, equipment: EQUIPMENT, types: TYPES } });
+      if (url.pathname === '/api/state' && req.method === 'GET') return json(res, present(state));
       if (url.pathname === '/api/datasets' && req.method === 'GET') return json(res, OFFICIAL_DATASETS);
+      if (url.pathname === '/api/optimizers' && req.method === 'GET')
+        return json(res, await optimizerCapabilities());
+      if (url.pathname === '/api/optimizers/compare' && req.method === 'POST') {
+        const options = await body(req);
+        const work = queue.then(async () => {
+          const snapshot = structuredClone(state);
+          const travel = await getTravel(snapshot);
+          return {
+            ...(await compareSolvers(snapshot, travel.matrix, options)),
+            roadDetail: travel.detail,
+            matrixId: travel.matrixId || null,
+          };
+        });
+        queue = work.catch(() => {});
+        return json(res, await work);
+      }
       if (url.pathname === '/api/health') return json(res, { ok: true });
       if (url.pathname === '/api/events') {
         res.writeHead(200, {
@@ -123,10 +148,7 @@ export async function startServer() {
           return state;
         });
         queue = work.catch(() => {});
-        return json(res, {
-          ...(await work),
-          catalog: { skills: SKILLS, equipment: EQUIPMENT, types: TYPES },
-        });
+        return json(res, present(await work));
       }
       if (url.pathname === '/api/export') return json(res, exportScenario(state));
       if (url.pathname.startsWith('/api/')) return json(res, { error: 'Не найдено' }, 404);
@@ -177,7 +199,10 @@ export async function startServer() {
     }
   });
   const port = Number(process.env.PORT || 4317);
-  server.listen(port, process.env.HOST || '127.0.0.1', () => console.log(`Контур: http://localhost:${port}`));
+  server.listen(port, process.env.HOST || '127.0.0.1', () => {
+    console.log(`Контур: ${workspaces.product.origin}`);
+    console.log(`Хакатон: ${workspaces.hackathon.origin}`);
+  });
 
   return server;
 }

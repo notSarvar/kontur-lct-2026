@@ -1,0 +1,10 @@
+{
+  "id": "khutor",
+  "name": "Хутор",
+  "originalFile": "Хутор Синтетические данные.csv",
+  "encoding": "windows-1251",
+  "sha256": "32abef9611edf667353924e40e13831d7bace449b64c017aba9463b12fd60c1d",
+  "providedBy": "user",
+  "synthetic": true,
+  "scope": "benchmark only; active dispatcher day is not replaced"
+}

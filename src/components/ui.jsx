@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Bell, Check, Route, TriangleAlert, X } from 'lucide-react';
 import { time, initials } from '../shared/format.js';
 
@@ -12,11 +12,7 @@ export function Button({ children, icon: Icon, variant = '', className = '', ...
 }
 
 export function Avatar({ engineer, size = 'normal' }) {
-  return (
-    <span className={`avatar ${size}`} style={{ '--person': engineer.color }}>
-      {initials(engineer.name)}
-    </span>
-  );
+  return <span className={`avatar ${size}`}>{initials(engineer.name)}</span>;
 }
 
 export function Badge({ children, tone = 'gray' }) {
@@ -24,12 +20,47 @@ export function Badge({ children, tone = 'gray' }) {
 }
 
 export function Modal({ title, subtitle, onClose, children, wide = false }) {
+  const dialog = useRef(null);
+  const close = useRef(onClose);
+  close.current = onClose;
+  const titleId = React.useId();
   useEffect(() => {
+    const previous = document.activeElement;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    dialog.current?.focus();
     const handler = (e) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') close.current();
+      if (e.key === 'Tab') {
+        const targets = [
+          ...dialog.current.querySelectorAll(
+            'button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), summary, [tabindex="0"]',
+          ),
+        ].filter((el) => el.getClientRects().length);
+        const first = targets[0],
+          last = targets.at(-1);
+        if (!first) {
+          e.preventDefault();
+          return;
+        }
+        if (e.shiftKey && (document.activeElement === first || document.activeElement === dialog.current)) {
+          e.preventDefault();
+          last.focus();
+        } else if (
+          !e.shiftKey &&
+          (document.activeElement === last || document.activeElement === dialog.current)
+        ) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     document.addEventListener('keydown', handler);
-    return () => document.removeEventListener('keydown', handler);
+    return () => {
+      document.removeEventListener('keydown', handler);
+      document.body.style.overflow = overflow;
+      if (previous?.isConnected) previous.focus();
+    };
   }, []);
   return (
     <div
@@ -38,10 +69,17 @@ export function Modal({ title, subtitle, onClose, children, wide = false }) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <section role="dialog" aria-modal="true" aria-label={title} className={`modal ${wide ? 'wide' : ''}`}>
+      <section
+        ref={dialog}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        className={`modal ${wide ? 'wide' : ''}`}
+      >
         <header>
           <div>
-            <h2>{title}</h2>
+            <h2 id={titleId}>{title}</h2>
             {subtitle && <p>{subtitle}</p>}
           </div>
           <button className="icon-button" aria-label="Закрыть" onClick={onClose}>
@@ -65,9 +103,10 @@ export function Field({ label, children, hint }) {
   );
 }
 
-export function Metric({ icon: Icon, label, value, detail, color }) {
+export function Metric({ icon: Icon, label, value, detail, color, onClick }) {
+  const Element = onClick ? 'button' : 'div';
   return (
-    <div className="metric">
+    <Element className={`metric ${onClick ? 'metric-link' : ''}`} onClick={onClick}>
       <div className="metric-top">
         <span>{label}</span>
         <span className={`metric-icon ${color}`}>
@@ -76,7 +115,7 @@ export function Metric({ icon: Icon, label, value, detail, color }) {
       </div>
       <strong>{value}</strong>
       <small>{detail}</small>
-    </div>
+    </Element>
   );
 }
 

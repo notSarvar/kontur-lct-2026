@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Check, CheckCheck, FileText, Headphones, ShieldCheck, TriangleAlert } from 'lucide-react';
 import { time, duration, transport, statusText } from '../../shared/format.js';
 import { Button, Avatar, Badge, Modal } from '../../components/ui.jsx';
+import SopPanel from './Sop.jsx';
 
-export default function JobDetails({ job: j, state, onClose, edit, act, busy, assign }) {
+export default function JobDetails({ job: j, state, onClose, edit, act, busy, assign, demo = false }) {
   const [note, setNote] = useState('');
   const e = state.engineers.find((e) => e.id === j.engineerId),
     route = state.plan.routes.find((r) => r.stops.some((s) => s.jobId === j.id)),
@@ -14,8 +15,9 @@ export default function JobDetails({ job: j, state, onClose, edit, act, busy, as
     if (await act('job.note', { id: j.id, text: note }, 'Отчёт сохранён и виден диспетчеру')) setNote('');
   };
   return (
-    <Modal title={`#${j.number} · ${j.title}`} subtitle={j.address} onClose={onClose}>
+    <Modal title={`Заявка №${j.number}`} subtitle={j.address} onClose={onClose}>
       <div className="modal-body details">
+        <h3 className="job-detail-title">{j.title}</h3>
         <div className="detail-status">
           <Badge tone={j.status === 'done' ? 'green' : !e || j.status === 'blocked' ? 'orange' : 'purple'}>
             {j.status === 'pending' && !e ? 'Не назначена' : statusText[j.status]}
@@ -38,19 +40,19 @@ export default function JobDetails({ job: j, state, onClose, edit, act, busy, as
           <span>
             Работа<b>{j.duration} мин</b>
           </span>
-          <span>
-            Приоритет<b>{j.priority === 'urgent' ? 'Авария' : 'Обычная'}</b>
-          </span>
         </div>
         {j.source?.fields && (
-          <div className="analysis-note">
-            <b>BK:</b> {j.source.fields['Тип заявки BK']} · <b>HD:</b> {j.source.fields['Тип заявки HD']}
-            <br />
-            {j.source.priorityBasis}
-            {j.source.assumptions?.map((text, i) => (
-              <p key={i}>Допущение: {text}</p>
-            ))}
-          </div>
+          <details className="source-details" open={demo || undefined}>
+            <summary>Исходные данные и допущения</summary>
+            <div className="analysis-note">
+              <b>BK:</b> {j.source.fields['Тип заявки BK']} · <b>HD:</b> {j.source.fields['Тип заявки HD']}
+              <br />
+              {j.source.priorityBasis}
+              {j.source.assumptions?.map((text, i) => (
+                <p key={i}>Допущение: {text}</p>
+              ))}
+            </div>
+          </details>
         )}
         {s && (
           <div className={`schedule-explanation ${s.late ? 'warning' : ''}`}>
@@ -59,7 +61,11 @@ export default function JobDetails({ job: j, state, onClose, edit, act, busy, as
               <b>
                 План: {time(s.start)}–{time(s.end)}
               </b>
-              <p>{exp?.text || 'Текущий выезд закреплён за инженером и сохраняется при перепланировании.'}</p>
+              <p>
+                {s.locked
+                  ? 'Текущий выезд сохраняется при перепланировании.'
+                  : 'Начало в клиентском окне, завершение в пределах смены.'}
+              </p>
               <small>
                 Дорога {s.travel} мин · ожидание {s.wait} мин
                 {exp?.changed ? ' · назначенный инженер изменился' : ''}
@@ -109,6 +115,7 @@ export default function JobDetails({ job: j, state, onClose, edit, act, busy, as
           <Badge>{transport[j.requiredTransport]}</Badge>
         </div>
         {j.contact && <p className="contact-note">{j.contact}</p>}
+        <SopPanel job={j} state={state} act={act} busy={busy} />
         <h3>Отчёты с объекта</h3>
         {j.notes.length ? (
           j.notes.map((n) => (
@@ -147,40 +154,41 @@ export default function JobDetails({ job: j, state, onClose, edit, act, busy, as
             </Button>
           )}
         </div>
-        <div className="form-actions">
-          {j.status === 'pending' && (
-            <Button onClick={assign} disabled={busy}>
-              Переназначить
-            </Button>
-          )}
-          {['pending', 'manual_review'].includes(j.status) && (
-            <>
+        {['pending', 'manual_review', 'working'].includes(j.status) && (
+          <div className="form-actions">
+            {j.status === 'pending' && (
+              <Button onClick={assign} disabled={busy}>
+                Переназначить
+              </Button>
+            )}
+            {['pending', 'manual_review'].includes(j.status) && (
+              <>
+                <Button
+                  variant="danger-ghost"
+                  disabled={busy}
+                  onClick={async () => {
+                    if (await act('job.delete', { id: j.id }, 'Заявка удалена')) onClose();
+                  }}
+                >
+                  Удалить
+                </Button>
+                <Button onClick={edit}>
+                  {j.status === 'manual_review' ? 'Согласовать время / адрес' : 'Изменить'}
+                </Button>
+              </>
+            )}
+            {j.status === 'working' && (
               <Button
-                variant="danger-ghost"
+                variant="primary"
+                icon={Check}
                 disabled={busy}
-                onClick={async () => {
-                  if (await act('job.delete', { id: j.id }, 'Заявка удалена')) onClose();
-                }}
+                onClick={() => act('job.complete', { id: j.id }, 'Работа завершена')}
               >
-                Удалить
+                Завершить работу
               </Button>
-              <Button onClick={edit}>
-                {j.status === 'manual_review' ? 'Согласовать время / адрес' : 'Изменить'}
-              </Button>
-            </>
-          )}
-          {j.status === 'working' && (
-            <Button
-              variant="primary"
-              icon={Check}
-              disabled={busy}
-              onClick={() => act('job.complete', { id: j.id }, 'Работа завершена')}
-            >
-              Завершить работу
-            </Button>
-          )}
-          <Button onClick={onClose}>Закрыть</Button>
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </Modal>
   );
