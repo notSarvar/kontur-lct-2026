@@ -15,7 +15,9 @@ test('operational dashboard has actionable metrics, collapsible neutral team and
   await expect(page.locator('.simulation')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Новая заявка', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Пересчитать план', exact: true })).toBeVisible();
-  await expect(page.locator('.topbar .header-metrics .metric-link')).toHaveCount(3);
+  await expect(page.locator('.topbar .metric-link')).toHaveCount(0);
+  await expect(page.getByRole('region', { name: 'Сводка дня' }).getByRole('button')).toHaveCount(3);
+  await expect(page.getByText('Синхронизировано', { exact: true })).toHaveCount(0);
   await expect(page.getByLabel('Режим планирования', { exact: true })).toHaveCount(0);
   await expect(page.getByText('ОПЕРАТИВНОЕ УПРАВЛЕНИЕ')).toHaveCount(0);
   await expect(page.getByText('Длина маршрутов', { exact: true })).toHaveCount(0);
@@ -60,6 +62,20 @@ test('free engineer lookup highlights the chosen window without mutating the pla
   const after = await (await request.get('/api/state')).json();
   expect(after.revision).toBe(before.revision);
   expect(after.plan).toEqual(before.plan);
+});
+
+test('connection warning appears only during a failed live connection and clears on reconnect', async ({
+  page,
+}) => {
+  let unavailable = true;
+  await page.route('**/api/events', (route) => (unavailable ? route.abort() : route.continue()));
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await expect(page.getByRole('status')).toContainText('Нет связи с сервером');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+  unavailable = false;
+  await expect(page.locator('.connection-warning')).toHaveCount(0, { timeout: 15000 });
+  await expect(page.getByText('Синхронизировано', { exact: true })).toHaveCount(0);
 });
 
 test('gantt jobs and dialogs remain usable on desktop and narrow screens', async ({ page }) => {

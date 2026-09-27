@@ -244,23 +244,12 @@ textarea {
   align-items: center;
   gap: 18px;
 }
-.connection {
-  font-size: 10px;
-  color: #767676;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.connection i,
 .pulse-dot {
   display: inline-block;
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: #767676;
-}
-.connection.offline i {
-  background: #d19850;
 }
 .user-avatar {
   width: 33px;
@@ -2455,9 +2444,6 @@ legend {
   .brand {
     width: auto;
     font-size: 24px;
-  }
-  .top-right .connection {
-    display: none;
   }
   .operations-grid {
     grid-template-columns: minmax(0, 1fr) 265px;

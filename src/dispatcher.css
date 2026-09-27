@@ -486,7 +486,6 @@
   .hackathon-workspace .top-right {
     margin-left: auto;
   }
-  .hackathon-workspace .top-right .connection,
   .hackathon-workspace .user-avatar,
   .hackathon-workspace .top-right .icon-button {
     display: none;

@@ -50,7 +50,7 @@ export default function App() {
   const [state, setState] = useState(null),
     [error, setError] = useState(''),
     [busy, setBusy] = useState(false),
-    [online, setOnline] = useState(false);
+    [connectionLost, setConnectionLost] = useState(false);
   const [mode, setMode] = useState('dispatch'),
     [section, setPage] = useState('overview'),
     [selected, setSelected] = useState('all'),
@@ -64,13 +64,6 @@ export default function App() {
     [filter, setFilter] = useState('all'),
     [timeline, setTimeline] = useState(false),
     [focusWindow, setFocusWindow] = useState(null);
-  const [wideHeader, setWideHeader] = useState(() => window.matchMedia('(min-width: 1280px)').matches);
-  useEffect(() => {
-    const query = window.matchMedia('(min-width: 1280px)');
-    const update = () => setWideHeader(query.matches);
-    query.addEventListener('change', update);
-    return () => query.removeEventListener('change', update);
-  }, []);
   const stateRef = useRef(state),
     busyRef = useRef(false);
   const isHackathon = state?.workspace?.mode === 'hackathon';
@@ -95,8 +88,8 @@ export default function App() {
     load();
     const events = new EventSource('/api/events');
     events.onmessage = () => load();
-    events.onopen = () => setOnline(true);
-    events.onerror = () => setOnline(false);
+    events.onopen = () => setConnectionLost(false);
+    events.onerror = () => setConnectionLost(true);
     return () => events.close();
   }, []);
   useEffect(() => {
@@ -233,7 +226,7 @@ export default function App() {
     ['support', Headphones, 'Поддержка'],
   ];
   const dayMetrics = (
-    <div className={`metrics-grid ${wideHeader ? 'header-metrics' : 'dispatch-metrics'}`}>
+    <section className="metrics-grid dispatch-metrics" aria-label="Сводка дня">
       <Metric
         icon={ListTodo}
         label="Заявки на сегодня"
@@ -253,17 +246,12 @@ export default function App() {
       <Metric
         icon={Users}
         label="Инженеры с выездами"
-        value={
-          <>
-            {plan.metrics.usedEngineers}
-            <span className="metric-total"> / {engineers.length}</span>
-          </>
-        }
-        detail="задействовано / всего в команде"
+        value={plan.metrics.usedEngineers}
+        detail={`из ${engineers.length} в команде`}
         color="green"
         onClick={() => setPage('team')}
       />
-    </div>
+    </section>
   );
   return (
     <div className={`application ${isHackathon ? 'hackathon-workspace' : ''}`}>
@@ -306,7 +294,6 @@ export default function App() {
             </button>
           </div>
         )}
-        {wideHeader && mode === 'dispatch' && !isHackathon && dayMetrics}
         <div className="top-right">
           {isHackathon && (
             <a
@@ -318,10 +305,6 @@ export default function App() {
               Открыть продукт <ArrowUpRight size={16} />
             </a>
           )}
-          <span className={`connection ${online ? '' : 'offline'}`}>
-            <i />
-            {online ? 'Синхронизировано' : 'Переподключение'}
-          </span>
           <button
             className="icon-button"
             aria-label="Уведомления"
@@ -371,6 +354,12 @@ export default function App() {
           </aside>
         )}
         <main className={`main ${mode === 'engineer' ? 'mobile-mode' : ''}`}>
+          {connectionLost && (
+            <div className="connection-warning" role="status">
+              <TriangleAlert size={18} aria-hidden="true" />
+              <p>Нет связи с сервером. Данные могут быть неактуальны. Переподключаемся…</p>
+            </div>
+          )}
           {mode === 'dispatch' ? (
             <>
               {!isHackathon && (
@@ -418,7 +407,7 @@ export default function App() {
               </div>
               {page === 'overview' && (
                 <>
-                  {!wideHeader && dayMetrics}
+                  {dayMetrics}
                   <Attention
                     state={state}
                     jobs={atRisk}
