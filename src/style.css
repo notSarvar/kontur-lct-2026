@@ -6,15 +6,15 @@
     BlinkMacSystemFont,
     'Segoe UI',
     sans-serif;
-  color: #26352e;
-  background: #f5f6f3;
+  color: #313131;
+  background: #f6f6f6;
   font-synthesis: none;
   font-size: 13px;
   --green: #237d68;
   --green-dark: #1b5f50;
-  --muted: #849089;
-  --border: #e7ebe5;
-  --ink: #26352e;
+  --muted: #767676;
+  --border: #eaeaea;
+  --ink: #313131;
 }
 * {
   box-sizing: border-box;
@@ -53,7 +53,7 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid #8cbca9;
+  outline: 3px solid #767676;
   outline-offset: 3px;
 }
 h1,
@@ -92,7 +92,7 @@ input,
 select,
 textarea {
   min-width: 0;
-  border: 1px solid #dfe5df;
+  border: 1px solid #e3e3e3;
   border-radius: 8px;
   background: white;
   color: var(--ink);
@@ -120,7 +120,7 @@ textarea {
 .button {
   height: 37px;
   padding: 0 13px;
-  border: 1px solid #e0e6df;
+  border: 1px solid #e4e4e4;
   border-radius: 8px;
   background: #fff;
   display: inline-flex;
@@ -135,8 +135,8 @@ textarea {
     box-shadow 0.15s;
 }
 .button:hover {
-  background: #f1f5f0;
-  box-shadow: 0 2px 6px #26352e08;
+  background: #f4f4f4;
+  box-shadow: 0 2px 6px #31313108;
 }
 .button.primary {
   background: var(--green);
@@ -163,7 +163,7 @@ textarea {
   position: relative;
 }
 .icon-button:hover {
-  background: #eef2ed;
+  background: #f1f1f1;
 }
 .muted {
   color: var(--muted);
@@ -209,16 +209,16 @@ textarea {
   height: 34px;
   border-radius: 10px;
   color: #f5f6d9;
-  background: #243c31;
+  background: #363636;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .mode-switch {
   display: flex;
-  background: #f4f6f2;
+  background: #f5f5f5;
   padding: 4px;
-  border: 1px solid #ebeee8;
+  border: 1px solid #ededed;
   border-radius: 10px;
   gap: 3px;
 }
@@ -232,12 +232,12 @@ textarea {
   padding: 9px 18px;
   font-weight: 550;
   font-size: 12px;
-  color: #7e8b81;
+  color: #767676;
 }
 .mode-switch button.active {
   background: white;
-  color: #2c4034;
-  box-shadow: 0 1px 4px #25372b13;
+  color: #3b3b3b;
+  box-shadow: 0 1px 4px #32323213;
 }
 .top-right {
   display: flex;
@@ -246,7 +246,7 @@ textarea {
 }
 .connection {
   font-size: 10px;
-  color: #758679;
+  color: #767676;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -257,7 +257,7 @@ textarea {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #599780;
+  background: #767676;
 }
 .connection.offline i {
   background: #d19850;
@@ -266,7 +266,7 @@ textarea {
   width: 33px;
   height: 33px;
   border-radius: 50%;
-  background: #e9eddf;
+  background: #ebebeb;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -305,27 +305,27 @@ textarea {
   font-weight: 600;
 }
 .workspace-icon {
-  background: #f2f4ee;
-  border: 1px solid #e8ecdf;
+  background: #f3f3f3;
+  border: 1px solid #eaeaea;
   width: 32px;
   height: 33px;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #7b8d65;
+  color: #767676;
 }
 .workspace small {
   display: block;
   font-size: 9px;
   font-weight: 400;
-  color: #929b93;
+  color: #767676;
   margin-top: 5px;
 }
 .nav-label {
   font-size: 8px;
   letter-spacing: 1px;
-  color: #9ca59d;
+  color: #767676;
   margin: 3px 12px 13px;
 }
 .sidebar nav {
@@ -343,20 +343,20 @@ textarea {
   padding: 12px 13px;
   border-radius: 8px;
   font-size: 11px;
-  color: #7c887e;
+  color: #767676;
 }
 .sidebar nav button.active {
   color: var(--green);
-  background: #eaf3eb;
+  background: #f1f1f1;
   font-weight: 600;
 }
 .sidebar nav button:hover {
-  background: #f3f6f1;
+  background: #f5f5f5;
 }
 .nav-count {
   margin-left: auto;
   font-size: 9px;
-  background: #e9eee6;
+  background: #ececec;
   min-width: 21px;
   padding: 3px 5px;
   border-radius: 5px;
@@ -380,14 +380,14 @@ textarea {
   align-items: center;
   gap: 6px;
   padding: 15px 8px;
-  background: #f6f7f3;
-  border: 1px solid #edf0e8;
+  background: #f6f6f6;
+  border: 1px solid #efefef;
   border-radius: 8px;
   margin-bottom: 16px;
 }
 .scenario-label small {
   font-size: 8px;
-  color: #95a08f;
+  color: #767676;
   margin-top: 3px;
 }
 .sidebar-bottom button {
@@ -398,7 +398,7 @@ textarea {
   align-items: center;
   padding: 8px 0;
   font-size: 10px;
-  color: #8a958a;
+  color: #767676;
 }
 .sidebar-bottom button svg:last-child:not(:first-child) {
   margin-left: auto;
@@ -420,7 +420,7 @@ textarea {
 .eyebrow {
   font-size: 8px;
   letter-spacing: 1.5px;
-  color: #80907e;
+  color: #767676;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -430,16 +430,16 @@ textarea {
 .eyebrow > span:first-child {
   width: 5px;
   height: 5px;
-  background: #6d9378;
+  background: #767676;
   border-radius: 50%;
 }
 .eyebrow-sep {
-  color: #bdc6b8;
+  color: #c3c3c3;
   margin: 0 3px;
 }
 .page-heading p {
   font-size: 11px;
-  color: #8b948c;
+  color: #767676;
   margin-top: 8px;
 }
 .heading-actions {
@@ -459,14 +459,14 @@ textarea {
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 12px;
-  box-shadow: 0 2px 3px #1f382602;
+  box-shadow: 0 2px 3px #31313102;
 }
 .metric-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
-  color: #7a877c;
+  color: #767676;
   font-size: 10px;
 }
 .metric-icon {
@@ -478,8 +478,8 @@ textarea {
   border-radius: 8px;
 }
 .green {
-  background: #edf5ee;
-  color: #498870;
+  background: #f3f3f3;
+  color: #767676;
 }
 .purple {
   background: #f0eef8;
@@ -503,7 +503,7 @@ textarea {
 .metric small {
   display: block;
   font-size: 9px;
-  color: #95a08f;
+  color: #767676;
   margin-top: 8px;
 }
 .panel {
@@ -511,7 +511,7 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 4px #23342a02;
+  box-shadow: 0 2px 4px #30303002;
 }
 .operations-grid {
   display: grid;
@@ -527,7 +527,7 @@ textarea {
 }
 .panel-heading p {
   font-size: 9px;
-  color: #96a094;
+  color: #767676;
   margin-top: 5px;
 }
 .panel-heading h2 {
@@ -539,7 +539,7 @@ textarea {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #62977c;
+  color: #767676;
   font-size: 7px;
   letter-spacing: 1px;
   font-weight: 550;
@@ -548,15 +548,15 @@ textarea {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #70a285;
+  background: #767676;
 }
 .small-segment {
   padding: 3px;
-  border: 1px solid #e9ede5;
+  border: 1px solid #ececec;
   border-radius: 7px;
   display: flex;
   gap: 3px;
-  background: #f7f8f4;
+  background: #f7f7f7;
 }
 .small-segment button {
   display: flex;
@@ -565,13 +565,13 @@ textarea {
   padding: 5px 8px;
   background: none;
   border: 0;
-  color: #9ba294;
+  color: #767676;
   font-size: 9px;
   border-radius: 5px;
 }
 .small-segment button.active {
   background: white;
-  color: #53654f;
+  color: #606060;
   box-shadow: 0 1px 2px #0000000a;
 }
 .engineer-filters {
@@ -582,7 +582,7 @@ textarea {
   white-space: nowrap;
 }
 .engineer-filters button {
-  border: 1px solid #e9ece6;
+  border: 1px solid #ebebeb;
   background: white;
   padding: 6px 9px;
   border-radius: 6px;
@@ -590,12 +590,12 @@ textarea {
   align-items: center;
   gap: 6px;
   font-size: 9px;
-  color: #88937f;
+  color: #767676;
 }
 .engineer-filters button.selected {
-  background: #eff5ec;
-  border-color: #dce8d7;
-  color: #4b6a43;
+  background: #f3f3f3;
+  border-color: #e4e4e4;
+  color: #616161;
 }
 .engineer-filters i {
   height: 5px;
@@ -609,15 +609,15 @@ textarea {
 .route-map {
   height: 351px;
   position: relative;
-  background: #e8ede3;
+  background: #ebebeb;
 }
 .map-canvas {
   height: 100%;
   width: 100%;
   z-index: 0;
-  background: #e9eee4;
+  background: #ececec;
   background-image:
-    linear-gradient(#d4ddcf80 1px, transparent 1px), linear-gradient(90deg, #d4ddcf80 1px, transparent 1px);
+    linear-gradient(#dadada80 1px, transparent 1px), linear-gradient(90deg, #dadada80 1px, transparent 1px);
   background-size: 40px 40px;
 }
 .leaflet-tile-pane {
@@ -628,13 +628,13 @@ textarea {
   background: #ffffffbd !important;
 }
 .leaflet-control-zoom {
-  border: 1px solid #e0e6dc !important;
-  box-shadow: 0 1px 6px #25362310 !important;
+  border: 1px solid #e4e4e4 !important;
+  box-shadow: 0 1px 6px #31313110 !important;
   border-radius: 7px !important;
   overflow: hidden;
 }
 .leaflet-control-zoom a {
-  color: #5e7258 !important;
+  color: #6c6c6c !important;
   font-weight: 400 !important;
   font-size: 19px !important;
   width: 28px !important;
@@ -647,7 +647,7 @@ textarea {
   line-height: 1.6;
   padding: 8px 12px;
   border-radius: 7px;
-  border: 1px solid #e2e8df;
+  border: 1px solid #e6e6e6;
 }
 .job-pin {
   background: var(--pin);
@@ -657,7 +657,7 @@ textarea {
   border: 2px solid white;
   border-radius: 50% 50% 50% 3px;
   transform: rotate(-45deg);
-  box-shadow: 0 2px 5px #263d3340;
+  box-shadow: 0 2px 5px #37373740;
   font-family: Arial;
   font-size: 10px;
   display: flex;
@@ -671,7 +671,7 @@ textarea {
   border-radius: 8px;
   box-shadow:
     0 0 0 3px #ffffff70,
-    0 2px 4px #25392b35;
+    0 2px 4px #34343435;
 }
 .job-pin:after {
   content: '';
@@ -701,13 +701,13 @@ textarea {
   justify-content: center;
   box-shadow:
     0 0 0 5px #ffffff60,
-    0 2px 5px #263d3340;
+    0 2px 5px #37373740;
 }
 .map-footer {
   padding: 12px 16px;
   display: flex;
   justify-content: space-between;
-  color: #8c9786;
+  color: #767676;
   font-size: 8px;
   gap: 10px;
 }
@@ -719,19 +719,19 @@ textarea {
 .legend-line {
   width: 12px;
   height: 2px;
-  background: #76a087;
+  background: #767676;
 }
 .legend-dot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #76a087;
+  background: #767676;
   margin-left: 6px;
 }
 .legend-square {
   width: 7px;
   height: 7px;
-  border: 1px solid #76a087;
+  border: 1px solid #767676;
   margin-left: 6px;
   border-radius: 2px;
 }
@@ -767,19 +767,19 @@ textarea {
   height: 506px;
 }
 .route-panel .panel-heading {
-  border-bottom: 1px solid #f0f2ec;
+  border-bottom: 1px solid #f1f1f1;
 }
 .count-circle {
   width: 27px;
   height: 27px;
-  border: 1px solid #e6ecdf;
-  background: #f5f8f1;
+  border: 1px solid #eaeaea;
+  background: #f7f7f7;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 10px;
-  color: #829070;
+  color: #767676;
 }
 .route-list {
   overflow-y: auto;
@@ -787,7 +787,7 @@ textarea {
 }
 .engineer-route {
   padding: 16px 17px 12px;
-  border-bottom: 1px solid #eff2ea;
+  border-bottom: 1px solid #f1f1f1;
 }
 .route-person {
   display: flex;
@@ -830,13 +830,13 @@ textarea {
 }
 .route-person small {
   font-size: 8px;
-  color: #a0aa97;
+  color: #767676;
   display: block;
   margin-top: 4px;
 }
 .route-person > svg {
   margin-left: auto;
-  color: #a4af9d;
+  color: #767676;
 }
 .route-stops {
   margin-left: 14px;
@@ -849,7 +849,7 @@ textarea {
   top: 4px;
   bottom: 10px;
   left: 0;
-  border-left: 1px dashed #d5dfca;
+  border-left: 1px dashed #dbdbdb;
 }
 .route-stop {
   position: relative;
@@ -868,7 +868,7 @@ textarea {
   flex-shrink: 0;
   width: 15px;
   height: 15px;
-  border: 1px solid #d5e1cd;
+  border: 1px solid #dddddd;
   background: #fff;
   border-radius: 50%;
   display: flex;
@@ -893,12 +893,12 @@ textarea {
 .route-stop small {
   display: block;
   font-size: 8px;
-  color: #9ba591;
+  color: #767676;
   margin-top: 4px;
 }
 .route-stop time {
   font-size: 9px;
-  color: #7a886e;
+  color: #767676;
   margin-left: auto;
 }
 .more-stops {
@@ -909,7 +909,7 @@ textarea {
   background: none;
   margin-left: 10px;
   padding: 5px 0;
-  color: #7a9670;
+  color: #767676;
   font-size: 8px;
 }
 .route-panel-footer {
@@ -917,9 +917,9 @@ textarea {
   display: flex;
   gap: 6px;
   align-items: center;
-  background: #fbfcf8;
+  background: #fbfbfb;
   font-size: 8px;
-  color: #92a382;
+  color: #767676;
 }
 .break-label {
   font-size: 9px;
@@ -937,34 +937,34 @@ textarea {
   gap: 13px;
   margin-top: 17px;
   padding: 16px 20px;
-  background: #f0f5ed;
-  border-color: #e3ebde;
+  background: #f3f3f3;
+  border-color: #e8e8e8;
 }
 .attention-icon {
   height: 35px;
   width: 35px;
-  background: #e4eedc;
+  background: #ebebeb;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 9px;
-  color: #70915a;
+  color: #767676;
 }
 .attention-panel h3 {
   font-size: 11px;
-  color: #527245;
+  color: #686868;
   font-weight: 550;
 }
 .attention-panel p {
   font-size: 10px;
   margin-top: 4px;
-  color: #8b9b7f;
+  color: #767676;
 }
 .attention-panel .button {
   margin-left: auto;
   background: #fcfef9;
-  border-color: #dfe9d6;
-  color: #6a8654;
+  border-color: #e6e6e6;
+  color: #767676;
 }
 .simulation {
   background: #fff;
@@ -988,8 +988,8 @@ textarea {
   width: 33px;
   height: 33px;
   border-radius: 8px;
-  background: #f3f5ef;
-  color: #8b9b80;
+  background: #f4f4f4;
+  color: #767676;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1000,7 +1000,7 @@ textarea {
 }
 .simulation-title p {
   font-size: 9px;
-  color: #9aa38f;
+  color: #767676;
   margin-top: 3px;
 }
 .simulation-actions {
@@ -1010,7 +1010,7 @@ textarea {
 .simulation-actions .button {
   height: 31px;
   font-size: 9px;
-  color: #829471;
+  color: #767676;
 }
 .simulation-controls {
   display: flex;
@@ -1042,7 +1042,7 @@ textarea {
 .simulation-clock small {
   display: block;
   font-size: 8px;
-  color: #94a086;
+  color: #767676;
   font-weight: 400;
   letter-spacing: 0;
   margin-top: 6px;
@@ -1056,7 +1056,7 @@ textarea {
   display: block;
   width: 100%;
   height: 4px;
-  background: linear-gradient(to right, #438d6f var(--progress), #e5eadf var(--progress));
+  background: linear-gradient(to right, #767676 var(--progress), #e8e8e8 var(--progress));
   border: 0;
 }
 .slider-wrap input::-webkit-slider-thumb {
@@ -1065,22 +1065,22 @@ textarea {
   height: 11px;
   border-radius: 50%;
   border: 2px solid white;
-  background: #3e8d6c;
-  box-shadow: 0 0 0 1px #b1c9a4;
+  background: #767676;
+  box-shadow: 0 0 0 1px #c1c1c1;
 }
 .slider-labels {
   display: flex;
   justify-content: space-between;
   margin-top: 9px;
-  color: #a1ab96;
+  color: #767676;
   font-size: 8px;
 }
 .simulation-controls select {
   height: 30px;
   padding: 0 8px;
   font-size: 9px;
-  color: #839175;
-  border-color: #e5eadf;
+  color: #767676;
+  border-color: #e8e8e8;
 }
 .simulation-controls > .button {
   height: 30px;
@@ -1090,7 +1090,7 @@ textarea {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  color: #a3ac9a;
+  color: #767676;
   font-size: 8px;
   margin-top: 20px;
 }
@@ -1103,7 +1103,7 @@ textarea {
   height: 3px;
   width: 3px;
   border-radius: 50%;
-  background: #a3ac9a;
+  background: #767676;
 }
 .table-toolbar {
   display: flex;
@@ -1122,7 +1122,7 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding-left: 10px;
-  color: #9aa594;
+  color: #767676;
   flex: 1;
   min-width: 200px;
 }
@@ -1142,18 +1142,18 @@ table {
   text-align: left;
 }
 th {
-  background: #f8faf5;
+  background: #f9f9f9;
   padding: 13px 17px;
   font-size: 9px;
-  color: #8c9980;
+  color: #767676;
   font-weight: 500;
-  border-top: 1px solid #eef1e7;
-  border-bottom: 1px solid #eef1e7;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
 }
 td {
   padding: 17px;
   font-size: 11px;
-  border-bottom: 1px solid #eff2e9;
+  border-bottom: 1px solid #f1f1f1;
 }
 td b {
   font-weight: 500;
@@ -1161,18 +1161,18 @@ td b {
 td small {
   display: block;
   font-size: 9px;
-  color: #98a28e;
+  color: #767676;
   margin-top: 6px;
 }
 tbody tr {
   cursor: pointer;
 }
 tbody tr:hover {
-  background: #f7faf3;
+  background: #f9f9f9;
 }
 .job-number {
   font-size: 9px;
-  color: #9fa894;
+  color: #767676;
   margin-right: 7px;
 }
 .table-person {
@@ -1195,16 +1195,16 @@ tbody tr:hover {
   white-space: nowrap;
 }
 .badge.gray {
-  background: #f0f3ec;
-  color: #8b967f;
+  background: #f2f2f2;
+  color: #767676;
 }
 .empty {
   padding: 55px 25px;
   text-align: center;
-  color: #9ca98e;
+  color: #767676;
 }
 .empty svg {
-  color: #bcc9ad;
+  color: #c4c4c4;
 }
 .empty p {
   margin: 12px auto;
@@ -1214,7 +1214,7 @@ tbody tr:hover {
 .empty-inline {
   padding: 10px;
   font-size: 10px;
-  color: #9ea992;
+  color: #767676;
 }
 .team-grid {
   display: grid;
@@ -1231,7 +1231,7 @@ tbody tr:hover {
 }
 .team-card-header p {
   font-size: 10px;
-  color: #99a38f;
+  color: #767676;
   margin-top: 6px;
 }
 .tags {
@@ -1247,7 +1247,7 @@ tbody tr:hover {
   gap: 11px;
   flex-wrap: wrap;
   margin: 16px 0;
-  color: #8e9d80;
+  color: #767676;
   font-size: 10px;
 }
 .equipment-list span {
@@ -1262,13 +1262,13 @@ tbody tr:hover {
   border-top: 1px solid var(--border);
   margin-top: 20px;
   font-size: 9px;
-  color: #9aa48d;
+  color: #767676;
 }
 .team-numbers b {
   display: block;
   font-size: 17px;
   font-weight: 500;
-  color: #607250;
+  color: #6c6c6c;
   margin-bottom: 6px;
 }
 .team-card-footer {
@@ -1296,12 +1296,12 @@ tbody tr:hover {
   font-weight: 500;
 }
 .comparison span {
-  color: #93a084;
+  color: #767676;
   font-size: 10px;
 }
 .comparison-track {
   height: 12px;
-  background: #f0f4eb;
+  background: #f2f2f2;
   border-radius: 4px;
   margin-top: 12px;
   overflow: hidden;
@@ -1313,7 +1313,7 @@ tbody tr:hover {
 }
 .analysis-note {
   margin: 22px;
-  color: #98a18e;
+  color: #767676;
   font-size: 10px;
 }
 .analysis-meta {
@@ -1321,7 +1321,7 @@ tbody tr:hover {
   justify-content: space-around;
   margin: 20px;
   font-size: 9px;
-  color: #98a58b;
+  color: #767676;
   border-top: 1px solid var(--border);
   padding-top: 22px;
 }
@@ -1330,7 +1330,7 @@ tbody tr:hover {
   font-size: 16px;
   margin-top: 7px;
   font-weight: 500;
-  color: #57734e;
+  color: #6a6a6a;
 }
 .accuracy-number {
   font-size: 60px;
@@ -1343,7 +1343,7 @@ tbody tr:hover {
   display: block;
   letter-spacing: 0;
   font-size: 11px;
-  color: #97a18c;
+  color: #767676;
 }
 .accuracy-bars {
   margin: 22px;
@@ -1358,7 +1358,7 @@ tbody tr:hover {
 .accuracy-bars b {
   font-weight: 400;
   margin-left: auto;
-  color: #96a089;
+  color: #767676;
 }
 .support-ticket {
   display: flex;
@@ -1378,20 +1378,20 @@ tbody tr:hover {
   color: #bf9a60;
 }
 .ticket-icon.resolved {
-  color: #76a174;
-  background: #edf5e8;
+  color: #767676;
+  background: #f2f2f2;
 }
 .support-ticket h3 {
   font-size: 12px;
 }
 .support-ticket p {
   font-size: 11px;
-  color: #96a18a;
+  color: #767676;
   margin: 6px 0;
 }
 .support-ticket small {
   font-size: 9px;
-  color: #a8b19d;
+  color: #767676;
 }
 .support-ticket > .button {
   margin-left: auto;
@@ -1407,7 +1407,7 @@ tbody tr:hover {
   display: flex;
   justify-content: space-between;
   font-size: 8px;
-  color: #a1ad94;
+  color: #767676;
   margin-bottom: 22px;
 }
 .timeline-row {
@@ -1427,10 +1427,10 @@ tbody tr:hover {
 .timeline-track {
   position: relative;
   height: 37px;
-  background: repeating-linear-gradient(to right, #edf2e8 0, #edf2e8 1px, transparent 1px, transparent 25%);
+  background: repeating-linear-gradient(to right, #f0f0f0 0, #f0f0f0 1px, transparent 1px, transparent 25%);
   flex: 1;
-  border-top: 1px solid #f0f3e9;
-  border-bottom: 1px solid #f0f3e9;
+  border-top: 1px solid #f2f2f2;
+  border-bottom: 1px solid #f2f2f2;
 }
 .timeline-track button {
   position: absolute;
@@ -1460,12 +1460,12 @@ tbody tr:hover {
 }
 .timeline-note {
   font-size: 9px;
-  color: #9eaa90;
+  color: #767676;
   margin-top: 35px;
 }
 .phone-stage {
-  background: radial-gradient(ellipse at 50% 45%, #e4ecdb 0, #edf1e7 50%, #f3f5ee 75%);
-  border: 1px solid #e7edde;
+  background: radial-gradient(ellipse at 50% 45%, #e9e9e9 0, #efefef 50%, #f4f4f4 75%);
+  border: 1px solid #ebebeb;
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -1480,12 +1480,12 @@ tbody tr:hover {
 .phone {
   width: 350px;
   height: 711px;
-  border: 7px solid #24342b;
+  border: 7px solid #303030;
   border-radius: 44px;
-  background: #fbfcf8;
+  background: #fbfbfb;
   box-shadow:
-    0 20px 35px #3f503320,
-    0 3px 4px #3f503330;
+    0 20px 35px #4a4a4a20,
+    0 3px 4px #4a4a4a30;
   overflow: hidden;
   position: relative;
   display: flex;
@@ -1510,7 +1510,7 @@ tbody tr:hover {
   width: 88px;
   height: 21px;
   border-radius: 20px;
-  background: #24342b;
+  background: #303030;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -1520,16 +1520,16 @@ tbody tr:hover {
   display: inline-block;
   width: 16px;
   height: 8px;
-  background: #26382a;
+  background: #333333;
   border-radius: 2px;
   border: 1px solid white;
-  box-shadow: 0 0 0 1px #26382a;
+  box-shadow: 0 0 0 1px #333333;
 }
 .phone-content {
   overflow-y: auto;
   flex: 1;
   scrollbar-width: thin;
-  scrollbar-color: #e1e8d9 transparent;
+  scrollbar-color: #e5e5e5 transparent;
 }
 .phone-heading {
   display: flex;
@@ -1539,7 +1539,7 @@ tbody tr:hover {
 }
 .phone-heading small {
   font-size: 9px;
-  color: #8e9c7f;
+  color: #767676;
 }
 .phone-heading h2 {
   font-size: 22px;
@@ -1548,7 +1548,7 @@ tbody tr:hover {
   letter-spacing: -0.6px;
 }
 .phone-heading h2 > span {
-  color: #88a166;
+  color: #767676;
   font-size: 19px;
   padding-left: 4px;
 }
@@ -1557,14 +1557,14 @@ tbody tr:hover {
   display: flex;
   justify-content: space-between;
   padding: 14px 13px;
-  background: #edf3e6;
-  border: 1px solid #e4ecd9;
+  background: #f1f1f1;
+  border: 1px solid #e9e9e9;
   border-radius: 10px;
 }
 .phone-summary b {
   font-size: 16px;
   font-weight: 550;
-  color: #536c41;
+  color: #646464;
 }
 .phone-summary b small {
   font-size: 9px;
@@ -1572,7 +1572,7 @@ tbody tr:hover {
 }
 .phone-summary span {
   display: block;
-  color: #98a58a;
+  color: #767676;
   font-size: 8px;
   margin-top: 5px;
 }
@@ -1582,7 +1582,7 @@ tbody tr:hover {
   margin: 0 18px;
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid #e0e8d7;
+  border: 1px solid #e5e5e5;
 }
 .phone-map .route-map {
   height: 100%;
@@ -1593,15 +1593,15 @@ tbody tr:hover {
   left: 10px;
   z-index: 500;
   background: #fffffff0;
-  box-shadow: 0 1px 3px #34502710;
-  border: 1px solid #e4eadc;
+  box-shadow: 0 1px 3px #47474710;
+  border: 1px solid #e8e8e8;
   border-radius: 6px;
   padding: 6px 9px;
   display: flex;
   align-items: center;
   gap: 5px;
   font-size: 8px;
-  color: #6d885a;
+  color: #767676;
 }
 .phone-map .leaflet-control-zoom {
   display: none;
@@ -1619,7 +1619,7 @@ tbody tr:hover {
   margin: 14px 18px 0;
   padding: 14px;
   background: white;
-  border: 1px solid #e4eadb;
+  border: 1px solid #e8e8e8;
   border-radius: 11px;
 }
 .next-visit-label {
@@ -1627,7 +1627,7 @@ tbody tr:hover {
   justify-content: space-between;
   align-items: center;
   font-size: 7px;
-  color: #8ba375;
+  color: #767676;
   letter-spacing: 0.7px;
 }
 .next-visit-label span {
@@ -1639,11 +1639,11 @@ tbody tr:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #7d9c66;
+  background: #767676;
 }
 .next-visit-label b {
   font-weight: 400;
-  color: #a5b097;
+  color: #767676;
   letter-spacing: 0;
 }
 .next-visit h3 {
@@ -1653,7 +1653,7 @@ tbody tr:hover {
 }
 .next-visit p {
   font-size: 9px;
-  color: #9aa78b;
+  color: #767676;
   margin-top: 4px;
 }
 .visit-times {
@@ -1666,7 +1666,7 @@ tbody tr:hover {
   display: flex;
   align-items: center;
   gap: 4px;
-  color: #80966c;
+  color: #767676;
 }
 .phone-tags {
   display: flex;
@@ -1678,18 +1678,18 @@ tbody tr:hover {
   display: flex;
   align-items: center;
   gap: 3px;
-  background: #f4f7ee;
+  background: #f6f6f6;
   border-radius: 4px;
   padding: 4px 5px;
   font-size: 7px;
-  color: #8d9f7c;
+  color: #767676;
 }
 .next-visit > .button {
   width: 100%;
   height: 34px;
   font-size: 10px;
-  background: #477e50;
-  border-color: #477e50;
+  background: #6f6f6f;
+  border-color: #6f6f6f;
 }
 .phone-secondary-actions {
   display: flex;
@@ -1704,13 +1704,13 @@ tbody tr:hover {
   align-items: center;
   gap: 4px;
   font-size: 7px;
-  color: #9aa68c;
+  color: #767676;
   padding: 0;
 }
 .phone-section-label {
   font-size: 7px;
   letter-spacing: 1px;
-  color: #a3af95;
+  color: #767676;
   padding: 18px 20px 8px;
   display: flex;
   justify-content: space-between;
@@ -1720,7 +1720,7 @@ tbody tr:hover {
   margin: 0 18px;
   padding: 11px 0;
   border: 0;
-  border-bottom: 1px solid #eaf0df;
+  border-bottom: 1px solid #ededed;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1730,9 +1730,9 @@ tbody tr:hover {
 .phone-upcoming > span {
   width: 20px;
   height: 20px;
-  border: 1px solid #e1ead6;
+  border: 1px solid #e7e7e7;
   border-radius: 50%;
-  color: #9fb18a;
+  color: #767676;
   font-size: 8px;
   display: flex;
   align-items: center;
@@ -1746,18 +1746,18 @@ tbody tr:hover {
 .phone-upcoming small {
   display: block;
   font-size: 7px;
-  color: #a4af97;
+  color: #767676;
   margin-top: 4px;
 }
 .phone-upcoming time {
   margin-left: auto;
   font-size: 8px;
-  color: #9aab87;
+  color: #767676;
 }
 .phone-nav {
   height: 62px;
   flex-shrink: 0;
-  border-top: 1px solid #e8eedf;
+  border-top: 1px solid #ececec;
   display: flex;
   background: #fcfdf8;
   padding: 8px 8px 11px;
@@ -1771,17 +1771,17 @@ tbody tr:hover {
   gap: 4px;
   border: 0;
   background: none;
-  color: #a6b196;
+  color: #767676;
   font-size: 7px;
 }
 .phone-nav button.active {
-  color: #4a7e4b;
+  color: #6f6f6f;
 }
 .phone-stage-caption {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #97a887;
+  color: #767676;
   font-size: 8px;
   margin-top: 20px;
 }
@@ -1808,14 +1808,14 @@ tbody tr:hover {
 .phone-empty {
   padding: 35px;
   text-align: center;
-  color: #84a263;
+  color: #767676;
 }
 .phone-empty h3 {
   margin: 12px 0 5px;
 }
 .phone-empty p {
   font-size: 10px;
-  color: #a0af8a;
+  color: #767676;
 }
 .phone-events {
   padding: 0 16px;
@@ -1843,7 +1843,7 @@ tbody tr:hover {
 }
 .phone-profile p {
   font-size: 11px;
-  color: #8e9f78;
+  color: #767676;
   margin-top: 8px;
 }
 .phone-profile .button {
@@ -1855,7 +1855,7 @@ tbody tr:hover {
 .context-eyebrow {
   font-size: 8px;
   letter-spacing: 1.4px;
-  color: #8e9f7d;
+  color: #767676;
 }
 .engineer-context > h2 {
   font-size: 34px;
@@ -1867,7 +1867,7 @@ tbody tr:hover {
 .context-intro {
   font-size: 12px;
   line-height: 1.9;
-  color: #96a389;
+  color: #767676;
   margin-top: 15px;
 }
 .context-card {
@@ -1875,7 +1875,7 @@ tbody tr:hover {
 }
 .context-card .panel-heading {
   padding: 17px 19px;
-  color: #718d5c;
+  color: #767676;
 }
 .context-facts {
   padding: 2px 19px 19px;
@@ -1884,12 +1884,12 @@ tbody tr:hover {
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
-  color: #9ca98d;
+  color: #767676;
   font-size: 10px;
 }
 .context-facts b {
   font-weight: 500;
-  color: #728e5d;
+  color: #767676;
 }
 .context-card .event {
   margin: 0 18px;
@@ -1899,11 +1899,11 @@ tbody tr:hover {
   display: flex;
   gap: 13px;
   align-items: flex-start;
-  background: #edf2e6;
-  border: 1px solid #e3ebd9;
+  background: #f0f0f0;
+  border: 1px solid #e8e8e8;
   border-radius: 10px;
   padding: 16px;
-  color: #879e6c;
+  color: #767676;
   margin-top: 23px;
 }
 .context-tip p {
@@ -1914,7 +1914,7 @@ tbody tr:hover {
   display: flex;
   gap: 10px;
   padding: 15px 0;
-  border-bottom: 1px solid #eef2e7;
+  border-bottom: 1px solid #f0f0f0;
   align-items: flex-start;
 }
 .event:last-child {
@@ -1927,8 +1927,8 @@ tbody tr:hover {
   align-items: center;
   justify-content: center;
   border-radius: 7px;
-  background: #f0f4e9;
-  color: #89a06e;
+  background: #f2f2f2;
+  color: #767676;
   flex-shrink: 0;
 }
 .event.warning .event-symbol {
@@ -1936,8 +1936,8 @@ tbody tr:hover {
   color: #c59b53;
 }
 .event.success .event-symbol {
-  background: #e7f3e1;
-  color: #709c50;
+  background: #efefef;
+  color: #767676;
 }
 .event b {
   font-size: 10px;
@@ -1945,14 +1945,14 @@ tbody tr:hover {
 }
 .event p {
   font-size: 9px;
-  color: #a2ac95;
+  color: #767676;
   margin-top: 4px;
 }
 .event time {
   margin-left: auto;
   font-size: 8px;
   white-space: nowrap;
-  color: #aeb7a1;
+  color: #767676;
   margin-top: 2px;
 }
 .event-list {
@@ -1961,7 +1961,7 @@ tbody tr:hover {
 .modal-shade {
   position: fixed;
   inset: 0;
-  background: #142a22a6;
+  background: #252525a6;
   backdrop-filter: blur(5px);
   z-index: 2000;
   display: flex;
@@ -1975,9 +1975,9 @@ tbody tr:hover {
   max-height: 92vh;
   overflow: auto;
   background: #fff;
-  border: 1px solid #e4ebdf;
+  border: 1px solid #e9e9e9;
   border-radius: 17px;
-  box-shadow: 0 25px 80px #112c2440;
+  box-shadow: 0 25px 80px #26262640;
 }
 .modal.wide {
   width: 970px;
@@ -1999,7 +1999,7 @@ tbody tr:hover {
 }
 .modal > header p {
   font-size: 11px;
-  color: #98a38b;
+  color: #767676;
   margin-top: 7px;
 }
 .modal-body {
@@ -2026,7 +2026,7 @@ tbody tr:hover {
 legend {
   font-size: 11px;
   font-weight: 500;
-  color: #607551;
+  color: #6e6e6e;
 }
 .field input,
 .field select {
@@ -2035,7 +2035,7 @@ legend {
 }
 .field small {
   font-size: 9px;
-  color: #9aa88a;
+  color: #767676;
   line-height: 1.5;
 }
 .form-row {
@@ -2049,7 +2049,7 @@ legend {
 .picker-map {
   height: 220px;
   border-radius: 9px;
-  border: 1px solid #e2ead9;
+  border: 1px solid #e7e7e7;
   overflow: hidden;
 }
 .picker-map .route-map {
@@ -2073,7 +2073,7 @@ legend {
   align-items: center;
   gap: 5px;
   font-size: 10px;
-  color: #81946d;
+  color: #767676;
 }
 .check-grid input {
   margin: 0;
@@ -2090,7 +2090,7 @@ legend {
 .form-actions > span {
   margin-right: auto;
   font-size: 9px;
-  color: #9aaa86;
+  color: #767676;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -2114,13 +2114,13 @@ legend {
   margin-top: 6px;
   gap: 15px;
   font-size: 9px;
-  color: #9aa68c;
+  color: #767676;
 }
 .detail-numbers b {
   display: block;
   font-size: 15px;
   letter-spacing: -0.3px;
-  color: #617f4c;
+  color: #757575;
   margin-top: 7px;
   font-weight: 500;
 }
@@ -2128,9 +2128,9 @@ legend {
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  border: 1px solid #e0ecd6;
-  background: #f2f7ec;
-  color: #7b9565;
+  border: 1px solid #e8e8e8;
+  background: #f5f5f5;
+  color: #767676;
   border-radius: 10px;
   padding: 15px;
 }
@@ -2141,12 +2141,12 @@ legend {
 .schedule-explanation p {
   font-size: 10px;
   margin-top: 5px;
-  color: #91a37d;
+  color: #767676;
 }
 .schedule-explanation small {
   display: block;
   font-size: 9px;
-  color: #9bac89;
+  color: #767676;
   margin-top: 6px;
 }
 .schedule-explanation.warning {
@@ -2163,21 +2163,21 @@ legend {
 }
 .contact-note {
   font-size: 11px;
-  color: #92a07e;
+  color: #767676;
   padding: 12px;
-  background: #f7f9f2;
+  background: #f8f8f8;
   border-radius: 8px;
   margin-top: 15px;
 }
 .job-note {
-  background: #f6f9f0;
+  background: #f8f8f8;
   padding: 12px;
   border-radius: 8px;
   margin-bottom: 10px;
 }
 .job-note time {
   font-size: 9px;
-  color: #a0b08c;
+  color: #767676;
 }
 .job-note p {
   font-size: 11px;
@@ -2194,10 +2194,10 @@ legend {
   display: flex;
   align-items: center;
   gap: 14px;
-  background: #f0f6e9;
+  background: #f4f4f4;
   border-radius: 10px;
   padding: 16px;
-  color: #7e9b61;
+  color: #767676;
 }
 .scenario-preview b {
   font-size: 12px;
@@ -2205,7 +2205,7 @@ legend {
 }
 .scenario-preview p {
   font-size: 10px;
-  color: #97ab80;
+  color: #767676;
   margin-top: 4px;
 }
 .scenario-presets {
@@ -2214,12 +2214,12 @@ legend {
   gap: 8px;
 }
 .scenario-presets button {
-  background: #f7f9f2;
-  border: 1px solid #e4ecd9;
+  background: #f8f8f8;
+  border: 1px solid #e9e9e9;
   border-radius: 6px;
   padding: 8px 10px;
   font-size: 10px;
-  color: #8a9e72;
+  color: #767676;
 }
 .inline-warning {
   display: flex;
@@ -2244,13 +2244,13 @@ legend {
 }
 .toggle-row small {
   display: block;
-  color: #9eac8c;
+  color: #767676;
   margin-top: 5px;
   font-size: 10px;
 }
 .help-copy p {
   font-size: 12px;
-  color: #809271;
+  color: #767676;
   line-height: 1.8;
   margin-bottom: 14px;
 }
@@ -2264,9 +2264,9 @@ legend {
   transform: translateX(-50%);
   max-width: min(650px, 90vw);
   z-index: 3000;
-  background: #263f32;
+  background: #393939;
   color: #fff;
-  box-shadow: 0 7px 30px #122e2a25;
+  box-shadow: 0 7px 30px #28282825;
   border-radius: 10px;
   padding: 15px 18px;
   display: flex;
@@ -2291,7 +2291,7 @@ legend {
   gap: 20px;
   align-items: center;
   justify-content: center;
-  color: #7a9266;
+  color: #767676;
 }
 .loading-screen .brand-symbol {
   width: 55px;
@@ -2302,7 +2302,7 @@ legend {
 }
 .loading-screen h1 {
   font-size: 30px;
-  color: #30482e;
+  color: #414141;
 }
 @media (min-width: 1600px) {
   .main {
@@ -2793,8 +2793,8 @@ legend {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  background: #eaf1ed;
-  border: 1px solid #d9e6dc;
+  background: #efefef;
+  border: 1px solid #e3e3e3;
   border-radius: 12px;
   padding: 14px 18px;
   margin-bottom: 20px;
@@ -2828,7 +2828,7 @@ legend {
 }
 .preview-policy {
   font-size: 13px;
-  color: #587061;
+  color: #6a6a6a;
 }
 .preview-warning {
   padding: 14px;
@@ -2860,7 +2860,7 @@ legend {
 .diff-list td small {
   display: block;
   margin-top: 6px;
-  color: #6e8174;
+  color: #767676;
 }
 .diff-metrics {
   width: 100%;

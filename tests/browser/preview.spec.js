@@ -37,6 +37,18 @@ test('ordinary manual reassignment supports cancel, apply, pin and stale preview
   await page.getByLabel('Новый исполнитель').selectOption(target.id);
   await page.getByRole('button', { name: 'Проверить переназначение' }).click();
   await expect(page.getByRole('dialog')).toContainText('Другой инженер');
+  await expect(page.getByLabel('Сводка изменений')).toContainText('Изменится');
+  await expect(page.getByLabel('Маршруты на карте')).toHaveValue('changed');
+  await page.getByLabel('Маршруты на карте').selectOption('all');
+  await page.getByLabel('Маршруты на карте').selectOption('changed');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator('.preview-body').evaluate((element) => {
+    element.scrollTop = element.scrollHeight;
+  });
+  await expect(page.getByRole('button', { name: 'Отменить изменения' })).toBeInViewport();
+  await expect(page.getByRole('button', { name: 'Применить план' })).toBeInViewport();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+  await page.setViewportSize({ width: 1440, height: 1100 });
   let current = await (await request.get('/api/state')).json();
   expect(current.revision).toBe(s.revision);
   await page.getByRole('button', { name: 'Отменить изменения' }).click();
@@ -68,6 +80,13 @@ test('prepared walking data and geography review are visible and work without a 
 }) => {
   await act(request, 'dataset.load', { id: 'east' });
   await page.goto('/');
+  await page.setViewportSize({ width: 390, height: 844 });
+  const issue = page.locator('.attention-item').first();
+  await expect(issue).toBeVisible();
+  await issue.click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.getByRole('button', { name: 'Закрыть', exact: true }).click();
+  await page.setViewportSize({ width: 1440, height: 1100 });
   await page.getByRole('button', { name: /Проверить адреса/ }).click();
   await expect(page.getByRole('dialog')).toContainText('83с4');
   await expect(page.getByLabel('Адрес для проверки')).toBeVisible();

@@ -19,7 +19,7 @@ export function Badge({ children, tone = 'gray' }) {
   return <span className={`badge ${tone}`}>{children}</span>;
 }
 
-export function Modal({ title, subtitle, onClose, children, wide = false }) {
+export function Modal({ title, subtitle, onClose, children, wide = false, className = '' }) {
   const dialog = useRef(null);
   const close = useRef(onClose);
   close.current = onClose;
@@ -75,7 +75,7 @@ export function Modal({ title, subtitle, onClose, children, wide = false }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className={`modal ${wide ? 'wide' : ''}`}
+        className={`modal ${wide ? 'wide' : ''} ${className}`}
       >
         <header>
           <div>

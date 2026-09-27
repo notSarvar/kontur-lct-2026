@@ -15,6 +15,7 @@ test('operational dashboard has actionable metrics, collapsible neutral team and
   await expect(page.locator('.simulation')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Новая заявка', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Пересчитать план', exact: true })).toBeVisible();
+  await expect(page.locator('.topbar .header-metrics .metric-link')).toHaveCount(3);
   await expect(page.getByLabel('Режим планирования', { exact: true })).toHaveCount(0);
   await expect(page.getByText('ОПЕРАТИВНОЕ УПРАВЛЕНИЕ')).toHaveCount(0);
   await expect(page.getByText('Длина маршрутов', { exact: true })).toHaveCount(0);
@@ -97,4 +98,25 @@ test('gantt jobs and dialogs remain usable on desktop and narrow screens', async
   await expect(page.getByLabel('Раздел приложения')).toHaveValue('team');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
   expect(errors).toEqual([]);
+});
+
+test('expanded schedule keeps the selected engineer and never changes the plan', async ({
+  page,
+  request,
+}) => {
+  const before = await (await request.get('/api/state')).json();
+  await page.goto('/');
+  await page.getByLabel('Инженер на карте и графике').selectOption(before.engineers[1].id);
+  await page.getByRole('button', { name: 'Развернуть расписание' }).click();
+  await expect(page.getByRole('dialog', { name: 'Карта выездов' })).toBeVisible();
+  await page.getByRole('button', { name: 'График', exact: true }).click();
+  await expect(page.getByRole('dialog')).toHaveAccessibleName('График выездов');
+  await expect(page.locator('.timeline-row')).toHaveCount(1);
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await expect(page.getByLabel('Инженер на карте и графике')).toHaveValue(before.engineers[1].id);
+  await expect(page.locator('.timeline-row')).toHaveCount(1);
+  const after = await (await request.get('/api/state')).json();
+  expect(after.revision).toBe(before.revision);
+  expect(after.plan).toEqual(before.plan);
 });

@@ -55,6 +55,7 @@ export default function PlanChanges({ diff, engineers = [] }) {
               <th>Показатель</th>
               <th>Было</th>
               <th>Стало</th>
+              <th>Разница</th>
             </tr>
           </thead>
           <tbody>
@@ -65,13 +66,30 @@ export default function PlanChanges({ diff, engineers = [] }) {
               ['Инженеров', 'engineers'],
               ['Расстояние, км', 'km'],
               ['Ожидание срочных, мин', 'urgentResponse'],
-            ].map(([label, key]) => (
-              <tr key={key}>
-                <td>{label}</td>
-                <td>{Number(diff.metrics.before[key]).toFixed(key === 'km' ? 1 : 0)}</td>
-                <td>{Number(diff.metrics.after[key]).toFixed(key === 'km' ? 1 : 0)}</td>
-              </tr>
-            ))}
+            ].map(([label, key]) => {
+              const delta = Number(
+                (diff.metrics.after[key] - diff.metrics.before[key]).toFixed(key === 'km' ? 1 : 0),
+              );
+              const better = key === 'assigned' ? delta > 0 : delta < 0;
+              return (
+                <tr key={key}>
+                  <td>{label}</td>
+                  <td>{Number(diff.metrics.before[key]).toFixed(key === 'km' ? 1 : 0)}</td>
+                  <td>{Number(diff.metrics.after[key]).toFixed(key === 'km' ? 1 : 0)}</td>
+                  <td
+                    className={
+                      !delta || key === 'total'
+                        ? 'delta-neutral'
+                        : better
+                          ? 'delta-positive'
+                          : 'delta-negative'
+                    }
+                  >
+                    {delta ? `${delta > 0 ? '+' : ''}${delta.toLocaleString('ru-RU')}` : '—'}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
