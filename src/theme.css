@@ -617,7 +617,7 @@ select:not([multiple]):not([size]) {
 }
 .gantt-travel,
 .gantt-travel-key {
-  background: repeating-linear-gradient(135deg, var(--accent) 0 5px, #242424 5px 8px);
+  background: repeating-linear-gradient(135deg, var(--accent) 0 5px, #969696 5px 8px);
 }
 .gantt-travel {
   top: 21px;
@@ -627,6 +627,47 @@ select:not([multiple]):not([size]) {
   width: 14px;
   height: 10px;
   flex-shrink: 0;
+}
+.gantt-wait {
+  position: absolute;
+  top: 16px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: #737373;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+}
+.gantt-wait::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 1px dashed #969696;
+}
+.gantt-wait span {
+  position: relative;
+  max-width: calc(100% - 8px);
+  padding: 0 4px;
+  background: #fcfcfc;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gantt-wait:hover {
+  background: #eee;
+  color: var(--ink);
+}
+.gantt-wait-key {
+  display: inline-block;
+  width: 14px;
+  border-top: 1px dashed #969696;
 }
 .gantt-free-window {
   border-color: #b69a20;

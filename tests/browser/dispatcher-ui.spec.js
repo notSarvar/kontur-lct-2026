@@ -165,7 +165,7 @@ test('working visits fill with elapsed time and keep priority visible through li
   );
   await expect(page.locator('.gantt-travel').first()).toHaveCSS(
     'background-image',
-    /repeating-linear-gradient.*rgb\(255, 207, 0\).*rgb\(36, 36, 36\)/,
+    /repeating-linear-gradient.*rgb\(255, 207, 0\).*rgb\(150, 150, 150\)/,
   );
   for (const fraction of [0, 0.25, 0.5]) {
     const elapsed = Math.floor((stop.end - stop.start) * fraction);
@@ -207,4 +207,52 @@ test('working visits fill with elapsed time and keep priority visible through li
   expect(finished.ok()).toBeTruthy();
   expect((await finished.json()).jobs.find((j) => j.id === job.id).status).toBe('done');
   await expect(bar).toHaveCount(0);
+});
+
+test('waiting connects arrival to work at every scale and opens the correct visit', async ({
+  page,
+  request,
+}, testInfo) => {
+  const state = await (await request.get('/api/state')).json();
+  const stops = state.plan.routes.flatMap((route) => route.stops);
+  const waiting = stops.filter((stop) => stop.start > stop.arrival);
+  expect(waiting.length).toBeGreaterThan(0);
+  expect(stops.some((stop) => stop.start === stop.arrival)).toBeTruthy();
+  await page.goto('/');
+  await page.getByRole('button', { name: 'График', exact: true }).click();
+  await expect(page.locator('.gantt-wait')).toHaveCount(waiting.length);
+  await expect(page.locator('.gantt-legend')).toContainText('Ожидание');
+  for (const scale of ['0.5', '1', '2']) {
+    await page.getByLabel('Масштаб графика').selectOption(scale);
+    const connections = await page.locator('.gantt-wait').evaluateAll((elements) =>
+      elements.map((el) => {
+        const travel = el.previousElementSibling.getBoundingClientRect();
+        const wait = el.getBoundingClientRect();
+        const work = el.nextElementSibling.getBoundingClientRect();
+        return { before: Math.abs(travel.right - wait.left), after: Math.abs(wait.right - work.left) };
+      }),
+    );
+    for (const connection of connections) {
+      expect(connection.before).toBeLessThan(1);
+      expect(connection.after).toBeLessThan(1);
+    }
+  }
+  await page.getByLabel('Масштаб графика').selectOption('1');
+  await page.locator('.map-panel').screenshot({ path: testInfo.outputPath('gantt-wait-desktop.png') });
+  const first = page.locator('.gantt-wait').first();
+  const number = (await first.getAttribute('aria-label')).match(/заявка №(\d+)/)[1];
+  await first.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('dialog')).toHaveAccessibleName(`Заявка №${number}`);
+  await page.keyboard.press('Escape');
+  await expect(first).toBeFocused();
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+  await page.locator('.map-panel').screenshot({ path: testInfo.outputPath('gantt-wait-mobile.png') });
+  await first.click();
+  await expect(page.getByRole('dialog')).toHaveAccessibleName(`Заявка №${number}`);
+  await page.keyboard.press('Escape');
+  const after = await (await request.get('/api/state')).json();
+  expect(after.revision).toBe(state.revision);
+  expect(after.plan).toEqual(state.plan);
 });

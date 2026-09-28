@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { time } from '../shared/format.js';
+import { duration, time } from '../shared/format.js';
 import { Avatar } from './ui.jsx';
 
 export default function Timeline({ state, selected, onJob, focusWindow }) {
@@ -28,6 +28,9 @@ export default function Timeline({ state, selected, onJob, focusWindow }) {
           </span>
           <span>
             <i className="gantt-travel-key" aria-hidden="true" /> Дорога
+          </span>
+          <span>
+            <i className="gantt-wait-key" aria-hidden="true" /> Ожидание
           </span>
           <span>
             <i className="gantt-urgent-key" aria-hidden="true" /> Срочная
@@ -95,6 +98,9 @@ export default function Timeline({ state, selected, onJob, focusWindow }) {
                   )}
                   {r.stops.map((s) => {
                     const job = jobs.get(s.jobId);
+                    const wait = Math.max(0, s.start - s.arrival);
+                    const waitWidth = wait * 2.4 * zoom;
+                    const waitLabel = `Ожидание начала работ: ${time(s.arrival)}–${time(s.start)} · ${duration(wait)} · заявка №${job.number}`;
                     const working = job.status === 'working';
                     const workStart = job.actualStart ?? s.start;
                     const progress = Math.min(
@@ -109,6 +115,26 @@ export default function Timeline({ state, selected, onJob, focusWindow }) {
                           title={`Дорога: ${time(s.depart)}–${time(s.arrival)} · ${s.travel} мин`}
                           style={{ left: `${percent(s.depart)}%`, width: `${(s.travel / span) * 100}%` }}
                         />
+                        {wait > 0 && (
+                          <button
+                            type="button"
+                            className="gantt-wait"
+                            title={waitLabel}
+                            aria-label={waitLabel}
+                            onClick={() => onJob(s.jobId)}
+                            style={{
+                              left: `${percent(s.arrival)}%`,
+                              width: `${(wait / span) * 100}%`,
+                            }}
+                          >
+                            {waitWidth >= 50 && (
+                              <span>
+                                {waitWidth >= 160 ? 'Ожидание · ' : ''}
+                                {duration(wait)}
+                              </span>
+                            )}
+                          </button>
+                        )}
                         <button
                           className={`gantt-job ${s.late ? 'problem' : job.priority === 'urgent' ? 'urgent' : ''} ${working ? 'working' : ''}`}
                           onClick={() => onJob(s.jobId)}
@@ -132,7 +158,8 @@ export default function Timeline({ state, selected, onJob, focusWindow }) {
         </div>
       </div>
       <p className="gantt-hint">
-        Нажмите на визит, чтобы открыть заявку. Прокручивайте график по горизонтали или меняйте масштаб.
+        Нажмите на визит или ожидание, чтобы открыть заявку. Прокручивайте график по горизонтали или меняйте
+        масштаб.
       </p>
     </div>
   );
