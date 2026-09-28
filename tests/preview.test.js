@@ -14,7 +14,7 @@ import path from 'node:path';
 import { loadState, persistState } from '../server/infrastructure/storage.js';
 import { diffPlans } from '../server/domain/plan-diff.js';
 const opts = { roads: false, iterations: 20 };
-test('last applied full diff survives a server restart', async () => {
+test('accepted plan, assignments, events and full diff survive a server restart unchanged', async () => {
   const state = fixture();
   await replan(state, opts);
   const c = await previewAction(
@@ -27,8 +27,26 @@ test('last applied full diff survives a server restart', async () => {
   try {
     await persistState(dir, applied);
     const loaded = await loadState(dir);
+    assert.deepEqual(loaded.plan, applied.plan);
+    assert.deepEqual(loaded.jobs, applied.jobs);
+    assert.deepEqual(loaded.notifications, applied.notifications);
     assert.deepEqual(loaded.plan.diff, applied.plan.diff);
     assert.equal(loaded.plan.diff.summary.removed, 1);
+  } finally {
+    await fs.rm(dir, { recursive: true, force: true });
+  }
+});
+test('loading a saved day without a plan rebuilds its schedule', async () => {
+  const state = fixture();
+  await replan(state, opts);
+  delete state.plan;
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'kontur-missing-plan-'));
+  try {
+    await persistState(dir, state);
+    const loaded = await loadState(dir);
+    assert.equal(loaded.plan.at, state.time);
+    assert.equal(loaded.plan.metrics.assigned, state.jobs.length);
+    assert(loaded.plan.routes.some((route) => route.stops.length));
   } finally {
     await fs.rm(dir, { recursive: true, force: true });
   }

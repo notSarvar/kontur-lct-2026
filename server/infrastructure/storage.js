@@ -52,6 +52,14 @@ export async function loadState(directory) {
         }
       }
     }
+    // A restart restores the accepted plan. Re-optimizing here can reassign
+    // visits and emit assignment events without a dispatcher action.
+    const hasCurrentPlan =
+      saved.plan?.at === saved.time &&
+      Array.isArray(saved.plan?.routes) &&
+      Array.isArray(saved.plan?.unassigned) &&
+      saved.plan?.metrics;
+    if (!refreshed && hasCurrentPlan) return saved;
     await replan(saved);
     if (refreshed) attachDiff(before, saved);
     else if (before.plan?.diff) {

@@ -1,0 +1,17 @@
+**
+!Dockerfile
+!package.json
+!package-lock.json
+!requirements-optimizer.txt
+!index.html
+!src/
+!src/**
+!public/
+!public/**
+!server/
+!server/**
+!data/
+!data/beeline/
+!data/beeline/**
+!data/sop/
+!data/sop/**

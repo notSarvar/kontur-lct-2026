@@ -1,0 +1,15 @@
+[Unit]
+Description=Back up Kontur demo state
+ConditionPathExists=/opt/kontur/data/state.json
+
+[Service]
+Type=oneshot
+User=notsarvar
+Group=notsarvar
+UMask=0077
+ExecStart=/bin/sh /opt/kontur/current/deploy/backup.sh
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/kontur/backups
