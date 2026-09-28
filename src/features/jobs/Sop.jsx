@@ -7,7 +7,7 @@ const createStepId = () =>
     '',
   );
 
-export function SopEditor({ sop, save, cancel, busy }) {
+export function SopEditor({ sop, save, cancel, busy, autoFocus = false }) {
   const [form, setForm] = useState(structuredClone(sop));
   const set = (key, value) => setForm((f) => ({ ...f, [key]: value }));
   return (
@@ -19,7 +19,13 @@ export function SopEditor({ sop, save, cancel, busy }) {
       }}
     >
       <Field label="Название регламента">
-        <input required maxLength={180} value={form.title} onChange={(e) => set('title', e.target.value)} />
+        <input
+          autoFocus={autoFocus}
+          required
+          maxLength={180}
+          value={form.title}
+          onChange={(e) => set('title', e.target.value)}
+        />
       </Field>
       {Object.entries({
         scope: 'Объём работ',
@@ -107,11 +113,10 @@ export function SopEditor({ sop, save, cancel, busy }) {
   );
 }
 
-export default function SopPanel({ job, state, act, busy }) {
+export default function SopPanel({ job, state, act, busy, onEdit }) {
   const [templateId, setTemplateId] = useState(
     job.sop?.templateId || state.sopTemplates?.[0]?.id || 'router',
   );
-  const [editing, setEditing] = useState(null);
   const sop = job.sop,
     readonly = job.status === 'done';
   const action = (type, p = {}) =>
@@ -121,7 +126,7 @@ export default function SopPanel({ job, state, act, busy }) {
       <div className="sop-heading">
         <h3>Регламент работ</h3>
         {sop && !readonly && (
-          <Button disabled={busy} onClick={() => setEditing({ revision: state.revision })}>
+          <Button className="sop-edit-button" disabled={busy} onClick={onEdit}>
             Изменить чек-лист
           </Button>
         )}
@@ -241,18 +246,6 @@ export default function SopPanel({ job, state, act, busy }) {
           )}
         </>
       )}
-      {editing && (
-        <SopEditor
-          key={job.id}
-          sop={sop}
-          busy={busy}
-          cancel={() => setEditing(null)}
-          save={async (value) => {
-            if (await action('job.sop.save', { sop: value, expectedRevision: editing.revision }))
-              setEditing(null);
-          }}
-        />
-      )}
     </section>
   );
 }
@@ -269,6 +262,7 @@ export function SopTemplates({ state, onClose, act, busy }) {
         {selected ? (
           <SopEditor
             key={selected.id}
+            autoFocus
             sop={state.sopTemplates.find((t) => t.id === selected.id)}
             busy={busy}
             cancel={() => setSelected(null)}

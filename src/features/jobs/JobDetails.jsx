@@ -1,195 +1,255 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Check, CheckCheck, FileText, Headphones, ShieldCheck, TriangleAlert } from 'lucide-react';
 import { time, duration, transport, statusText } from '../../shared/format.js';
 import { Button, Avatar, Badge, Modal } from '../../components/ui.jsx';
-import SopPanel from './Sop.jsx';
+import SopPanel, { SopEditor } from './Sop.jsx';
 
 export default function JobDetails({ job: j, state, onClose, edit, act, busy, assign, demo = false }) {
   const [note, setNote] = useState('');
+  const [noteSaving, setNoteSaving] = useState(false);
+  const [editingSop, setEditingSop] = useState(null);
+  const detailsBody = useRef(null),
+    scrollPosition = useRef(0),
+    restoreSop = useRef(false);
+  const closeEditor = () => {
+    restoreSop.current = true;
+    setEditingSop(null);
+  };
+  useLayoutEffect(() => {
+    if (!editingSop && restoreSop.current && detailsBody.current) {
+      detailsBody.current.scrollTop = scrollPosition.current;
+      detailsBody.current.querySelector('.sop-edit-button')?.focus({ preventScroll: true });
+      restoreSop.current = false;
+    }
+  }, [editingSop]);
   const e = state.engineers.find((e) => e.id === j.engineerId),
     route = state.plan.routes.find((r) => r.stops.some((s) => s.jobId === j.id)),
     s = route?.stops.find((s) => s.jobId === j.id),
     reason = state.plan.unassigned.find((u) => u.jobId === j.id),
     exp = route?.explanations.find((x) => x.jobId === j.id);
   const noteSubmit = async () => {
-    if (await act('job.note', { id: j.id, text: note }, 'Отчёт сохранён и виден диспетчеру')) setNote('');
+    setNoteSaving(true);
+    try {
+      if (await act('job.note', { id: j.id, text: note }, 'Отчёт сохранён и виден диспетчеру')) setNote('');
+    } finally {
+      setNoteSaving(false);
+    }
   };
   return (
-    <Modal title={`Заявка №${j.number}`} subtitle={j.address} onClose={onClose}>
-      <div className="modal-body details">
-        <h3 className="job-detail-title">{j.title}</h3>
-        <div className="detail-status">
-          <Badge tone={j.status === 'done' ? 'green' : !e || j.status === 'blocked' ? 'orange' : 'purple'}>
-            {j.status === 'pending' && !e ? 'Не назначена' : statusText[j.status]}
-          </Badge>
-          {j.priority === 'urgent' && <Badge tone="orange">Срочная</Badge>}
-          {e && (
-            <span className="table-person">
-              <Avatar engineer={e} size="small" />
-              {e.name}
-            </span>
-          )}
-        </div>
-        <div className="detail-numbers">
-          <span>
-            Окно начала
-            <b>
-              {time(j.windowStart)}–{time(j.windowEnd)}
-            </b>
-          </span>
-          <span>
-            Работа<b>{j.duration} мин</b>
-          </span>
-        </div>
-        {j.source?.fields && (
-          <details className="source-details" open={demo || undefined}>
-            <summary>Исходные данные и допущения</summary>
-            <div className="analysis-note">
-              <b>BK:</b> {j.source.fields['Тип заявки BK']} · <b>HD:</b> {j.source.fields['Тип заявки HD']}
-              <br />
-              {j.source.priorityBasis}
-              {j.source.assumptions?.map((text, i) => (
-                <p key={i}>Допущение: {text}</p>
-              ))}
-            </div>
-          </details>
-        )}
-        {s && (
-          <div className={`schedule-explanation ${s.late ? 'warning' : ''}`}>
-            <ShieldCheck size={20} />
-            <div>
-              <b>
-                План: {time(s.start)}–{time(s.end)}
-              </b>
-              <p>
-                {s.locked
-                  ? 'Текущий выезд сохраняется при перепланировании.'
-                  : 'Начало в клиентском окне, завершение в пределах смены.'}
-              </p>
-              <small>
-                Дорога {s.travel} мин · ожидание {s.wait} мин
-                {exp?.changed ? ' · назначенный инженер изменился' : ''}
-              </small>
-            </div>
-          </div>
-        )}
-        {reason && (
-          <div className="schedule-explanation warning">
-            <TriangleAlert size={20} />
-            <div>
-              <b>Почему заявка не назначена</b>
-              <p>{reason.text}</p>
-            </div>
-          </div>
-        )}
-        {j.status === 'done' && (
-          <div className="schedule-explanation">
-            <CheckCheck size={20} />
-            <div>
-              <b>
-                Факт: {time(j.actualStart)}–{time(j.actualEnd)}
-              </b>
-              <p>
-                {j.actualStart <= j.windowEnd && j.actualStart >= j.windowStart
-                  ? 'Работа начата в согласованном окне'
-                  : 'Начало работы вне согласованного окна'}
-              </p>
-            </div>
-          </div>
-        )}
-        {j.originalWindow && (
-          <p className="contact-note">
-            Исходное окно: {time(j.originalWindow.start)}–{time(j.originalWindow.end)}
-          </p>
-        )}
-        <h3>Ресурсы для выезда</h3>
-        <div className="tags">
-          {j.skills.map((k) => (
-            <Badge key={k} tone="green">
-              {state.catalog.skills[k]}
-            </Badge>
-          ))}
-          {j.equipment.map((k) => (
-            <Badge key={k}>{state.catalog.equipment[k]}</Badge>
-          ))}
-          <Badge>{transport[j.requiredTransport]}</Badge>
-        </div>
-        {j.contact && <p className="contact-note">{j.contact}</p>}
-        <SopPanel job={j} state={state} act={act} busy={busy} />
-        <h3>Отчёты с объекта</h3>
-        {j.notes.length ? (
-          j.notes.map((n) => (
-            <div className="job-note" key={n.id}>
-              <time>{time(n.time)}</time>
-              <p>{n.text}</p>
-            </div>
-          ))
-        ) : (
-          <p className="muted">Отчётов пока нет.</p>
-        )}
-        <textarea
-          aria-label="Отчёт инженера"
-          placeholder="Что сделано, что важно знать диспетчеру…"
-          value={note}
-          onChange={(e) => setNote(e.target.value)}
-          maxLength={2000}
-        />
-        <div className="note-actions">
-          <Button icon={FileText} disabled={!note.trim() || busy} onClick={noteSubmit}>
-            Сохранить отчёт
-          </Button>
-          {j.status !== 'done' && (
-            <Button
-              icon={Headphones}
-              disabled={busy}
-              onClick={() =>
-                act(
-                  'job.issue',
-                  { id: j.id, text: note || 'Не удалось выполнить работу. Требуется помощь диспетчера.' },
-                  'Обращение создано, остальные заявки перепланированы',
+    <Modal
+      title={editingSop ? 'Изменить чек-лист' : `Заявка №${j.number}`}
+      subtitle={editingSop ? `Заявка №${j.number} · ${j.address}` : j.address}
+      onClose={editingSop ? closeEditor : onClose}
+    >
+      {editingSop ? (
+        <div className="modal-body" key="sop-editor">
+          <SopEditor
+            sop={editingSop.sop}
+            autoFocus
+            busy={busy}
+            cancel={closeEditor}
+            save={async (sop) => {
+              if (
+                await act(
+                  'job.sop.save',
+                  { id: j.id, sop, expectedRevision: editingSop.revision },
+                  'Регламент сохранён',
                 )
-              }
-            >
-              Сообщить о проблеме
-            </Button>
-          )}
+              )
+                closeEditor();
+            }}
+          />
         </div>
-        {['pending', 'manual_review', 'working'].includes(j.status) && (
-          <div className="form-actions">
-            {j.status === 'pending' && (
-              <Button onClick={assign} disabled={busy}>
-                Переназначить
-              </Button>
+      ) : (
+        <div className="modal-body details" key="job-details" ref={detailsBody}>
+          <h3 className="job-detail-title">{j.title}</h3>
+          <div className="detail-status">
+            <Badge tone={j.status === 'done' ? 'green' : !e || j.status === 'blocked' ? 'orange' : 'purple'}>
+              {j.status === 'pending' && !e ? 'Не назначена' : statusText[j.status]}
+            </Badge>
+            {j.priority === 'urgent' && <Badge tone="orange">Срочная</Badge>}
+            {e && (
+              <span className="table-person">
+                <Avatar engineer={e} size="small" />
+                {e.name}
+              </span>
             )}
-            {['pending', 'manual_review'].includes(j.status) && (
-              <>
-                <Button
-                  variant="danger-ghost"
-                  disabled={busy}
-                  onClick={async () => {
-                    if (await act('job.delete', { id: j.id }, 'Заявка удалена')) onClose();
-                  }}
-                >
-                  Удалить
-                </Button>
-                <Button onClick={edit}>
-                  {j.status === 'manual_review' ? 'Согласовать время / адрес' : 'Изменить'}
-                </Button>
-              </>
-            )}
-            {j.status === 'working' && (
+          </div>
+          <div className="detail-numbers">
+            <span>
+              Окно начала
+              <b>
+                {time(j.windowStart)}–{time(j.windowEnd)}
+              </b>
+            </span>
+            <span>
+              Работа<b>{j.duration} мин</b>
+            </span>
+          </div>
+          {j.source?.fields && (
+            <details className="source-details" open={demo || undefined}>
+              <summary>Исходные данные и допущения</summary>
+              <div className="analysis-note">
+                <b>BK:</b> {j.source.fields['Тип заявки BK']} · <b>HD:</b> {j.source.fields['Тип заявки HD']}
+                <br />
+                {j.source.priorityBasis}
+                {j.source.assumptions?.map((text, i) => (
+                  <p key={i}>Допущение: {text}</p>
+                ))}
+              </div>
+            </details>
+          )}
+          {s && (
+            <div className={`schedule-explanation ${s.late ? 'warning' : ''}`}>
+              <ShieldCheck size={20} />
+              <div>
+                <b>
+                  План: {time(s.start)}–{time(s.end)}
+                </b>
+                <p>
+                  {s.locked
+                    ? 'Текущий выезд сохраняется при перепланировании.'
+                    : 'Начало в клиентском окне, завершение в пределах смены.'}
+                </p>
+                <small>
+                  Дорога {s.travel} мин · ожидание {s.wait} мин
+                  {exp?.changed ? ' · назначенный инженер изменился' : ''}
+                </small>
+              </div>
+            </div>
+          )}
+          {reason && (
+            <div className="schedule-explanation warning">
+              <TriangleAlert size={20} />
+              <div>
+                <b>Почему заявка не назначена</b>
+                <p>{reason.text}</p>
+              </div>
+            </div>
+          )}
+          {j.status === 'done' && (
+            <div className="schedule-explanation">
+              <CheckCheck size={20} />
+              <div>
+                <b>
+                  Факт: {time(j.actualStart)}–{time(j.actualEnd)}
+                </b>
+                <p>
+                  {j.actualStart <= j.windowEnd && j.actualStart >= j.windowStart
+                    ? 'Работа начата в согласованном окне'
+                    : 'Начало работы вне согласованного окна'}
+                </p>
+              </div>
+            </div>
+          )}
+          {j.originalWindow && (
+            <p className="contact-note">
+              Исходное окно: {time(j.originalWindow.start)}–{time(j.originalWindow.end)}
+            </p>
+          )}
+          <h3>Ресурсы для выезда</h3>
+          <div className="tags">
+            {j.skills.map((k) => (
+              <Badge key={k} tone="green">
+                {state.catalog.skills[k]}
+              </Badge>
+            ))}
+            {j.equipment.map((k) => (
+              <Badge key={k}>{state.catalog.equipment[k]}</Badge>
+            ))}
+            <Badge>{transport[j.requiredTransport]}</Badge>
+          </div>
+          {j.contact && <p className="contact-note">{j.contact}</p>}
+          <SopPanel
+            job={j}
+            state={state}
+            act={act}
+            busy={busy}
+            onEdit={() => {
+              scrollPosition.current = detailsBody.current.scrollTop;
+              setEditingSop({ sop: structuredClone(j.sop), revision: state.revision });
+            }}
+          />
+          <h3>Отчёты с объекта</h3>
+          {j.notes.length ? (
+            j.notes.map((n) => (
+              <div className="job-note" key={n.id}>
+                <time>{time(n.time)}</time>
+                <p>{n.text}</p>
+              </div>
+            ))
+          ) : (
+            <p className="muted">Отчётов пока нет.</p>
+          )}
+          <textarea
+            aria-label="Отчёт инженера"
+            aria-describedby="report-hint"
+            disabled={noteSaving}
+            placeholder="Что сделано, что важно знать диспетчеру…"
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            maxLength={2000}
+          />
+          <p id="report-hint" className="report-hint muted">
+            {note.trim() ? 'Отчёт будет виден диспетчеру.' : 'Введите текст отчёта, чтобы сохранить.'}
+          </p>
+          <div className="note-actions">
+            <Button icon={FileText} disabled={!note.trim() || busy} loading={noteSaving} onClick={noteSubmit}>
+              {noteSaving ? 'Сохраняем отчёт…' : 'Сохранить отчёт'}
+            </Button>
+            {j.status !== 'done' && (
               <Button
-                variant="primary"
-                icon={Check}
+                icon={Headphones}
                 disabled={busy}
-                onClick={() => act('job.complete', { id: j.id }, 'Работа завершена')}
+                onClick={() =>
+                  act(
+                    'job.issue',
+                    { id: j.id, text: note || 'Не удалось выполнить работу. Требуется помощь диспетчера.' },
+                    'Обращение создано, остальные заявки перепланированы',
+                  )
+                }
               >
-                Завершить работу
+                Сообщить о проблеме
               </Button>
             )}
           </div>
-        )}
-      </div>
+          {['pending', 'manual_review', 'working'].includes(j.status) && (
+            <div className="form-actions">
+              {j.status === 'pending' && (
+                <Button onClick={assign} disabled={busy}>
+                  Переназначить
+                </Button>
+              )}
+              {['pending', 'manual_review'].includes(j.status) && (
+                <>
+                  <Button
+                    variant="danger-ghost"
+                    disabled={busy}
+                    onClick={async () => {
+                      if (await act('job.delete', { id: j.id }, 'Заявка удалена')) onClose();
+                    }}
+                  >
+                    Удалить
+                  </Button>
+                  <Button variant="primary" onClick={edit} disabled={busy}>
+                    {j.status === 'manual_review' ? 'Согласовать время / адрес' : 'Изменить'}
+                  </Button>
+                </>
+              )}
+              {j.status === 'working' && (
+                <Button
+                  variant="primary"
+                  icon={Check}
+                  disabled={busy}
+                  onClick={() => act('job.complete', { id: j.id }, 'Работа завершена')}
+                >
+                  Завершить работу
+                </Button>
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </Modal>
   );
 }

@@ -104,7 +104,7 @@ export default function JobForm({ job, state, urgent, onClose, save, busy }) {
                 placeholder="Вход со двора, встретит администратор"
               />
             </Field>
-            <div className="form-row three">
+            <div className="form-row">
               <Field label="Окно: с">
                 <input
                   type="time"

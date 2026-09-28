@@ -1,11 +1,24 @@
 import React, { useEffect, useRef } from 'react';
-import { Bell, Check, Route, TriangleAlert, X } from 'lucide-react';
+import { Bell, Check, LoaderCircle, Route, TriangleAlert, X } from 'lucide-react';
 import { time, initials } from '../shared/format.js';
 
-export function Button({ children, icon: Icon, variant = '', className = '', ...props }) {
+export function Button({
+  children,
+  icon: Icon,
+  variant = '',
+  className = '',
+  loading = false,
+  disabled,
+  ...props
+}) {
   return (
-    <button className={`button ${variant} ${className}`} {...props}>
-      {Icon && <Icon size={16} />}
+    <button
+      className={`button ${variant} ${className}`}
+      {...props}
+      disabled={disabled || loading}
+      aria-busy={loading || undefined}
+    >
+      {loading ? <LoaderCircle size={16} className="spin" aria-hidden="true" /> : Icon && <Icon size={16} />}
       <span>{children}</span>
     </button>
   );

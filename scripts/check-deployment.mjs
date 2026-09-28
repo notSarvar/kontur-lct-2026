@@ -28,6 +28,12 @@ try {
   await page.goto(baseURL);
   await expect(page.getByRole('region', { name: 'Сводка дня' })).toBeVisible();
   await expect(page.locator('.topbar .metric-link')).toHaveCount(0);
+  const avatar = await page.locator('.user-avatar').boundingBox();
+  const summary = await page.getByRole('region', { name: 'Сводка дня' }).boundingBox();
+  assert(
+    Math.abs(avatar.x + avatar.width - summary.x - summary.width) <= 1,
+    'Header and content edges must align.',
+  );
   await page.getByRole('button', { name: 'График', exact: true }).click();
   await expect(page.locator('.timeline-row')).toHaveCount(before.engineers.length);
   await page.locator('.gantt-job').first().click();
@@ -40,6 +46,37 @@ try {
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await page.evaluate(() => document.fonts.ready);
   if (output) await page.screenshot({ path: `${output}/desktop.png` });
+  const geography = page.getByRole('button', { name: /Проверить адреса/ });
+  if (await geography.count()) {
+    await geography.click();
+    await expect(page.getByRole('dialog')).toHaveAccessibleName('Проверка географии');
+    if (output) await page.screenshot({ path: `${output}/geography.png` });
+    await page.keyboard.press('Escape');
+  }
+  const sopJob = before.jobs.find((job) => job.sop && job.status !== 'done');
+  if (sopJob) {
+    await page
+      .locator('.sidebar')
+      .getByRole('button', { name: /^Заявки/ })
+      .click();
+    await page.getByPlaceholder('Адрес, номер или тип работ').fill(String(sopJob.number));
+    await page
+      .locator('tbody tr')
+      .filter({ hasText: `#${sopJob.number}` })
+      .first()
+      .click();
+    if (output) await page.screenshot({ path: `${output}/job.png` });
+    const report = page.getByRole('button', { name: 'Сохранить отчёт', exact: true });
+    assert.equal(await report.evaluate((el) => getComputedStyle(el).cursor), 'not-allowed');
+    await page.getByRole('button', { name: 'Изменить чек-лист', exact: true }).click();
+    await expect(page.getByRole('dialog')).toHaveAccessibleName('Изменить чек-лист');
+    await expect(page.getByLabel('Название регламента')).toBeInViewport();
+    if (output) await page.screenshot({ path: `${output}/checklist.png` });
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toHaveAccessibleName(`Заявка №${sopJob.number}`);
+    await page.keyboard.press('Escape');
+    await page.locator('.sidebar').getByRole('button', { name: 'Обзор дня', exact: true }).click();
+  }
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByLabel('Раздел приложения')).toBeVisible();
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));

@@ -53,7 +53,15 @@ export default function RouteMap({
         lng: Number(event.latlng.lng.toFixed(6)),
       }),
     );
-    const observer = new ResizeObserver(() => map.current?.invalidateSize());
+    const resize = () => {
+      element.current?.style.setProperty(
+        '--map-tooltip-width',
+        `${Math.min(280, Math.max(140, element.current.clientWidth - 40))}px`,
+      );
+      map.current?.invalidateSize();
+    };
+    resize();
+    const observer = new ResizeObserver(resize);
     observer.observe(element.current);
     return () => {
       observer.disconnect();

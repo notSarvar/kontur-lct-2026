@@ -825,12 +825,13 @@
   overflow-wrap: anywhere;
 }
 .leaflet-tooltip {
-  max-width: 280px;
+  width: max-content;
+  max-width: var(--map-tooltip-width, 280px);
   white-space: normal;
   line-height: 1.5;
   padding: 9px 12px;
   font-family: inherit;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 .mobile-workspace-nav {
   display: none;

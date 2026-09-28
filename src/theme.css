@@ -8,6 +8,9 @@
   --accent-soft: #fff5c4;
   --green: #247348;
   --green-dark: #195c38;
+  --page-gutter: 30px;
+  --sidebar-size: 212px;
+  --workspace-max: 1800px;
   color: var(--ink);
   background: #fff;
 }
@@ -25,6 +28,28 @@ input[type='range'] {
 .button {
   font-weight: 550;
   border-color: #dedede;
+}
+button[aria-busy='true'] {
+  cursor: progress;
+}
+select:not([multiple]):not([size]) {
+  appearance: none;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+.report-hint {
+  font-size: 11px;
+  margin: 8px 0 12px;
+}
+.search-input:focus-within {
+  outline: 3px solid #ac8900;
+  outline-offset: 2px;
+}
+.search-input input:focus-visible {
+  outline: none;
 }
 .button:hover {
   background: #f5f5f5;
@@ -210,7 +235,7 @@ input[type='range'] {
 }
 
 .sidebar {
-  width: 212px;
+  width: var(--sidebar-size);
 }
 .sidebar nav button {
   color: #666;
@@ -244,7 +269,8 @@ input[type='range'] {
   color: #6c6c6c;
 }
 .main {
-  padding: 22px 30px 28px;
+  padding: 22px var(--page-gutter) 28px;
+  max-width: var(--workspace-max);
   background: #fff;
 }
 .dispatch-toolbar {
@@ -770,11 +796,12 @@ input[type='range'] {
   }
 }
 @media (max-width: 1279px) {
+  :root {
+    --page-gutter: 22px;
+    --sidebar-size: 185px;
+  }
   .brand {
     min-width: 150px;
-  }
-  .sidebar {
-    width: 185px;
   }
   .main {
     padding: 22px;
@@ -784,6 +811,10 @@ input[type='range'] {
   }
 }
 @media (max-width: 900px) {
+  :root {
+    --page-gutter: 18px;
+    --sidebar-size: 165px;
+  }
   .dispatch-metrics .metric {
     grid-template-columns: minmax(0, 1fr) auto;
     padding: 14px;
@@ -800,7 +831,6 @@ input[type='range'] {
   }
 
   .sidebar {
-    width: 165px;
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -828,6 +858,10 @@ input[type='range'] {
   }
 }
 @media (max-width: 760px) {
+  :root {
+    --page-gutter: 16px;
+    --sidebar-size: 0px;
+  }
   .sidebar {
     display: none;
   }
@@ -879,6 +913,9 @@ input[type='range'] {
   }
 }
 @media (max-width: 520px) {
+  :root {
+    --page-gutter: 12px;
+  }
   .dispatch-metrics .metric {
     display: flex;
     flex-direction: column;
@@ -1089,5 +1126,118 @@ input[type='range'] {
   }
   .mode-switch button {
     padding: 8px 6px;
+  }
+}
+
+/* Header actions and panels share the same right edge, including wide monitors. */
+.hackathon-workspace {
+  --sidebar-size: 0px;
+  --workspace-max: 1440px;
+}
+.topbar {
+  padding-right: max(
+    var(--page-gutter),
+    calc((100% - var(--sidebar-size) - var(--workspace-max)) / 2 + var(--page-gutter))
+  );
+}
+.geography-form {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+.geography-form > .modal-body {
+  overflow-y: auto;
+  min-height: 0;
+  padding: 20px 24px;
+  overscroll-behavior: contain;
+}
+.geography-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+  gap: 24px;
+}
+.geography-form .preview-warning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.geography-form .preview-warning .button {
+  flex-shrink: 0;
+}
+.geography-fields {
+  min-width: 0;
+}
+.geography-fields > .field {
+  flex: initial;
+}
+.geography-address {
+  font-weight: 550;
+  overflow-wrap: anywhere;
+}
+.geography-map {
+  height: auto;
+  min-height: 340px;
+}
+.geography-explanation {
+  font-size: 11px;
+  color: var(--muted);
+}
+.geography-explanation summary {
+  cursor: pointer;
+}
+.geography-explanation p {
+  margin-top: 8px;
+}
+.dialog-actions {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  background: #fff;
+}
+.dialog-actions .button {
+  height: auto;
+  min-height: 37px;
+  padding-block: 10px;
+  white-space: normal;
+}
+@media (max-width: 760px) {
+  .geography-form .preview-warning {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .geography-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .geography-map {
+    min-height: 0;
+    height: 260px;
+  }
+  .geography-form > .modal-body,
+  .dialog-actions {
+    padding: 16px;
+  }
+}
+@media (max-width: 520px) {
+  .dialog-actions {
+    align-items: stretch;
+  }
+  .dialog-actions .button {
+    flex: 1;
+    min-height: 44px;
+  }
+  .modal .form-row.three {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .modal .form-row.three > .field:last-child {
+    grid-column: 1 / -1;
   }
 }
