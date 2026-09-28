@@ -19,12 +19,20 @@ export default function Timeline({ state, selected, onJob, focusWindow }) {
   return (
     <div className="gantt">
       <div className="gantt-toolbar">
-        <span>
-          <i className="gantt-work-key" />
-          Работа <i className="gantt-travel-key" />
-          Дорога <i className="gantt-urgent-key" />
-          Срочная
-        </span>
+        <div className="gantt-legend" aria-label="Обозначения графика">
+          <span>
+            <i className="gantt-work-key" aria-hidden="true" /> Запланировано
+          </span>
+          <span>
+            <i className="gantt-progress-key" aria-hidden="true" /> В работе
+          </span>
+          <span>
+            <i className="gantt-travel-key" aria-hidden="true" /> Дорога
+          </span>
+          <span>
+            <i className="gantt-urgent-key" aria-hidden="true" /> Срочная
+          </span>
+        </div>
         <label>
           Масштаб{' '}
           <select aria-label="Масштаб графика" value={zoom} onChange={(e) => setZoom(Number(e.target.value))}>
@@ -87,22 +95,29 @@ export default function Timeline({ state, selected, onJob, focusWindow }) {
                   )}
                   {r.stops.map((s) => {
                     const job = jobs.get(s.jobId);
-                    const label = `Заявка №${job.number} · ${job.title} · ${time(s.start)}–${time(s.end)} · ${job.address}`;
+                    const working = job.status === 'working';
+                    const workStart = job.actualStart ?? s.start;
+                    const progress = Math.min(
+                      100,
+                      Math.max(0, ((state.time - workStart) / Math.max(1, s.end - workStart)) * 100),
+                    );
+                    const label = `Заявка №${job.number} · ${job.title} · ${time(s.start)}–${time(s.end)} · ${job.address}${working ? ` · В работе: прошло ${Math.round(progress)}% планового времени` : ''}`;
                     return (
                       <React.Fragment key={s.jobId}>
                         <span
                           className="gantt-travel"
-                          title={`Дорога: ${s.travel} мин`}
+                          title={`Дорога: ${time(s.depart)}–${time(s.arrival)} · ${s.travel} мин`}
                           style={{ left: `${percent(s.depart)}%`, width: `${(s.travel / span) * 100}%` }}
                         />
                         <button
-                          className={`gantt-job ${s.late ? 'problem' : job.priority === 'urgent' ? 'urgent' : ''}`}
+                          className={`gantt-job ${s.late ? 'problem' : job.priority === 'urgent' ? 'urgent' : ''} ${working ? 'working' : ''}`}
                           onClick={() => onJob(s.jobId)}
                           title={label}
                           aria-label={label}
                           style={{
                             left: `${percent(s.start)}%`,
                             width: `${((s.end - s.start) / span) * 100}%`,
+                            '--job-progress': working ? `${progress}%` : undefined,
                           }}
                         >
                           <span>№{job.number}</span>

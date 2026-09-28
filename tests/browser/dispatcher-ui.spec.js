@@ -8,7 +8,7 @@ test.beforeEach(async ({ request }) => {
   expect(result.ok()).toBeTruthy();
 });
 
-test('operational dashboard has actionable metrics, collapsible neutral team and separate demo tools', async ({
+test('operational dashboard has actionable metrics, collapsible team and separate demo tools', async ({
   page,
 }) => {
   await page.goto('/');
@@ -135,4 +135,71 @@ test('expanded schedule keeps the selected engineer and never changes the plan',
   const after = await (await request.get('/api/state')).json();
   expect(after.revision).toBe(before.revision);
   expect(after.plan).toEqual(before.plan);
+});
+
+test('working visits fill with elapsed time and keep priority visible through live updates', async ({
+  page,
+  request,
+}, testInfo) => {
+  const state = await (await request.get('/api/state')).json();
+  const jobs = new Map(state.jobs.map((job) => [job.id, job]));
+  const stops = state.plan.routes.flatMap((route) => route.stops);
+  const stop = stops.find((stop) => jobs.get(stop.jobId).priority === 'urgent') || stops[0];
+  const job = jobs.get(stop.jobId);
+  await page.goto('/');
+  await expect(page.locator('.compact-route .avatar').first()).toHaveCSS(
+    'background-color',
+    'rgb(255, 207, 0)',
+  );
+  await page.getByRole('button', { name: 'График', exact: true }).click();
+  const bar = page.locator('.gantt-job').filter({ hasText: new RegExp(`^№${job.number}$`) });
+  await expect(bar).not.toHaveClass(/working/);
+  await expect(page.locator('.gantt-person .avatar').first()).toHaveCSS(
+    'background-color',
+    'rgb(255, 207, 0)',
+  );
+  await expect(page.locator('.gantt-travel').first()).toHaveCSS(
+    'background-image',
+    /repeating-linear-gradient.*rgb\(255, 207, 0\).*rgb\(36, 36, 36\)/,
+  );
+  for (const fraction of [0, 0.25, 0.5]) {
+    const elapsed = Math.floor((stop.end - stop.start) * fraction);
+    const response = await request.post('/api/action', {
+      data: { type: 'clock', payload: { time: stop.start + elapsed } },
+    });
+    expect(response.ok()).toBeTruthy();
+    const next = await response.json();
+    expect(next.jobs.find((j) => j.id === job.id).status).toBe('working');
+    await expect(bar).toHaveClass(/working/);
+    const progress = (elapsed / (stop.end - stop.start)) * 100;
+    await expect(bar).toHaveCSS('--job-progress', `${progress}%`);
+    await expect(bar).toHaveAccessibleName(
+      new RegExp(`В работе: прошло ${Math.round(progress)}% планового времени`),
+    );
+    await expect
+      .poll(() =>
+        bar.evaluate((el) => {
+          const fill = parseFloat(getComputedStyle(el, '::before').width);
+          return Math.round((fill / el.clientWidth) * 100);
+        }),
+      )
+      .toBe(Math.round(progress));
+  }
+  if (job.priority === 'urgent') await expect(bar).toHaveCSS('border-top-color', 'rgb(178, 56, 45)');
+  const future = page.locator('.gantt-job:not(.working)').first();
+  await expect(future).toHaveCSS('--job-progress', '');
+  await bar.scrollIntoViewIfNeeded();
+  await page.locator('.map-panel').screenshot({ path: testInfo.outputPath('gantt-progress-desktop.png') });
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+  await page.locator('.map-panel').screenshot({ path: testInfo.outputPath('gantt-progress-mobile.png') });
+  await bar.click();
+  await expect(page.getByRole('dialog')).toHaveAccessibleName(`Заявка №${job.number}`);
+  await page.keyboard.press('Escape');
+  const finished = await request.post('/api/action', {
+    data: { type: 'clock', payload: { time: stop.end } },
+  });
+  expect(finished.ok()).toBeTruthy();
+  expect((await finished.json()).jobs.find((j) => j.id === job.id).status).toBe('done');
+  await expect(bar).toHaveCount(0);
 });
