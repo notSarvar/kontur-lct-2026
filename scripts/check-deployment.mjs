@@ -99,6 +99,23 @@ try {
     await page.locator('.phone-nav').getByRole('button', { name: title, exact: true }).click();
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   }
+  await page.goto(`${baseURL}/hackathon`);
+  await expect(page).toHaveTitle('Контур — пульт хакатона');
+  await expect(page.getByRole('heading', { name: 'Пульт демонстрации' })).toBeVisible();
+  await expect(page.locator('.sidebar')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Открыть продукт' })).toHaveAttribute(
+    'href',
+    before.workspace.productUrl,
+  );
+  assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  if (output) await page.screenshot({ path: `${output}/hackathon-mobile.png` });
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.getByRole('button', { name: 'Настройки расчёта', exact: true }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await page.reload();
+  await expect(page.locator('.simulation')).toBeVisible();
+  if (output) await page.screenshot({ path: `${output}/hackathon.png` });
   const after = await (await page.request.get(`${baseURL}/api/state`)).json();
   assert.equal(after.revision, before.revision, 'The shared day changed during the check.');
   assert.deepEqual(after.jobs, before.jobs);
@@ -115,7 +132,8 @@ try {
         revision: before.revision,
         ortools: optimizers.ortools,
         sse: true,
-        browser: 'desktop, mobile, all sections and SOP editor passed; preview cancelled; state unchanged',
+        browser:
+          'desktop, mobile, all sections, SOP editor and public hackathon console passed; preview cancelled; state unchanged',
       },
       null,
       2,

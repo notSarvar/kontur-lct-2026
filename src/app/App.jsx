@@ -66,7 +66,8 @@ export default function App() {
     [focusWindow, setFocusWindow] = useState(null);
   const stateRef = useRef(state),
     busyRef = useRef(false);
-  const isHackathon = state?.workspace?.mode === 'hackathon';
+  const isHackathon =
+    /^\/hackathon\/?$/.test(window.location.pathname) || state?.workspace?.mode === 'hackathon';
   const page = isHackathon ? 'demo' : section;
   useEffect(() => {
     document.title = isHackathon ? 'Контур — пульт хакатона' : 'Контур — маршруты выездной команды';
