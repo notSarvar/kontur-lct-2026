@@ -11,7 +11,7 @@ export function rng(seed) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-export function createScenario({ seed = 42, count = 18, engineerCount = 4 } = {}) {
+export function createScenario({ seed = 42, count = 18, engineerCount = 4, includeUrgent = false } = {}) {
   const random = rng(seed);
   const combinations = [
     ['local', 'connection', 'additional'],
@@ -33,7 +33,7 @@ export function createScenario({ seed = 42, count = 18, engineerCount = 4 } = {}
     home: { ...DEPOT },
     pausedUntil: 0,
   }));
-  const keys = Object.keys(TYPES);
+  const keys = Object.keys(TYPES).filter((type) => includeUrgent || type !== 'emergency');
   const jobs = Array.from({ length: count }, (_, i) => {
     const type = keys[Math.floor(random() * keys.length)],
       loc = LOCATIONS[Math.floor(random() * LOCATIONS.length)];

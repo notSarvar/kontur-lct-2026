@@ -141,7 +141,12 @@ test('working visits fill with elapsed time and keep priority visible through li
   page,
   request,
 }, testInfo) => {
-  const state = await (await request.get('/api/state')).json();
+  const initial = await (await request.get('/api/state')).json();
+  const urgentResponse = await request.post('/api/action', {
+    data: { type: 'job.save', payload: { ...initial.jobs[0], priority: 'urgent' } },
+  });
+  expect(urgentResponse.ok()).toBeTruthy();
+  const state = await urgentResponse.json();
   const jobs = new Map(state.jobs.map((job) => [job.id, job]));
   const stops = state.plan.routes.flatMap((route) => route.stops);
   const stop = stops.find((stop) => jobs.get(stop.jobId).priority === 'urgent') || stops[0];

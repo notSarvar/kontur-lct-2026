@@ -32,8 +32,8 @@ export async function applyAction(current, action, opts = {}) {
         Number.isInteger(p.seed) && p.seed >= 0 && p.seed <= 4294967295,
         'Seed: целое число от 0 до 4294967295',
       );
-      state = createScenario(p);
-      state.settings = { ...current.settings, roadMode: 'estimate' };
+      state = createScenario({ seed: p.seed, count: p.count, engineerCount: p.engineerCount });
+      state.settings = { ...current.settings, roadMode: 'estimate', mode: 'economy' };
       addEvent(state, 'Создан новый день', `${p.count} заявок · seed ${p.seed}`);
       break;
     }
@@ -223,6 +223,7 @@ export async function applyAction(current, action, opts = {}) {
         seed: p.seed,
         count: p.count,
         engineerCount: state.engineers.length,
+        includeUrgent: true,
       });
       for (const job of generated.jobs) {
         const start = Math.min(1380, Math.max(job.windowStart, state.time + 15));
