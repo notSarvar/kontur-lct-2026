@@ -268,13 +268,11 @@ export default function EngineerView({ state, engineer: e, setEngineer, tab, set
         <div className="engineer-context">
           <div className="context-eyebrow">ОДНА КОМАНДА. ОБЩАЯ КАРТИНА.</div>
           <h2>
-            Меньше звонков.
-            <br />
+            Меньше звонков. <br />
             Больше ясности.
           </h2>
           <p className="context-intro">
-            Инженер знает, куда ехать дальше.
-            <br />
+            Инженер знает, куда ехать дальше. <br />
             Диспетчер видит, как проходит день.
           </p>
           <section className="panel context-card">

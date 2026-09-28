@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Field, Modal } from '../../components/ui.jsx';
 
+// getRandomValues also works on HTTP; randomUUID requires a secure context.
+const createStepId = () =>
+  Array.from(crypto.getRandomValues(new Uint8Array(16)), (byte) => byte.toString(16).padStart(2, '0')).join(
+    '',
+  );
+
 export function SopEditor({ sop, save, cancel, busy }) {
   const [form, setForm] = useState(structuredClone(sop));
   const set = (key, value) => setForm((f) => ({ ...f, [key]: value }));
@@ -81,7 +87,7 @@ export function SopEditor({ sop, save, cancel, busy }) {
       <Button
         type="button"
         disabled={form.steps.length >= 30}
-        onClick={() => set('steps', [...form.steps, { id: crypto.randomUUID(), text: '', minutes: 5 }])}
+        onClick={() => set('steps', [...form.steps, { id: createStepId(), text: '', minutes: 5 }])}
       >
         Добавить шаг
       </Button>

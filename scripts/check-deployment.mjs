@@ -44,9 +44,29 @@ try {
   await expect(page.getByLabel('Раздел приложения')).toBeVisible();
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   if (output) await page.screenshot({ path: `${output}/mobile.png` });
+  for (const section of ['jobs', 'team', 'analytics', 'support', 'settings']) {
+    await page.getByLabel('Раздел приложения').selectOption(section);
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  }
+  await page.getByRole('button', { name: 'Шаблоны работ', exact: true }).click();
+  await page.getByRole('button', { name: 'Редактировать шаблон', exact: true }).first().click();
+  const steps = await page.locator('.sop-step-edit').count();
+  await page.getByRole('button', { name: 'Добавить шаг', exact: true }).click();
+  await expect(page.locator('.sop-step-edit')).toHaveCount(steps + 1);
+  await page.getByRole('button', { name: 'Удалить шаг', exact: true }).last().click();
+  await expect(page.locator('.sop-step-edit')).toHaveCount(steps);
+  await page.getByRole('button', { name: 'Отменить правки', exact: true }).click();
+  await page.keyboard.press('Escape');
+  await page.getByRole('tab', { name: 'Инженер', exact: true }).click();
+  for (const title of ['События', 'Профиль', 'Маршрут']) {
+    await page.locator('.phone-nav').getByRole('button', { name: title, exact: true }).click();
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  }
   const after = await (await page.request.get(`${baseURL}/api/state`)).json();
   assert.equal(after.revision, before.revision, 'The shared day changed during the check.');
   assert.deepEqual(after.jobs, before.jobs);
+  assert.deepEqual(after.plan, before.plan);
+  assert.deepEqual(after.sopTemplates, before.sopTemplates);
   assert.deepEqual(errors, []);
   console.log(
     JSON.stringify(
@@ -58,7 +78,7 @@ try {
         revision: before.revision,
         ortools: optimizers.ortools,
         sse: true,
-        browser: 'desktop and mobile passed; preview cancelled; state unchanged',
+        browser: 'desktop, mobile, all sections and SOP editor passed; preview cancelled; state unchanged',
       },
       null,
       2,

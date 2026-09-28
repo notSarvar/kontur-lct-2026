@@ -31,10 +31,12 @@ export default function RouteMap({
   const [tileError, setTileError] = useState(false);
   callbacks.current = { onJob, onPick };
   useEffect(() => {
-    map.current = L.map(element.current, { zoomControl: false, attributionControl: true }).setView(
-      [55.758, 37.62],
-      12,
-    );
+    map.current = L.map(element.current, {
+      zoomControl: false,
+      attributionControl: true,
+      // Dialogs can unmount during a zoom. Leaflet 1.9 leaves its transition callback queued.
+      zoomAnimation: false,
+    }).setView([55.758, 37.62], 12);
     L.control.zoom({ position: 'bottomright' }).addTo(map.current);
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
