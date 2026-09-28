@@ -37,10 +37,11 @@ export default function RouteMap({
       // Dialogs can unmount during a zoom. Leaflet 1.9 leaves its transition callback queued.
       zoomAnimation: false,
     }).setView([55.758, 37.62], 12);
+    map.current.attributionControl.setPrefix(false);
     L.control.zoom({ position: 'bottomright' }).addTo(map.current);
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · <a href="https://www.openstreetmap.org/fixthemap">Исправить карту</a>',
+        '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>',
       maxZoom: 19,
     });
     tiles.on('tileerror', () => setTileError(true));

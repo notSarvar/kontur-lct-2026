@@ -612,9 +612,20 @@ textarea {
 .leaflet-tile-pane {
   filter: saturate(0.45) contrast(0.95) brightness(1.03);
 }
-.leaflet-control-attribution {
-  font-size: 8px !important;
-  background: #ffffffbd !important;
+.route-map .map-canvas .leaflet-control-attribution {
+  padding: 0 5px;
+  border-radius: 4px 0 0;
+  font-size: 11px;
+  line-height: 16px;
+  color: #555;
+  background: #ffffffe6;
+}
+.route-map .leaflet-control-attribution a {
+  color: inherit;
+}
+.route-map .leaflet-control-attribution a:hover,
+.route-map .leaflet-control-attribution a:focus-visible {
+  text-decoration: underline;
 }
 .leaflet-control-zoom {
   border: 1px solid #e4e4e4 !important;
