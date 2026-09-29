@@ -1,0 +1,115 @@
+.first-plan-notice {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 45;
+  width: 348px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  padding: 20px;
+  border: 1px solid #dce5dc;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 48px #17212b29;
+  color: #17212b;
+}
+.first-plan-notice header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.first-plan-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  color: #19814a;
+  background: #eef7f0;
+}
+.first-plan-notice h2 {
+  margin: 0;
+  font-size: 16px;
+  flex: 1;
+}
+.first-plan-close {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #69737c;
+  cursor: pointer;
+}
+.first-plan-close:hover {
+  background: #f2f4f1;
+}
+.first-plan-score {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 18px 0 12px;
+}
+.first-plan-score > strong {
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.first-plan-score > span {
+  font-size: 11px;
+  color: #69737c;
+}
+.first-plan-score b {
+  display: block;
+  margin-top: 4px;
+  color: #17212b;
+  font-size: 13px;
+}
+.first-plan-bar {
+  height: 5px;
+  border-radius: 3px;
+  background: #edf0ec;
+  overflow: hidden;
+}
+.first-plan-bar span {
+  display: block;
+  height: 100%;
+  background: #19814a;
+}
+.first-plan-notice dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+.first-plan-notice dt {
+  color: #69737c;
+  font-size: 11px;
+}
+.first-plan-notice dd {
+  margin: 5px 0 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+.first-plan-notice p {
+  margin: 0 0 15px;
+  color: #54616c;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.first-plan-notice > .button {
+  width: 100%;
+  justify-content: center;
+  min-height: 40px;
+}
+@media (max-width: 600px) {
+  .first-plan-notice {
+    right: 16px;
+    bottom: 16px;
+    padding: 16px;
+  }
+}

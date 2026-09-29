@@ -1,6 +1,7 @@
 import { applyAction } from './actions.js';
 
 const allowed = new Set([
+  'engineer.kit.resolve',
   'job.assign',
   'job.save',
   'job.resolve',

@@ -1,3 +1,4 @@
+import { apiFetch } from '../../shared/api.js';
 import React, { useState, useEffect } from 'react';
 import { Modal, Field, Button } from '../../components/ui.jsx';
 export default function Settings({ state, onClose, save, busy, onTemplates }) {
@@ -5,7 +6,7 @@ export default function Settings({ state, onClose, save, busy, onTemplates }) {
   const [capabilities, setCapabilities] = useState(null);
   useEffect(() => {
     let active = true;
-    fetch('/api/optimizers')
+    apiFetch('/api/optimizers')
       .then((r) => r.json())
       .then((r) => {
         if (active) setCapabilities(r);

@@ -74,7 +74,7 @@ test('ordinary manual reassignment supports cancel, apply, pin and stale preview
   await expect(page.getByRole('dialog')).toContainText('План изменился');
 });
 
-test('prepared walking data and geography review are visible and work without a routing provider', async ({
+test('prepared walking data and attention jobs work without a routing provider', async ({
   page,
   request,
 }) => {
@@ -87,10 +87,6 @@ test('prepared walking data and geography review are visible and work without a 
   await expect(page.getByRole('dialog')).toBeVisible();
   await page.getByRole('button', { name: 'Закрыть', exact: true }).click();
   await page.setViewportSize({ width: 1440, height: 1100 });
-  await page.getByRole('button', { name: /Проверить адреса/ }).click();
-  await expect(page.getByRole('dialog')).toContainText('83с4');
-  await expect(page.getByLabel('Адрес для проверки')).toBeVisible();
-  await page.getByRole('button', { name: 'Закрыть', exact: true }).click();
   let s = await act(request, 'settings', { roadMode: 'prepared', mode: 'economy', stability: true });
   expect(s.plan.roadSource).toBe('prepared');
   expect(s.plan.matrixId).toBeTruthy();

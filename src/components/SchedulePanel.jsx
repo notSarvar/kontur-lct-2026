@@ -39,6 +39,7 @@ export default function SchedulePanel({
               Карта
             </button>
             <button
+              data-tour="graph"
               className={timeline ? 'active' : ''}
               aria-pressed={timeline}
               onClick={() => setTimeline(true)}

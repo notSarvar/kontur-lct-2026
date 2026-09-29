@@ -1,3 +1,5 @@
+import { createOnboardingSessions } from '../application/onboarding.js';
+import { recommendEngineers } from '../application/engineer-recommendations.js';
 import http from 'node:http';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -21,6 +23,7 @@ export async function startServer() {
   await persist(state);
   const clients = new Set();
   const candidates = new Map();
+  const onboarding = createOnboardingSessions();
   let queue = Promise.resolve();
   const vite = production
     ? null
@@ -65,6 +68,18 @@ export async function startServer() {
         new URL(req.headers.origin).host !== req.headers.host
       )
         return json(res, { error: 'Недопустимый источник запроса' }, 403);
+      if (url.pathname.startsWith('/api/onboarding/')) {
+        const match = url.pathname.match(/^\/api\/onboarding\/([a-f0-9]{32})(\/.*)$/);
+        if (!match) return json(res, { error: 'Учебный маршрут не найден' }, 404);
+        const input = req.method === 'POST' ? await body(req) : {};
+        const result = await onboarding(match[1], match[2], req.method, input);
+        return json(res, result?.jobs ? present(result) : result);
+      }
+      if (url.pathname === '/api/engineer-recommendations' && req.method === 'POST') {
+        const input = await body(req);
+        await queue;
+        return json(res, await recommendEngineers(structuredClone(state), input));
+      }
       if (url.pathname === '/api/preview' && req.method === 'POST') {
         const action = await body(req);
         const work = queue.then(async () => {

@@ -1,3 +1,4 @@
+import { apiFetch } from '../../shared/api.js';
 import React, { useRef } from 'react';
 import { ArrowUpFromLine, Download, SlidersHorizontal } from 'lucide-react';
 import { Button } from '../../components/ui.jsx';
@@ -8,7 +9,7 @@ export default function Hackathon({ state, open, act, busy, running, setRunning,
   const fileRef = useRef();
   async function exportFile() {
     try {
-      const response = await fetch('/api/export');
+      const response = await apiFetch('/api/export');
       if (!response.ok) throw new Error('Не удалось выгрузить сценарий');
       const blob = new Blob([JSON.stringify(await response.json(), null, 2)], { type: 'application/json' });
       const a = document.createElement('a');

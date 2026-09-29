@@ -9,13 +9,18 @@ import {
   geocacheUrl,
 } from '../server/infrastructure/geocoding.js';
 
-const datasets = await loadOfficialDatasets();
+const selected = process.env.DATASET_IDS?.split(',');
+const datasets = (await loadOfficialDatasets()).filter((d) => !selected || selected.includes(d.id));
 const addresses = [
   ...new Set(
     datasets.flatMap((d) => [d.office.address, ...d.jobs.map((j) => j.address)]).map(normalizeAddress),
   ),
 ];
 const cache = await readGeocache();
+const preserveArg = process.argv.indexOf('--preserve-cache');
+const protectedKeys = new Set(
+  preserveArg < 0 ? [] : Object.keys(JSON.parse(await fs.readFile(process.argv[preserveArg + 1], 'utf8'))),
+);
 const provider = process.env.GEOCODER_URL || 'https://nominatim.openstreetmap.org/search';
 let requests = 0;
 const refine = process.argv.includes('--refine');
@@ -29,6 +34,7 @@ const houseKey = (value) =>
     .replace(/b/g, 'в');
 for (const address of addresses) {
   if (
+    protectedKeys.has(address) ||
     cache[address]?.status === 'matched' ||
     (cache[address] && !refine) ||
     (refine && cache[address]?.refined)
@@ -88,7 +94,9 @@ for (const address of addresses) {
   cache[address].refined = refine;
   await fs.writeFile(geocacheUrl, JSON.stringify(cache, null, 2) + '\n');
   requests++;
-  console.log(`${Object.keys(cache).length}/${addresses.length} ${cache[address].status}: ${address}`);
+  console.log(
+    `${addresses.filter((a) => cache[a]).length}/${addresses.length} ${cache[address].status}: ${address}`,
+  );
 }
 console.log(
   `Prepared ${addresses.length} unique addresses; ${Object.values(cache).filter((r) => r.status === 'matched').length} building matches. Others require manual confirmation.`,

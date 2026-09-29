@@ -1,3 +1,6 @@
+import KitShortageDialog from '../features/engineer/KitShortageDialog.jsx';
+import OnboardingTour from '../features/onboarding/OnboardingTour.jsx';
+import { apiFetch, isOnboarding } from '../shared/api.js';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   ArrowUpRight,
@@ -38,6 +41,7 @@ import Settings from '../features/scenarios/Settings.jsx';
 import DatasetForm from '../features/scenarios/DatasetForm.jsx';
 import OfficeForm from '../features/scenarios/OfficeForm.jsx';
 import PlanPreview from '../features/plans/PlanPreview.jsx';
+import FirstPlanNotice from '../features/plans/FirstPlanNotice.jsx';
 import AssignmentForm from '../features/plans/AssignmentForm.jsx';
 import GeographyPanel from '../features/scenarios/GeographyPanel.jsx';
 import Attention from '../features/jobs/Attention.jsx';
@@ -67,17 +71,22 @@ export default function App() {
   const stateRef = useRef(state),
     busyRef = useRef(false);
   const isHackathon =
-    /^\/hackathon\/?$/.test(window.location.pathname) || state?.workspace?.mode === 'hackathon';
+    !isOnboarding &&
+    (/^\/hackathon\/?$/.test(window.location.pathname) || state?.workspace?.mode === 'hackathon');
   const page = isHackathon ? 'demo' : section;
   useEffect(() => {
-    document.title = isHackathon ? 'Контур — пульт хакатона' : 'Контур — маршруты выездной команды';
+    document.title = isOnboarding
+      ? 'Контур — обучение диспетчера'
+      : isHackathon
+        ? 'Контур — пульт хакатона'
+        : 'Контур — маршруты выездной команды';
   }, [isHackathon]);
   stateRef.current = state;
   useEffect(() => setFocusWindow(null), [state?.revision]);
   const accept = (next) => setState((prev) => (!prev || next.revision >= prev.revision ? next : prev));
   const load = async () => {
     try {
-      const response = await fetch('/api/state');
+      const response = await apiFetch('/api/state');
       if (!response.ok) throw new Error('Сервер недоступен');
       accept(await response.json());
       setError('');
@@ -87,6 +96,7 @@ export default function App() {
   };
   useEffect(() => {
     load();
+    if (isOnboarding) return;
     const events = new EventSource('/api/events');
     events.onmessage = () => load();
     events.onopen = () => setConnectionLost(false);
@@ -103,17 +113,19 @@ export default function App() {
     busyRef.current = true;
     setBusy(true);
     try {
-      const preview = [
-        'job.assign',
-        'job.save',
-        'job.resolve',
-        'job.delete',
-        'settings',
-        'optimize',
-        'office.save',
-        'geography.confirm',
-      ].includes(type);
-      const response = await fetch(preview ? '/api/preview' : '/api/action', {
+      const preview =
+        [
+          'job.assign',
+          'job.save',
+          'job.resolve',
+          'job.delete',
+          'settings',
+          'optimize',
+          'office.save',
+          'geography.confirm',
+        ].includes(type) ||
+        (type === 'engineer.kit.resolve' && payload.decision !== 'confirm');
+      const response = await apiFetch(preview ? '/api/preview' : '/api/action', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type, payload, expectedRevision: stateRef.current.revision }),
@@ -142,7 +154,7 @@ export default function App() {
     busyRef.current = true;
     setBusy(true);
     try {
-      const response = await fetch('/api/preview/apply', {
+      const response = await apiFetch('/api/preview/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: modal.candidate.id, expectedRevision: modal.candidate.baseRevision }),
@@ -161,7 +173,7 @@ export default function App() {
     }
   }
   function closePreview() {
-    fetch(`/api/preview/${modal.candidate.id}`, { method: 'DELETE' }).catch(() => {});
+    apiFetch(`/api/preview/${modal.candidate.id}`, { method: 'DELETE' }).catch(() => {});
     setModal(null);
   }
   useEffect(() => {
@@ -286,6 +298,7 @@ export default function App() {
             </button>
             <button
               role="tab"
+              data-tour="engineer-mode"
               aria-selected={mode === 'engineer'}
               className={mode === 'engineer' ? 'active' : ''}
               onClick={() => setMode('engineer')}
@@ -314,9 +327,23 @@ export default function App() {
             <Bell size={19} />
             <span className="notification-dot" />
           </button>
-          <span className="user-avatar">СА</span>
+          <button
+            className="user-avatar"
+            aria-label="Профиль диспетчера"
+            onClick={() => open({ type: 'dispatcherProfile' })}
+            style={{ border: 0, cursor: 'pointer' }}
+          >
+            СА
+          </button>
         </div>
       </header>
+      {isOnboarding && (
+        <div className="onboarding-banner">
+          <b>Учебный режим</b>
+          <span>Отдельные данные · рабочие заявки не меняются</span>
+          <a href="/">Выйти из обучения</a>
+        </div>
+      )}
       <div className="app-body">
         {!isHackathon && (
           <aside className="sidebar">
@@ -324,6 +351,7 @@ export default function App() {
               {sidebarItems.map(([id, Icon, label]) => (
                 <button
                   key={id}
+                  data-tour={`nav-${id}`}
                   className={page === id && mode === 'dispatch' ? 'active' : ''}
                   onClick={() => {
                     setPage(id);
@@ -414,7 +442,6 @@ export default function App() {
                     jobs={atRisk}
                     onJob={(id) => open({ type: 'job', id })}
                     onAll={() => goJobs('risk')}
-                    onGeography={() => open({ type: 'geography' })}
                   />
                   <div className="operations-grid">
                     <SchedulePanel
@@ -503,7 +530,7 @@ export default function App() {
                   <div className="panel-heading">
                     <div>
                       <h2>Очередь диспетчера</h2>
-                      <p>Конфликты окон и адресов; согласование с клиентом выполняет диспетчер</p>
+                      <p>Согласование заявок, проблемы адресов и риски комплекта инженеров</p>
                     </div>
                     <Button
                       icon={Plus}
@@ -515,36 +542,75 @@ export default function App() {
                   {!state.support.length ? (
                     <Empty text="Обращений пока нет. Инженер может сообщить о проблеме с объекта." />
                   ) : (
-                    state.support.map((t) => {
-                      const j = jobs.find((j) => j.id === t.jobId);
-                      return (
-                        <div className="support-ticket" key={t.id}>
-                          <span className={`ticket-icon ${t.status === 'resolved' ? 'resolved' : ''}`}>
-                            {t.status === 'resolved' ? <Check size={20} /> : <Headphones size={20} />}
-                          </span>
-                          <div>
-                            <h3>
-                              №{j?.number} · {j?.address}
-                            </h3>
-                            <p>{t.text}</p>
-                            <small>
-                              {time(t.time)} · {t.status === 'open' ? 'Ожидает решения' : 'Обработано'}
-                            </small>
-                          </div>
-                          {t.status === 'open' && (
-                            <Button
-                              onClick={() =>
-                                t.kind === 'scheduling'
-                                  ? open({ type: 'resolveJob', id: t.jobId })
-                                  : act('support.resolve', { id: t.id }, 'Обращение обработано')
-                              }
-                            >
-                              {t.kind === 'scheduling' ? 'Согласовать заявку' : 'Вернуть в планирование'}
-                            </Button>
-                          )}
-                        </div>
-                      );
-                    })
+                    <div className="support-grid">
+                      {state.support.map((t) => {
+                        const j = jobs.find((j) => j.id === t.jobId);
+                        const resolved = t.status === 'resolved';
+                        const kitRisk = t.kind === 'kit_shortage';
+                        const person = engineers.find((e) => e.id === t.engineerId);
+                        return (
+                          <article className={`support-ticket ${resolved ? 'is-resolved' : ''}`} key={t.id}>
+                            <div className="support-card-top">
+                              <span className="support-number">
+                                {kitRisk ? 'Маршрут под риском' : j ? `№${j.number}` : 'Обращение'}
+                              </span>
+                              {j?.priority === 'urgent' && <span className="support-priority">Срочная</span>}
+                            </div>
+                            <h3>{kitRisk ? person?.name : j?.address || 'Заявка недоступна'}</h3>
+                            {kitRisk && (
+                              <p className="support-job-type">
+                                По SOP затронуто заявок при отправке: {t.affectedJobIds.length}
+                              </p>
+                            )}
+                            {j && <p className="support-job-type">{j.title}</p>}
+                            {j && (
+                              <div className="support-job-facts">
+                                <span>
+                                  <Clock3 size={14} />
+                                  {time(j.windowStart)}–{time(j.windowEnd)}
+                                </span>
+                                <span>{j.duration} мин работы</span>
+                              </div>
+                            )}
+                            <div className="support-reason">
+                              <span>Причина обращения</span>
+                              <p>{t.text}</p>
+                            </div>
+                            <div className="support-card-footer">
+                              <div className={`support-status ${resolved ? 'resolved' : ''}`}>
+                                {resolved ? <Check size={15} /> : <Headphones size={15} />}
+                                <span>{resolved ? 'Обработано' : 'Ожидает решения'}</span>
+                                <time>{time(t.time)}</time>
+                              </div>
+                              {t.status === 'open' && (
+                                <Button
+                                  data-tour={
+                                    j?.priority === 'urgent' && t.kind === 'scheduling'
+                                      ? 'urgent-approval'
+                                      : undefined
+                                  }
+                                  disabled={busy}
+                                  onClick={() =>
+                                    kitRisk
+                                      ? open({ type: 'kitShortage', id: t.id })
+                                      : t.kind === 'scheduling'
+                                        ? open({ type: 'resolveJob', id: t.jobId })
+                                        : act('support.resolve', { id: t.id }, 'Обращение обработано')
+                                  }
+                                >
+                                  {kitRisk
+                                    ? 'Разобрать недостачу'
+                                    : t.kind === 'scheduling'
+                                      ? 'Согласовать заявку'
+                                      : 'Вернуть в планирование'}
+                                  <ArrowUpRight size={15} />
+                                </Button>
+                              )}
+                            </div>
+                          </article>
+                        );
+                      })}
+                    </div>
                   )}
                 </section>
               )}
@@ -670,6 +736,15 @@ export default function App() {
           save={(payload) => act('geography.confirm', payload)}
         />
       )}
+      {modal?.type === 'kitShortage' && state.support.find((t) => t.id === modal.id) && (
+        <KitShortageDialog
+          state={state}
+          ticket={state.support.find((t) => t.id === modal.id)}
+          busy={busy}
+          act={act}
+          onClose={() => setModal(null)}
+        />
+      )}
       {modal?.type === 'preview' && (
         <PlanPreview
           candidate={modal.candidate}
@@ -759,6 +834,52 @@ export default function App() {
       {modal?.type === 'sopTemplates' && (
         <SopTemplates state={state} busy={busy} act={act} onClose={() => setModal(null)} />
       )}
+      {modal?.type === 'dispatcherProfile' && (
+        <Modal
+          title="Профиль диспетчера"
+          subtitle="Ваше рабочее пространство в Контуре"
+          onClose={() => setModal(null)}
+        >
+          <div className="modal-body" style={{ padding: 28 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 24 }}>
+              <span
+                className="user-avatar"
+                style={{ width: 72, height: 72, fontSize: 26, background: '#fff1bd', color: '#6a5010' }}
+              >
+                СА
+              </span>
+              <div>
+                <h2 style={{ margin: '0 0 6px' }}>Сотрудник диспетчерской</h2>
+                <p className="muted">Оператор · управление рабочим днём</p>
+              </div>
+            </div>
+            <div style={{ background: '#f6f7f8', borderRadius: 16, padding: 20, display: 'grid', gap: 14 }}>
+              <div>
+                <small className="muted">Рабочее пространство</small>
+                <div>
+                  <b>Контур · диспетчерская</b>
+                </div>
+              </div>
+              <div>
+                <small className="muted">Участок</small>
+                <div>
+                  <b>{state.dataset?.name || 'Демонстрационный участок'}</b>
+                </div>
+              </div>
+              <div>
+                <small className="muted">Возможности</small>
+                <div>Планирование маршрутов, поддержка инженеров и согласование заявок</div>
+              </div>
+            </div>
+            <p className="muted" style={{ margin: '20px 0' }}>
+              Демонстрационный профиль. Персональные настройки появятся здесь позже.
+            </p>
+            <Button variant="primary" onClick={() => setModal(null)}>
+              Вернуться к работе
+            </Button>
+          </div>
+        </Modal>
+      )}
       {modal?.type === 'notifications' && (
         <Modal
           title="События рабочего дня"
@@ -802,6 +923,67 @@ export default function App() {
           </div>
         </Modal>
       )}
+      {isOnboarding && (
+        <OnboardingTour
+          context={{ state, page, mode, modal, timeline }}
+          busy={busy}
+          onTransition={async (step) => {
+            if (step === 18 || step === 19) {
+              const response = await apiFetch('/api/engineer-demo', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  stage: step === 18 ? 'travel' : 'work',
+                  engineerId: mobileEngineer,
+                  expectedRevision: stateRef.current.revision,
+                }),
+              });
+              const next = await response.json();
+              if (!response.ok) throw new Error(next.error);
+              accept(next);
+            }
+            if (step === 6) setModal(null);
+            if (step === 15) {
+              const route =
+                state.plan.routes.find(
+                  (r) => state.jobs.find((j) => j.id === r.stops[0]?.jobId)?.sop?.steps.length,
+                ) || state.plan.routes.find((r) => r.stops.length);
+              if (route) setMobileEngineer(route.engineerId);
+              setPhoneTab('route');
+            }
+          }}
+          onRestart={async () => {
+            const response = await apiFetch('/api/reset', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: '{}',
+            });
+            const next = await response.json();
+            if (!response.ok) throw new Error(next.error);
+            accept(next);
+            setModal(null);
+            setMode('dispatch');
+            setPage('overview');
+            setTimeline(false);
+            setSelected('all');
+            setSearch('');
+            setFilter('all');
+            setPhoneTab('route');
+          }}
+        />
+      )}
+      <FirstPlanNotice
+        state={state}
+        visible={
+          !isOnboarding && !isHackathon && mode === 'dispatch' && page === 'overview' && !modal && !busy
+        }
+        onReview={() => {
+          setRunning(false);
+          setPage('overview');
+          setSelected('all');
+          setTimeline(true);
+        }}
+      />
       {modal?.type === 'help' && (
         <Modal
           title="Рабочий прототип, открытая модель"

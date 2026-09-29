@@ -110,27 +110,3 @@ test('empty report is unavailable without a busy cursor; saving only shows while
   await expect(button).not.toHaveAttribute('aria-busy', 'true');
   await expect(page.getByLabel('Отчёт инженера')).toHaveValue('');
 });
-
-test('geography keeps fields beside the map and actions visible, then stacks on mobile', async ({
-  page,
-  request,
-}, testInfo) => {
-  await request.post('/api/action', { data: { type: 'dataset.load', payload: { id: 'east' } } });
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto('/');
-  await page.getByRole('button', { name: /Проверить адреса/ }).click();
-  const fields = await page.locator('.geography-fields').boundingBox();
-  const map = await page.locator('.geography-map').boundingBox();
-  expect(map.x).toBeGreaterThan(fields.x + fields.width);
-  expect(Math.abs(map.y - fields.y)).toBeLessThan(2);
-  await expect(page.getByLabel('Источник подтверждения')).toBeInViewport();
-  await expect(page.getByRole('button', { name: 'Проверить план с этой точкой' })).toBeInViewport();
-  await page.screenshot({ path: testInfo.outputPath('geography-desktop.png') });
-  await page.setViewportSize({ width: 320, height: 740 });
-  const mobileFields = await page.locator('.geography-fields').boundingBox();
-  const mobileMap = await page.locator('.geography-map').boundingBox();
-  expect(mobileMap.y).toBeGreaterThan(mobileFields.y + mobileFields.height);
-  expect(await page.getByRole('dialog').evaluate((el) => el.scrollWidth <= el.clientWidth)).toBeTruthy();
-  await expect(page.getByRole('button', { name: 'Проверить план с этой точкой' })).toBeInViewport();
-  await page.screenshot({ path: testInfo.outputPath('geography-mobile.png') });
-});

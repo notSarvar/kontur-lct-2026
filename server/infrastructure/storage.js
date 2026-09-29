@@ -1,3 +1,4 @@
+import { ensureSops } from '../domain/sop.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createOfficialScenario } from '../domain/official-scenario.js';
@@ -59,7 +60,10 @@ export async function loadState(directory) {
       Array.isArray(saved.plan?.routes) &&
       Array.isArray(saved.plan?.unassigned) &&
       saved.plan?.metrics;
-    if (!refreshed && hasCurrentPlan) return saved;
+    if (!refreshed && hasCurrentPlan) {
+      ensureSops(saved);
+      return saved;
+    }
     await replan(saved);
     if (refreshed) attachDiff(before, saved);
     else if (before.plan?.diff) {

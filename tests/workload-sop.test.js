@@ -22,6 +22,7 @@ function scenario() {
     priority: 'normal',
   };
   s.settings.balanceWork = true;
+  s.settings.autoChecklists = false;
   return s;
 }
 test('historical onsite load favours a less loaded compatible engineer, but never overrides a pin', () => {

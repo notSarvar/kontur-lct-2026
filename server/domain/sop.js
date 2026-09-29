@@ -62,6 +62,16 @@ export function ensureSops(state) {
     const template = state.sopTemplates.find((t) => t.id === defaultSop(job));
     job.sop = template ? sopCopy(template) : null;
   }
+  if (state.settings?.autoChecklists !== false) {
+    for (const job of state.jobs) {
+      if (!job.sop || job.status === 'done') continue;
+      job.sop.prerequisitesConfirmed = true;
+      for (const step of job.sop.steps) {
+        step.done = true;
+        step.completedAt ??= state.time;
+      }
+    }
+  }
 }
 export function sopAction(state, type, p) {
   ensureSops(state);
@@ -81,7 +91,10 @@ export function sopAction(state, type, p) {
   if (type === 'job.sop.apply') {
     const template = state.sopTemplates.find((t) => t.id === p.templateId);
     assert(template, 'Шаблон не найден');
-    assert(!job.sop?.steps.some((s) => s.done), 'Нельзя заменять регламент с выполненными шагами');
+    assert(
+      state.settings.autoChecklists !== false || !job.sop?.steps.some((s) => s.done),
+      'Нельзя заменять регламент с выполненными шагами',
+    );
     job.sop = sopCopy(template);
   } else if (type === 'job.sop.save') {
     assert(job.sop, 'Сначала выберите шаблон');
@@ -94,6 +107,10 @@ export function sopAction(state, type, p) {
     Object.assign(job.sop, valid, { customized: true });
   } else if (type === 'job.sop.check') {
     assert(job.sop, 'Регламент не выбран');
+    assert(
+      state.settings.autoChecklists === false,
+      'Для изменения отметок включите ручное прохождение чек-листов',
+    );
     if (p.prerequisitesConfirmed !== undefined) {
       assert(typeof p.prerequisitesConfirmed === 'boolean', 'Проверьте подтверждение условий');
       job.sop.prerequisitesConfirmed = p.prerequisitesConfirmed;

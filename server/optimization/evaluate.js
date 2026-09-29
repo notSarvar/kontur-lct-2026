@@ -1,8 +1,11 @@
+import { kitKeysForJob } from '../../src/shared/kit-shortage.js';
 import { hasCoordinates } from './travel.js';
 import { workloadBase, balanceCost } from '../domain/engineer-metrics.js';
 
 export function incompatibilities(job, engineer) {
   const reasons = [];
+  if (engineer.shiftWithdrawn) reasons.push('shift');
+  if (kitKeysForJob(job).some((key) => engineer.missingKitKeys?.includes(key))) reasons.push('materials');
   if (!job.skills.every((k) => engineer.skills.includes(k))) reasons.push('qualification');
   if (!job.equipment.every((k) => engineer.equipment.includes(k))) reasons.push('equipment');
   if (

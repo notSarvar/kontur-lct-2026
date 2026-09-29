@@ -10,12 +10,50 @@ import { migrateWorkPolicy } from '../domain/policy-migration.js';
 import { OFFICIAL_POLICY } from '../domain/official-policy.js';
 import { ensureSops, sopAction, validateSop, sopCopy } from '../domain/sop.js';
 import { attachEngineerMetrics } from '../domain/engineer-metrics.js';
+import { engineerAction } from '../domain/engineer-actions.js';
+import { sopReady } from '../../src/shared/shift-kit.js';
+import { kitShortageAction } from '../domain/kit-shortage.js';
 import { optimizerSettings } from '../optimization/settings.js';
+const MAX_DAY_JOBS = 200;
 const finite = (x, min, max) => typeof x === 'number' && Number.isFinite(x) && x >= min && x <= max;
 export async function applyAction(current, action, opts = {}) {
   let state = structuredClone(current);
   const { type, payload: p = {} } = action;
   switch (type) {
+    case 'simulation.checklists': {
+      assert(
+        p.expectedRevision === state.revision && typeof p.enabled === 'boolean',
+        'Обновите экран и повторите действие',
+      );
+      state.settings.autoChecklists = p.enabled;
+      if (!p.enabled) {
+        for (const e of state.engineers) e.kitChecks = {};
+        for (const j of state.jobs) {
+          if (j.status === 'done' || !j.sop) continue;
+          j.sop.prerequisitesConfirmed = false;
+          for (const step of j.sop.steps) {
+            step.done = false;
+            step.completedAt = null;
+          }
+        }
+      }
+      addEvent(
+        state,
+        p.enabled ? 'Автозаполнение чек-листов включено' : 'Включено ручное прохождение чек-листов',
+      );
+      break;
+    }
+    case 'engineer.kit.submit':
+    case 'engineer.kit.resolve':
+      kitShortageAction(state, type, p);
+      break;
+    case 'engineer.kit.check':
+    case 'job.depart':
+    case 'job.arrive':
+    case 'job.start':
+    case 'job.finish':
+      engineerAction(state, type, p);
+      break;
     case 'sop.template.save':
     case 'job.sop.apply':
     case 'job.sop.save':
@@ -33,7 +71,7 @@ export async function applyAction(current, action, opts = {}) {
         'Seed: целое число от 0 до 4294967295',
       );
       state = createScenario({ seed: p.seed, count: p.count, engineerCount: p.engineerCount });
-      state.settings = { ...current.settings, roadMode: 'estimate', mode: 'economy' };
+      state.settings = { ...current.settings, roadMode: 'estimate', mode: 'economy', autoChecklists: true };
       addEvent(state, 'Создан новый день', `${p.count} заявок · seed ${p.seed}`);
       break;
     }
@@ -169,7 +207,7 @@ export async function applyAction(current, action, opts = {}) {
       if (job) {
         Object.assign(job, valid);
       } else {
-        assert(state.jobs.length < 100, 'В прототипе поддерживается до 100 заявок');
+        assert(state.jobs.length < MAX_DAY_JOBS, `В прототипе поддерживается до ${MAX_DAY_JOBS} заявок`);
         job = {
           ...valid,
           id: crypto.randomUUID(),
@@ -218,7 +256,10 @@ export async function applyAction(current, action, opts = {}) {
         Number.isInteger(p.seed) && p.seed >= 0 && p.seed <= 4294967295,
         'Seed: целое число от 0 до 4294967295',
       );
-      assert(state.jobs.length + p.count <= 100, 'В прототипе поддерживается до 100 заявок');
+      assert(
+        state.jobs.length + p.count <= MAX_DAY_JOBS,
+        `В прототипе поддерживается до ${MAX_DAY_JOBS} заявок`,
+      );
       const generated = createScenario({
         seed: p.seed,
         count: p.count,
@@ -280,6 +321,10 @@ export async function applyAction(current, action, opts = {}) {
       const engineer = state.engineers.find((e) => e.id === p.id);
       assert(engineer, 'Инженер не найден');
       assert(finite(p.minutes, 0, 180), 'Перерыв: 0–180 минут');
+      const breakUsed = engineer.breakUsed || (engineer.breaks || []).length > 0 || engineer.pausedUntil > 0;
+      if (p.minutes > 0) assert(!breakUsed, 'Перерыв уже использован в этой смене');
+      // Returning early must not restore the allowance, even for a scheduled break.
+      if (p.minutes > 0 || breakUsed) engineer.breakUsed = true;
       const active = state.jobs.find(
         (j) => j.engineerId === p.id && ['enroute', 'working'].includes(j.status),
       );
@@ -321,6 +366,11 @@ export async function applyAction(current, action, opts = {}) {
     case 'job.complete': {
       const job = state.jobs.find((j) => j.id === p.id);
       assert(job?.status === 'working', 'Завершить можно только начатую работу');
+      assert(sopReady(job), 'Сначала пройдите чек-лист SOP');
+      assert(
+        state.settings.autoChecklists !== false || !job.sop?.diagnosticsOnly,
+        'Диагностика не закрывает ремонт аварии',
+      );
       job.status = 'done';
       job.actualEnd = state.time;
       addEvent(state, 'Работа завершена инженером', `№${job.number}`, job.engineerId, 'success');
@@ -362,6 +412,7 @@ export async function applyAction(current, action, opts = {}) {
     case 'support.resolve': {
       const ticket = state.support.find((t) => t.id === p.id);
       assert(ticket, 'Обращение не найдено');
+      assert(ticket.kind !== 'kit_shortage', 'Выберите решение по недостающим материалам');
       assert(ticket.kind !== 'scheduling', 'Откройте заявку и укажите результат согласования с клиентом');
       ticket.status = 'resolved';
       const job = state.jobs.find((j) => j.id === ticket.jobId);
@@ -369,6 +420,9 @@ export async function applyAction(current, action, opts = {}) {
         job.status = 'pending';
         job.actualStart = null;
         job.lockedStop = null;
+        job.arrivedAt = null;
+        job.manualExecution = false;
+        delete job.visitResult;
       }
       addEvent(state, 'Обращение обработано', 'Заявка возвращена в планирование');
       break;
@@ -395,8 +449,8 @@ export async function applyAction(current, action, opts = {}) {
       break;
     case 'import': {
       assert(
-        Array.isArray(p.jobs) && p.jobs.length > 0 && p.jobs.length <= 100,
-        'Импорт: требуется 1–100 заявок',
+        Array.isArray(p.jobs) && p.jobs.length > 0 && p.jobs.length <= MAX_DAY_JOBS,
+        `Импорт: требуется 1–${MAX_DAY_JOBS} заявок`,
       );
       assert(
         Array.isArray(p.engineers) && p.engineers.length > 0 && p.engineers.length <= 40,
@@ -472,14 +526,19 @@ export async function applyAction(current, action, opts = {}) {
       assert(false, 'Неизвестное действие');
   }
   ensureSops(state);
-  const skip = [
-    'job.note',
-    'support.create',
-    'sop.template.save',
-    'job.sop.apply',
-    'job.sop.save',
-    'job.sop.check',
-  ].includes(type);
+  const skip =
+    (type === 'engineer.kit.resolve' && p.decision === 'confirm') ||
+    [
+      'engineer.kit.submit',
+      'simulation.checklists',
+      'engineer.kit.check',
+      'job.note',
+      'support.create',
+      'sop.template.save',
+      'job.sop.apply',
+      'job.sop.save',
+      'job.sop.check',
+    ].includes(type);
   if (!skip) await replan(state, opts);
   else attachEngineerMetrics(state);
   if (!skip) attachDiff(current, state);

@@ -15,6 +15,7 @@ const clock = (n) =>
 export default function RouteMap({
   state,
   selected = 'all',
+  currentJobId,
   onJob = () => {},
   compact = false,
   engineerIds,
@@ -97,23 +98,39 @@ export default function RouteMap({
         (selected !== 'all' && route.engineerId !== selected)
       )
         continue;
-      if (route.segments)
-        for (const segment of route.segments)
+      const visibleStops = currentJobId
+        ? route.stops.filter((stop) => stop.jobId === currentJobId)
+        : route.stops;
+      if (currentJobId && !visibleStops.length) continue;
+      const segments = currentJobId
+        ? route.segments?.filter((_, index) => route.stops[index]?.jobId === currentJobId)
+        : route.segments;
+      if (segments?.length)
+        for (const segment of segments)
           L.polyline(segment.coordinates, {
             color: selected === 'all' && !engineerIds ? '#999999' : '#cfab24',
             weight: selected === 'all' ? 3 : 4,
             opacity: 0.75,
             dashArray: segment.roadGeometry ? null : '7 6',
           }).addTo(layers.current);
-      if (!route.segments && route.geometry?.length > 1)
-        L.polyline(route.geometry, {
+      // A whole-route geometry can include future visits. Without individual legs,
+      // draw only the direct approach to the current job as an estimated line.
+      const engineer = state.engineers.find((e) => e.id === route.engineerId);
+      const destination = jobs[currentJobId];
+      const geometry = currentJobId
+        ? [engineer?.position, destination]
+            .filter((p) => Number.isFinite(p?.lat) && Number.isFinite(p?.lng))
+            .map((p) => [p.lat, p.lng])
+        : route.geometry;
+      if (!segments?.length && geometry?.length > 1)
+        L.polyline(geometry, {
           color: selected === 'all' && !engineerIds ? '#999999' : '#cfab24',
           weight: selected === 'all' ? 3 : 4,
           opacity: 0.75,
-          dashArray: route.roadGeometry ? null : '7 6',
+          dashArray: !currentJobId && route.roadGeometry ? null : '7 6',
           lineCap: 'round',
         }).addTo(layers.current);
-      route.stops.forEach((stop, i) => {
+      visibleStops.forEach((stop, i) => {
         const job = jobs[stop.jobId];
         if (!job || !Number.isFinite(job.lat) || !Number.isFinite(job.lng)) return;
         const icon = L.divIcon({
@@ -136,6 +153,7 @@ export default function RouteMap({
     )) {
       if (
         (engineerIds && !unassignedJobIds?.includes(job.id)) ||
+        currentJobId ||
         selected !== 'all' ||
         !Number.isFinite(job.lat) ||
         !Number.isFinite(job.lng)
@@ -176,7 +194,7 @@ export default function RouteMap({
       positions.push([e.position.lat, e.position.lng]);
     }
     const fitPositions = boundsPoints?.length ? boundsPoints : positions;
-    const nextKey = `${state.dataset?.id || state.seed}-${selected}-${engineerIds?.join(',') || ''}-${state.jobs.length}-${JSON.stringify(boundsPoints || [])}`;
+    const nextKey = `${state.dataset?.id || state.seed}-${selected}-${engineerIds?.join(',') || ''}-${state.jobs.length}-${JSON.stringify(boundsPoints || [])}-${currentJobId || ''}-${currentJobId ? JSON.stringify([jobs[currentJobId]?.lat, jobs[currentJobId]?.lng]) : ''}`;
     if (fitPositions.length && fitKey.current !== nextKey) {
       map.current.fitBounds(L.latLngBounds(fitPositions).pad(0.18), {
         maxZoom: compact ? 13 : 14,
@@ -185,7 +203,7 @@ export default function RouteMap({
       });
       fitKey.current = nextKey;
     }
-  }, [state, selected, picker, compact, engineerIds, boundsPoints, unassignedJobIds]);
+  }, [state, selected, currentJobId, picker, compact, engineerIds, boundsPoints, unassignedJobIds]);
   return (
     <div className={`route-map ${compact ? 'compact' : ''}`}>
       <div ref={element} className="map-canvas" />

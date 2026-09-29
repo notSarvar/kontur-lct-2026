@@ -118,7 +118,8 @@ export default function SopPanel({ job, state, act, busy, onEdit }) {
     job.sop?.templateId || state.sopTemplates?.[0]?.id || 'router',
   );
   const sop = job.sop,
-    readonly = job.status === 'done';
+    readonly = job.status === 'done',
+    automatic = state.settings.autoChecklists !== false;
   const action = (type, p = {}) =>
     act(type, { id: job.id, expectedRevision: state.revision, ...p }, 'Регламент сохранён');
   return (
@@ -145,7 +146,7 @@ export default function SopPanel({ job, state, act, busy, onEdit }) {
             ))}
           </select>
           <Button
-            disabled={busy || sop?.steps.some((s) => s.done)}
+            disabled={busy || (!automatic && sop?.steps.some((s) => s.done))}
             onClick={() => action('job.sop.apply', { templateId })}
           >
             {sop ? 'Заменить шаблоном' : 'Применить шаблон'}
@@ -160,6 +161,11 @@ export default function SopPanel({ job, state, act, busy, onEdit }) {
       {sop && (
         <>
           <h4>{sop.title}</h4>
+          {automatic && (
+            <p className="muted">
+              Симуляция: чек-лист заполнен автоматически. Ручное прохождение включается на экране инженера.
+            </p>
+          )}
           <p>{sop.scope}</p>
           <p className="muted">
             Копия шаблона v{sop.version}
@@ -169,7 +175,7 @@ export default function SopPanel({ job, state, act, busy, onEdit }) {
             <input
               type="checkbox"
               checked={Boolean(sop.prerequisitesConfirmed)}
-              disabled={busy || readonly}
+              disabled={busy || readonly || automatic}
               onChange={(e) => action('job.sop.check', { prerequisitesConfirmed: e.target.checked })}
             />
             <span>
@@ -184,7 +190,7 @@ export default function SopPanel({ job, state, act, busy, onEdit }) {
                   <input
                     type="checkbox"
                     checked={Boolean(s.done)}
-                    disabled={busy || readonly || !sop.prerequisitesConfirmed}
+                    disabled={busy || readonly || automatic || !sop.prerequisitesConfirmed}
                     onChange={(e) => action('job.sop.check', { stepId: s.id, done: e.target.checked })}
                   />
                   <span>{s.text}</span>

@@ -1,3 +1,6 @@
+import { startWorkTimer, finishWorkTimer } from './work-timer.js';
+import { openKitShortage } from '../../src/shared/kit-shortage.js';
+import { shiftKit, sopReady } from '../../src/shared/shift-kit.js';
 import { assert } from './validation.js';
 import { addEvent } from './scenario.js';
 const finite = (x, min, max) => typeof x === 'number' && Number.isFinite(x) && x >= min && x <= max;
@@ -14,6 +17,15 @@ export function advance(state, to) {
       for (const stop of route.stops) {
         const job = state.jobs.find((j) => j.id === stop.jobId);
         if (!job || ['done', 'blocked', 'manual_review'].includes(job.status)) continue;
+        if (
+          state.settings.autoChecklists === false &&
+          job.manualExecution &&
+          ['enroute', 'working'].includes(job.status)
+        )
+          break;
+        if (job.status === 'pending' && (engineer.shiftWithdrawn || openKitShortage(state, engineer.id)))
+          break;
+        if (job.status === 'pending' && !shiftKit(state, engineer).ready) break;
         if (job.status === 'pending' && minute >= stop.depart) {
           job.status = 'enroute';
           job.lockedStop = structuredClone(stop);
@@ -22,12 +34,19 @@ export function advance(state, to) {
         if (job.status === 'enroute' && minute >= stop.start) {
           job.status = 'working';
           job.actualStart = stop.start;
+          startWorkTimer(job, 'simulation');
           engineer.position = { lat: job.lat, lng: job.lng };
           addEvent(state, 'Работа начата', `№${job.number}`, engineer.id);
         }
-        if (job.status === 'working' && minute >= stop.end) {
+        if (
+          job.status === 'working' &&
+          minute >= stop.end &&
+          sopReady(job) &&
+          (state.settings.autoChecklists !== false || !job.sop?.diagnosticsOnly)
+        ) {
           job.status = 'done';
-          job.actualEnd = stop.end;
+          job.actualEnd = minute;
+          finishWorkTimer(state, job, engineer.id, 'complete');
           engineer.position = { lat: job.lat, lng: job.lng };
           addEvent(state, 'Заявка выполнена', `№${job.number}`, engineer.id, 'success');
         }

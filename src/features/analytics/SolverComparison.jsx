@@ -1,3 +1,4 @@
+import { apiFetch } from '../../shared/api.js';
 import React, { useState } from 'react';
 import { Button } from '../../components/ui.jsx';
 import { duration } from '../../shared/format.js';
@@ -19,7 +20,7 @@ export default function SolverComparison({ state }) {
     setBusy(true);
     setError('');
     try {
-      const response = await fetch('/api/optimizers/compare', {
+      const response = await apiFetch('/api/optimizers/compare', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({}),

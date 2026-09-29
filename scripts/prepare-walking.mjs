@@ -2,6 +2,7 @@
 import fs from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { setTimeout } from 'node:timers/promises';
+import { OFFICIAL_DATASETS } from '../server/infrastructure/datasets.js';
 import { createOfficialScenario } from '../server/domain/official-scenario.js';
 import { pointKey, hasCoordinates } from '../server/optimization/travel.js';
 import { preparedUrl, readPreparedTravel, preparedMatrix } from '../server/infrastructure/prepared-travel.js';
@@ -12,8 +13,8 @@ cache.regions ||= {};
 cache.geometries ||= {};
 const stateArg = process.argv.indexOf('--state');
 const current = stateArg >= 0 ? JSON.parse(await fs.readFile(process.argv[stateArg + 1], 'utf8')) : null;
-if (current && !['east', 'southeast', 'southcenter'].includes(current.dataset?.id))
-  throw new Error('--state должен содержать сохранённый день одного из трёх участков');
+if (current && !OFFICIAL_DATASETS.some((d) => d.id === current.dataset?.id))
+  throw new Error('--state должен содержать сохранённый день из зарегистрированного набора');
 let previous = 0;
 async function request(path) {
   await setTimeout(Math.max(0, 1100 - (Date.now() - previous)));
@@ -27,7 +28,10 @@ async function request(path) {
   if (data.code !== 'Ok') throw new Error(data.message || data.code);
   return data;
 }
-for (const id of current ? [current.dataset.id] : ['east', 'southeast', 'southcenter']) {
+const selected = process.env.DATASET_IDS?.split(',');
+for (const id of current
+  ? [current.dataset.id]
+  : OFFICIAL_DATASETS.filter((d) => !selected || selected.includes(d.id)).map((d) => d.id)) {
   const state = current || (await createOfficialScenario(id));
   const original = await createOfficialScenario(id);
   const points = [

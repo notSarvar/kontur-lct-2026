@@ -1360,41 +1360,127 @@ tbody tr:hover {
   margin-left: auto;
   color: #767676;
 }
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+  gap: 16px;
+  padding: 0 24px 24px;
+}
 .support-ticket {
   display: flex;
-  gap: 14px;
-  padding: 23px;
-  border-top: 1px solid var(--border);
-  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 2px 6px #17212b04;
 }
-.ticket-icon {
-  height: 36px;
-  width: 36px;
+.support-card-top {
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 9px;
-  background: #fcf1e2;
-  color: #bf9a60;
+  justify-content: space-between;
+  gap: 8px;
 }
-.ticket-icon.resolved {
-  color: #767676;
-  background: #f2f2f2;
+.support-number {
+  font-size: 12px;
+  color: #68717c;
+  font-weight: 600;
+}
+.support-priority {
+  border-radius: 6px;
+  padding: 4px 7px;
+  color: #a93629;
+  background: #fff0ec;
+  font-size: 10px;
+  font-weight: 600;
 }
 .support-ticket h3 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.support-ticket .support-job-type {
   font-size: 12px;
+  color: #68717c;
+  margin: -6px 0 0;
+  line-height: 1.5;
 }
-.support-ticket p {
+.support-job-facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
   font-size: 11px;
-  color: #767676;
-  margin: 6px 0;
+  color: #54616c;
 }
-.support-ticket small {
-  font-size: 9px;
-  color: #767676;
+.support-job-facts span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
-.support-ticket > .button {
+.support-reason {
+  padding: 12px;
+  border-radius: 9px;
+  background: #f7f8f6;
+  overflow-wrap: anywhere;
+}
+.support-reason > span {
+  font-size: 10px;
+  color: #68717c;
+}
+.support-reason p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #374450;
+}
+.support-card-footer {
+  margin-top: auto;
+  padding-top: 4px;
+}
+.support-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #8a641f;
+  font-size: 11px;
+  margin-bottom: 12px;
+}
+.support-status svg {
+  flex-shrink: 0;
+}
+.support-status time {
   margin-left: auto;
+  color: #68717c;
+  font-size: 10px;
+}
+.support-status.resolved {
+  color: #39805a;
+}
+.support-ticket.is-resolved {
+  background: #fcfdfb;
+}
+.support-card-footer .button {
+  width: 100%;
+  justify-content: space-between;
+  text-align: left;
+  white-space: normal;
+  min-height: 40px;
+  font-size: 12px;
+  border-radius: 9px;
+}
+.support-card-footer .button > span {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.support-card-footer .button svg {
+  flex-shrink: 0;
 }
 .timeline {
   height: 351px;
@@ -1775,7 +1861,17 @@ tbody tr:hover {
   font-size: 7px;
 }
 .phone-nav button.active {
-  color: #6f6f6f;
+  color: #222;
+  background: #ffeb8a;
+  border-radius: 10px;
+  font-weight: 700;
+}
+.phone-nav button.active svg {
+  stroke-width: 2.4;
+}
+.phone-nav button:focus-visible {
+  outline: 2px solid #846600;
+  outline-offset: 2px;
 }
 .phone-stage-caption {
   display: flex;
@@ -2718,12 +2814,12 @@ legend {
   .detail-numbers b {
     font-size: 13px;
   }
+  .support-grid {
+    padding: 0 16px 16px;
+    gap: 12px;
+  }
   .support-ticket {
     padding: 16px;
-    flex-wrap: wrap;
-  }
-  .support-ticket > .button {
-    margin-left: 50px;
   }
   .analytics-card .panel-heading h2 {
     font-size: 13px;
@@ -2876,5 +2972,16 @@ legend {
   }
   .heading-actions {
     flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 700px) {
+  .support-panel > .panel-heading {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .support-panel > .panel-heading > .button {
+    align-self: flex-start;
   }
 }

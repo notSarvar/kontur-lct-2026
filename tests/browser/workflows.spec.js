@@ -7,6 +7,8 @@ async function action(request, type, payload = {}) {
   return res.json();
 }
 test.beforeEach(async ({ request }) => {
+  const initial = await (await request.get('/api/state')).json();
+  await action(request, 'simulation.checklists', { enabled: true, expectedRevision: initial.revision });
   await action(request, 'settings', { roadMode: 'estimate', stability: true });
   await action(request, 'generate', { seed: 42, count: 18, engineerCount: 4 });
 });
@@ -89,13 +91,18 @@ test('simulated execution, break, manual completion, issue handling and history 
   await page.goto('/');
   await page.getByRole('tab', { name: 'Инженер', exact: true }).click();
   await page.getByLabel('Выбрать инженера').selectOption(engineer.id);
-  await expect(page.locator('.phone .next-visit-label')).toContainText('НА ОБЪЕКТЕ');
-  await page.locator('.phone').getByRole('button', { name: 'Перерыв 30 мин' }).click();
+  await expect(page.locator('.phone h2')).toHaveText('Работа на объекте');
+  await page.locator('.phone-nav').getByRole('button', { name: 'Профиль' }).click();
+  await page.locator('.phone').getByRole('button', { name: 'Перерыв на 30 минут' }).click();
+  await page.locator('.phone-nav').getByRole('button', { name: 'Мой день' }).click();
   await expect(page.locator('.phone-break')).toBeVisible();
-  await page.locator('.phone').getByRole('button', { name: 'Завершить работу', exact: true }).click();
+  await page.locator('.phone').getByRole('button', { name: 'Завершить визит', exact: true }).click();
+  await page.getByRole('button', { name: /^Всё выполнено/ }).click();
+  await page.getByRole('button', { name: 'Подтвердить и завершить' }).click();
   await expect(
-    page.locator('.phone').getByRole('button', { name: 'Завершить работу', exact: true }),
+    page.locator('.phone').getByRole('button', { name: 'Завершить визит', exact: true }),
   ).toHaveCount(0);
+  await expect(page.locator('.phone h2')).toHaveText('Визит закрыт');
   s = await (await request.get('/api/state')).json();
   expect(s.jobs.find((j) => j.id === stop.jobId).status).toBe('done');
   await page.getByRole('tab', { name: 'Диспетчер', exact: true }).click();

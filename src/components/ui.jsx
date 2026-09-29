@@ -43,6 +43,7 @@ export function Modal({ title, subtitle, onClose, children, wide = false, classN
     document.body.style.overflow = 'hidden';
     dialog.current?.focus();
     const handler = (e) => {
+      if (document.body.dataset.onboardingActive === 'true') return;
       if (e.key === 'Escape') close.current();
       if (e.key === 'Tab') {
         const targets = [
@@ -86,7 +87,7 @@ export function Modal({ title, subtitle, onClose, children, wide = false, classN
         ref={dialog}
         tabIndex={-1}
         role="dialog"
-        aria-modal="true"
+        aria-modal={document.body.dataset.onboardingActive !== 'true'}
         aria-labelledby={titleId}
         className={`modal ${wide ? 'wide' : ''} ${className}`}
       >

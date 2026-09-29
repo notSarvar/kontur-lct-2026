@@ -20,6 +20,7 @@ ENV NODE_ENV=production HOST=0.0.0.0 PORT=4317 \
 WORKDIR /app
 COPY --chown=node:node package.json ./
 COPY --chown=node:node server ./server
+COPY --chown=node:node src/shared/shift-kit.js src/shared/kit-shortage.js ./src/shared/
 COPY --chown=node:node data/beeline ./data/beeline
 COPY --chown=node:node data/sop ./data/sop
 COPY --from=frontend --chown=node:node /build/dist ./dist

@@ -144,11 +144,13 @@ for (const width of [1440, 390, 320]) {
       .getByRole('button', { name: /^Открыть приложение:/ })
       .first()
       .click();
-    for (const title of ['События', 'Профиль', 'Маршрут']) {
+    for (const title of ['События', 'Профиль', 'Мой день']) {
       await page.locator('.phone-nav').getByRole('button', { name: title, exact: true }).click();
       await shot(page, testInfo, `engineer-${title}`);
     }
-    await page.getByLabel('Выбрать инженера').selectOption(before.engineers[1].id);
+    await page
+      .getByLabel('Выбрать инженера')
+      .selectOption(before.plan.routes.find((route) => route.stops.length).engineerId);
     await page.getByRole('button', { name: 'Открыть заявку', exact: true }).click();
     await shot(page, testInfo, 'engineer-job');
     await close(page);
@@ -303,23 +305,9 @@ test('map controls, team cards, creation, validation and deletion remain connect
   expect(errors).toEqual([]);
 });
 
-test('geography confirmation previews safely and simulation controls advance the clock', async ({
-  page,
-  request,
-}) => {
+test('simulation controls advance the clock', async ({ page, request }) => {
   await request.post('/api/action', { data: { type: 'dataset.load', payload: { id: 'east' } } });
   await page.goto('/');
-  await page.getByRole('button', { name: /Проверить адреса/ }).click();
-  const before = await (await request.get('/api/state')).json();
-  await page.getByLabel('Широта здания').fill('55.75');
-  await page.getByLabel('Долгота здания').fill('37.62');
-  await page.getByLabel('Источник подтверждения').fill('Тестовая точка для проверки предпросмотра');
-  await page.getByRole('button', { name: 'Проверить план с этой точкой' }).click();
-  await expect(page.getByRole('dialog')).toHaveAccessibleName('Предпросмотр изменений');
-  await page.getByRole('button', { name: 'Отменить изменения' }).click();
-  const unchanged = await (await request.get('/api/state')).json();
-  expect(unchanged.jobs).toEqual(before.jobs);
-  expect(unchanged.revision).toBe(before.revision);
   await openHackathon(page);
   await page.getByLabel('Скорость симуляции').selectOption('15');
   await page.getByRole('button', { name: 'Запустить симуляцию', exact: true }).click();

@@ -46,13 +46,6 @@ try {
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await page.evaluate(() => document.fonts.ready);
   if (output) await page.screenshot({ path: `${output}/desktop.png` });
-  const geography = page.getByRole('button', { name: /Проверить адреса/ });
-  if (await geography.count()) {
-    await geography.click();
-    await expect(page.getByRole('dialog')).toHaveAccessibleName('Проверка географии');
-    if (output) await page.screenshot({ path: `${output}/geography.png` });
-    await page.keyboard.press('Escape');
-  }
   const sopJob = before.jobs.find((job) => job.sop && job.status !== 'done');
   if (sopJob) {
     await page
@@ -95,7 +88,7 @@ try {
   await page.getByRole('button', { name: 'Отменить правки', exact: true }).click();
   await page.keyboard.press('Escape');
   await page.getByRole('tab', { name: 'Инженер', exact: true }).click();
-  for (const title of ['События', 'Профиль', 'Маршрут']) {
+  for (const title of ['События', 'Профиль', 'Мой день']) {
     await page.locator('.phone-nav').getByRole('button', { name: title, exact: true }).click();
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   }

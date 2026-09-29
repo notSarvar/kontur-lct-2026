@@ -15,6 +15,54 @@
       "file": "Югоцентр Синтетические данные.csv",
       "encoding": "windows-1251",
       "sha256": "e553b5b1ad985f2ec62ffe291544a7df1c8622ef5cd80165287d95f45a53a035"
+    },
+    {
+      "file": "additional/восток день 2.csv",
+      "encoding": "windows-1251",
+      "sha256": "295bb396e507326bf0b1cbddf9c86170c8a414fa02466f1b2aea6ebd673bbea8",
+      "baseRegion": "east",
+      "sourceName": "восток день 2.csv",
+      "sourceCollection": "Доп дни"
+    },
+    {
+      "file": "additional/восток день 3.csv",
+      "encoding": "windows-1251",
+      "sha256": "eb05e4d5788da7ffd71b86afb59046cb17e4f2580ce801f921f7e1ad71749441",
+      "baseRegion": "east",
+      "sourceName": "восток день 3.csv",
+      "sourceCollection": "Доп дни"
+    },
+    {
+      "file": "additional/юго-восток день 2.csv",
+      "encoding": "windows-1251",
+      "sha256": "959711cc73ee6ff63b3b70ce7de0e012cd94a429837d225834c66777c7f5b8cf",
+      "baseRegion": "southeast",
+      "sourceName": "юго-восток день 2.csv",
+      "sourceCollection": "Доп дни"
+    },
+    {
+      "file": "additional/юго восок день 3.csv",
+      "encoding": "windows-1251",
+      "sha256": "917731a3aac37ff3c6748776426a75e2c44fb58af12b6db0241688e61f6963d4",
+      "baseRegion": "southeast",
+      "sourceName": "юго восок день 3.csv",
+      "sourceCollection": "Доп дни"
+    },
+    {
+      "file": "additional/юго-центр день 2.csv",
+      "encoding": "windows-1251",
+      "sha256": "46d8420aa5958ba8c7e8e3954d967f06deeb7d442429f7d5933072038b37d34b",
+      "baseRegion": "southcenter",
+      "sourceName": "юго-центр день 2.csv",
+      "sourceCollection": "Доп дни"
+    },
+    {
+      "file": "additional/юго-центр день 3.csv",
+      "encoding": "windows-1251",
+      "sha256": "b1621c47e7b501e32a87f688c7655cb2ee890ba8108caa31772a9e8a63fe6579",
+      "baseRegion": "southcenter",
+      "sourceName": "юго-центр день 3.csv",
+      "sourceCollection": "Доп дни"
     }
   ]
 }

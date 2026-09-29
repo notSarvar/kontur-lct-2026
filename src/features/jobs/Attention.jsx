@@ -1,17 +1,15 @@
 import React from 'react';
-import { ArrowRight, CheckCheck, MapPin, TriangleAlert } from 'lucide-react';
+import { ArrowRight, CheckCheck, TriangleAlert } from 'lucide-react';
 import { Button } from '../../components/ui.jsx';
 import { time } from '../../shared/format.js';
 
-export default function Attention({ state, jobs, onJob, onAll, onGeography }) {
+export default function Attention({ state, jobs, onJob, onAll }) {
   const issues = [...jobs].sort(
     (a, b) => Number(b.priority === 'urgent') - Number(a.priority === 'urgent') || a.windowEnd - b.windowEnd,
   );
   const needsAddress = (job) => !Number.isFinite(job.lat) || !Number.isFinite(job.lng);
   const addressIssues = issues.filter(needsAddress);
   const planningIssues = issues.filter((job) => !needsAddress(job));
-  const urgentCount = issues.filter((job) => job.priority === 'urgent').length;
-  const geography = state.geography?.issues.length || 0;
   const groups = [
     { title: 'Нужно согласовать', jobs: planningIssues, limit: 2 },
     { title: 'Адрес не подтверждён', jobs: addressIssues, limit: 1 },
@@ -30,24 +28,8 @@ export default function Attention({ state, jobs, onJob, onAll, onGeography }) {
             <h2>{issues.length ? 'Требует внимания' : 'Нет заявок, требующих решения'}</h2>
             {issues.length > 0 && <span className="attention-count">{issues.length}</span>}
           </div>
-          {issues.length > 0 && (
-            <p className="attention-summary">
-              {[
-                urgentCount ? `Срочных: ${urgentCount}` : null,
-                planningIssues.length ? `На согласовании: ${planningIssues.length}` : null,
-                addressIssues.length ? `Без координат: ${addressIssues.length}` : null,
-              ]
-                .filter(Boolean)
-                .join(' · ')}
-            </p>
-          )}
         </div>
         <div className="attention-actions">
-          {geography > 0 && (
-            <Button icon={MapPin} onClick={onGeography}>
-              Проверить адреса · {geography}
-            </Button>
-          )}
           {issues.length > 0 && (
             <Button icon={ArrowRight} onClick={onAll}>
               Все проблемные заявки

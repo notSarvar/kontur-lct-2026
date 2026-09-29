@@ -50,6 +50,9 @@ test('workload analytics and historical work inputs are readable on desktop and 
 });
 test('SOP checklist survives reload and template edits preserve copies', async ({ page, request }) => {
   let state = await (await request.get('/api/state')).json();
+  await request.post('/api/action', {
+    data: { type: 'simulation.checklists', payload: { enabled: false, expectedRevision: state.revision } },
+  });
   const job = state.jobs.find((j) => j.sop && j.status === 'pending');
   expect(job).toBeTruthy();
   await page.goto('/');

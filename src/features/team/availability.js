@@ -1,6 +1,9 @@
+import { openKitShortage } from '../../shared/kit-shortage.js';
 // Gaps in the current plan, not a promise that a new visit (including travel) fits.
 export function freeWindows(state, engineer, minimum = 30) {
   if (
+    engineer.shiftWithdrawn ||
+    openKitShortage(state, engineer.id) ||
     engineer.transport === 'none' ||
     state.jobs.some((j) => j.engineerId === engineer.id && j.status === 'blocked')
   )
@@ -24,6 +27,8 @@ export function freeWindows(state, engineer, minimum = 30) {
 }
 
 export function engineerStatus(state, engineer) {
+  if (engineer.shiftWithdrawn) return { label: 'Снят со смены', tone: 'muted' };
+  if (openKitShortage(state, engineer.id)) return { label: 'Комплект под риском', tone: 'problem' };
   const route = state.plan.routes.find((r) => r.engineerId === engineer.id);
   const hasIssue =
     state.jobs.some((j) => j.engineerId === engineer.id && j.status === 'blocked') ||

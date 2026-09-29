@@ -3,9 +3,75 @@ import { OFFICIAL_POLICY } from '../domain/official-policy.js';
 
 const dataRoot = new URL('../../data/beeline/', import.meta.url);
 export const OFFICIAL_DATASETS = [
-  { id: 'east', name: 'Восток', file: 'Восток Синтетические данные.csv' },
-  { id: 'southeast', name: 'Юго-восток', file: 'Юго-восток Синтетические данные.csv' },
-  { id: 'southcenter', name: 'Югоцентр', file: 'Югоцентр Синтетические данные.csv' },
+  { id: 'east', name: 'Восток', file: 'Восток Синтетические данные.csv', count: 66, date: '2026-08-17' },
+  {
+    id: 'southeast',
+    name: 'Юго-восток',
+    file: 'Юго-восток Синтетические данные.csv',
+    count: 83,
+    date: '2026-08-17',
+  },
+  {
+    id: 'southcenter',
+    name: 'Югоцентр',
+    file: 'Югоцентр Синтетические данные.csv',
+    count: 56,
+    date: '2026-08-17',
+  },
+  {
+    id: 'east-day2',
+    name: 'Восток · день 2',
+    file: 'additional/восток день 2.csv',
+    baseRegion: 'east',
+    count: 74,
+    date: '2026-09-28',
+    format: 'additional-day',
+  },
+  {
+    id: 'east-day3',
+    name: 'Восток · день 3',
+    file: 'additional/восток день 3.csv',
+    baseRegion: 'east',
+    count: 78,
+    date: '2026-09-29',
+    format: 'additional-day',
+  },
+  {
+    id: 'southeast-day2',
+    name: 'Юго-восток · день 2',
+    file: 'additional/юго-восток день 2.csv',
+    baseRegion: 'southeast',
+    count: 87,
+    date: '2026-09-29',
+    format: 'additional-day',
+  },
+  {
+    id: 'southeast-day3',
+    name: 'Юго-восток · день 3',
+    file: 'additional/юго восок день 3.csv',
+    baseRegion: 'southeast',
+    count: 102,
+    date: '2026-09-28',
+    format: 'additional-day',
+  },
+  {
+    id: 'southcenter-day2',
+    name: 'Югоцентр · день 2',
+    file: 'additional/юго-центр день 2.csv',
+    baseRegion: 'southcenter',
+    count: 77,
+    date: '2026-09-28',
+    format: 'additional-day',
+  },
+  {
+    id: 'southcenter-day3',
+    name: 'Югоцентр · день 3',
+    file: 'additional/юго-центр день 3.csv',
+    baseRegion: 'southcenter',
+    count: 79,
+    date: '2026-09-28',
+    format: 'additional-day',
+  },
 ];
 const workTypes = {
   Подключение: { type: 'connection', skill: 'connection', norm: 'Подключение клиентов Базовая' },
@@ -188,16 +254,51 @@ export function normalizeOfficialCsv(text, dataset, norms) {
   };
 }
 
+// Explicit adapter for registered extra days. Original status remains source metadata;
+// it is never interpreted as an assignment or completed visit in a new simulation.
+export function normalizeAdditionalCsv(text, dataset, norms, office) {
+  const [header, ...rows] = parseCsv(text);
+  if (!header?.includes('Статус BK') || header.includes('Бригада'))
+    throw new Error('Некорректный формат дополнительного дня');
+  if (rows.some((r) => r.length !== header.length))
+    throw new Error('Количество полей не совпадает с заголовком');
+  const fields = rows.map((row) => Object.fromEntries(header.map((key, i) => [key, row[i].trim()])));
+  const columns = header.map((key, i) => (key === 'Статус BK' ? -1 : i)).filter((i) => i >= 0);
+  const adapted = [
+    columns.map((i) => header[i]),
+    ['Адрес офиса', office.address, ...Array(columns.length - 2).fill('')],
+    ...rows.map((row) => columns.map((i) => row[i])),
+  ];
+  const csv = adapted
+    .map((row) => row.map((value) => '"' + value.replaceAll('"', '""') + '"').join(';'))
+    .join('\n');
+  const normalized = normalizeOfficialCsv(csv, dataset, norms);
+  if (normalized.jobs.length !== dataset.count || normalized.date !== dataset.date)
+    throw new Error('Количество заявок или дата не совпадают с описанием набора');
+  for (let i = 0; i < normalized.jobs.length; i++) {
+    normalized.jobs[i].source.fields = fields[i];
+    normalized.jobs[i].source.importPolicy = 'independent-replay-v1';
+    normalized.jobs[i].source.officeFromRegion = dataset.baseRegion;
+  }
+  return normalized;
+}
+
 export async function loadOfficialDatasets() {
   const norms = JSON.parse(await fs.readFile(new URL('norms.json', dataRoot), 'utf8'));
-  return Promise.all(
-    OFFICIAL_DATASETS.map(async (dataset) => {
-      const bytes = await fs.readFile(new URL(dataset.file, dataRoot));
-      return normalizeOfficialCsv(
-        new TextDecoder('windows-1251', { fatal: true }).decode(bytes),
-        dataset,
-        norms,
-      );
-    }),
+  const texts = await Promise.all(
+    OFFICIAL_DATASETS.map(async (dataset) =>
+      new TextDecoder('windows-1251', { fatal: true }).decode(
+        await fs.readFile(new URL(dataset.file, dataRoot)),
+      ),
+    ),
+  );
+  const base = new Map();
+  OFFICIAL_DATASETS.forEach((dataset, i) => {
+    if (!dataset.baseRegion) base.set(dataset.id, normalizeOfficialCsv(texts[i], dataset, norms));
+  });
+  return OFFICIAL_DATASETS.map((dataset, i) =>
+    dataset.baseRegion
+      ? normalizeAdditionalCsv(texts[i], dataset, norms, base.get(dataset.baseRegion).office)
+      : base.get(dataset.id),
   );
 }

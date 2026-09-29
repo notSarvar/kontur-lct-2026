@@ -7,6 +7,7 @@ import { ensureSops } from '../domain/sop.js';
 import { optimizerSettings } from '../optimization/settings.js';
 
 export async function replan(state, { roads = true, iterations } = {}) {
+  const initialCalculation = !state.plan;
   ensureSops(state);
   state.settings = { ...state.settings, ...optimizerSettings(state.settings) };
   state.geography = geographyStatus(state);
@@ -55,5 +56,17 @@ export async function replan(state, { roads = true, iterations } = {}) {
   }
   await addGeometries(state);
   attachEngineerMetrics(state);
+  if (initialCalculation) {
+    const id = crypto.randomUUID();
+    state.firstPlanResult = {
+      id,
+      total: state.jobs.length,
+      assigned: state.plan.metrics.assigned,
+      unassigned: state.plan.metrics.unassigned,
+      usedEngineers: state.plan.metrics.usedEngineers,
+      computedAt: state.plan.computedAt,
+    };
+    state.plan.initialResultId = id;
+  }
   return state;
 }

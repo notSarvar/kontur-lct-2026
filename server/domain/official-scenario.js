@@ -61,7 +61,11 @@ export async function createOfficialScenario(id) {
   const assumptions = JSON.parse(
     await fs.readFile(new URL('../../data/beeline/office-assumptions.json', import.meta.url), 'utf8'),
   );
-  const office = { ...dataset.office, ...assumptions[id], ...resolvedPoint(dataset.office.address, cache) };
+  const office = {
+    ...dataset.office,
+    ...assumptions[dataset.baseRegion || id],
+    ...resolvedPoint(dataset.office.address, cache),
+  };
   const jobs = dataset.jobs.map((job) => ({
     ...job,
     ...resolvedPoint(job.address, cache),
@@ -77,6 +81,8 @@ export async function createOfficialScenario(id) {
     dataset: {
       id,
       name: dataset.name,
+      baseRegion: dataset.baseRegion || id,
+      independentReplay: dataset.format === 'additional-day',
       date: dataset.date,
       policyVersion: OFFICIAL_POLICY.version,
       office,

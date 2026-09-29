@@ -10,7 +10,7 @@ import {
 } from '../server/infrastructure/datasets.js';
 
 test('official synthetic imports preserve all requests, offices, windows and separate regions', async () => {
-  const datasets = await loadOfficialDatasets();
+  const datasets = (await loadOfficialDatasets()).filter((d) => !d.baseRegion);
   assert.deepEqual(
     datasets.map((d) => d.jobs.length),
     [66, 83, 56],
@@ -30,7 +30,7 @@ test('official synthetic imports preserve all requests, offices, windows and sep
 });
 
 test('BK chooses skill and norm; global HD distinguishes emergencies from information', async () => {
-  const jobs = (await loadOfficialDatasets()).flatMap((d) => d.jobs);
+  const jobs = (await loadOfficialDatasets()).filter((d) => !d.baseRegion).flatMap((d) => d.jobs);
   const minutes = { connection: 70, additional: 20, local: 30, emergency: 80, information: 30 };
   for (const job of jobs.filter((j) => !j.review.length)) {
     assert.equal(job.duration, minutes[job.type]);

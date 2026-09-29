@@ -1,3 +1,4 @@
+import EngineerRecommendations from './EngineerRecommendations.jsx';
 import React, { useState } from 'react';
 import { Loader2, Plus, ShieldCheck } from 'lucide-react';
 import { time, minutes, duration, transport } from '../../shared/format.js';
@@ -252,6 +253,15 @@ export default function JobForm({ job, state, urgent, onClose, save, busy }) {
                 placeholder="Клиент подтвердил новое время / адрес проверен"
               />
             </Field>
+            {form.priority === 'urgent' && (
+              <EngineerRecommendations
+                form={form}
+                state={state}
+                selected={form.pinnedEngineerId}
+                onSelect={(id) => set('pinnedEngineerId', id)}
+                busy={busy}
+              />
+            )}
             <Field label="Назначить инженера">
               <select
                 value={form.pinnedEngineerId || ''}

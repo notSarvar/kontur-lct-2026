@@ -93,6 +93,15 @@ export default function JobDetails({ job: j, state, onClose, edit, act, busy, as
                 <b>BK:</b> {j.source.fields['Тип заявки BK']} · <b>HD:</b> {j.source.fields['Тип заявки HD']}
                 <br />
                 {j.source.priorityBasis}
+                {j.source.importPolicy === 'independent-replay-v1' && (
+                  <p>
+                    Статус в исходном файле: {j.source.fields['Статус BK']}. Справочная отметка; этот сценарий
+                    рассчитан заново.
+                  </p>
+                )}
+                {j.source.fields['Гигабитное подключение'] && (
+                  <p>Гигабитное подключение: {j.source.fields['Гигабитное подключение']}</p>
+                )}
                 {j.source.assumptions?.map((text, i) => (
                   <p key={i}>Допущение: {text}</p>
                 ))}
